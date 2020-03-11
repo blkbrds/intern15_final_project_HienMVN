@@ -3,6 +3,8 @@ before_install:
     - gem install bundler
     - bundle install
     - bundle exec pod install --repo-update
+    - gem install linterbot
+    - brew install swiftlint
 cache:
   - bundler
   - cocoapods
@@ -12,6 +14,7 @@ xcode_project: FinalProject.xcworkspace
 xcode_scheme: Dev
 xcode_destination: platform=iOS Simulator,OS=13.0,name=iPhone X
 script:
+    - ./scripts/lint
     - xcodebuild clean build -sdk iphonesimulator -workspace FinalProject.xcworkspace -scheme Dev
 install:
     - sudo systemsetup -settimezone Asia/Ho_Chi_Minh
