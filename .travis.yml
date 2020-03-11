@@ -1,0 +1,17 @@
+before_install:
+    - gem update --system
+    - gem install bundler
+    - bundle install
+    - bundle exec pod install --repo-update
+cache:
+  - bundler
+  - cocoapods
+language: objective-c
+osx_image: xcode11.2
+xcode_project: FinalProject.xcworkspace
+xcode_scheme: Dev
+xcode_destination: platform=iOS Simulator,OS=13.0,name=iPhone X
+script:
+    - xcodebuild clean build -sdk iphonesimulator -workspace FinalProject.xcworkspace -scheme Dev
+install:
+    - sudo systemsetup -settimezone Asia/Ho_Chi_Minh

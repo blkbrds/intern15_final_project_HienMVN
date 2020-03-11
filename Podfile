@@ -9,7 +9,7 @@ target 'FinalProject' do
 
   # Data
   pod 'ObjectMapper', '3.5.1', :inhibit_warnings => true # Simple JSON Object mapping written in Swift.
-  pod 'RealmSwift'
+  pod 'RealmSwift', :inhibit_warnings => true
 
   # Network
   pod 'Alamofire', '4.9.0' # Elegant HTTP Networking in Swift.
