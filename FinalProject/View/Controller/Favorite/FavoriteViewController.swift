@@ -6,6 +6,7 @@ final class FavoriteViewController: ViewController {
 		super.viewDidLoad()
 
 	}
+	
 	override func setupUI() {
 		title = "Favorite"
 	}

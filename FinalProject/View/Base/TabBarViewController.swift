@@ -8,13 +8,13 @@
 
 import UIKit
 
-class TabBarViewController: UITabBarController {
-	// MARK: - Life
+final class TabBarViewController: UITabBarController {
+	// MARK: - Life cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupTabBar()
 	}
-	// MARK: - private Func
+	// MARK: - Private
 	private func setupTabBar() {
 		let homeVC = HomeViewController()
 		let homeNaVi = UINavigationController(rootViewController: homeVC)
