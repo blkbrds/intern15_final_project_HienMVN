@@ -9,24 +9,23 @@
 import UIKit
 
 class TabBarViewController: UITabBarController {
-	
-	//MARK: - Life
+	// MARK: - Life
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupTabBar()
 	}
-	//MARK: - private Func
+	// MARK: - private Func
 	private func setupTabBar() {
 		let homeVC = HomeViewController()
 		let homeNaVi = UINavigationController(rootViewController: homeVC)
 		let favoriteVC = FavoriteViewController()
 		let favoriteNavi = UINavigationController(rootViewController: favoriteVC)
-		homeVC.tabBarItem = UITabBarItem(title: "Map", image: UIImage(named: "map"), tag: 0)
-		favoriteVC.tabBarItem = UITabBarItem(title: "Favorite", image: UIImage(named: "heart"), tag: 1)
+		homeVC.tabBarItem = UITabBarItem(title: "Map", image: #imageLiteral(resourceName: "map"), tag: 0)
+		favoriteVC.tabBarItem = UITabBarItem(title: "Favorite", image: #imageLiteral(resourceName: "heart"), tag: 1)
 		self.viewControllers = [homeNaVi, favoriteNavi]
 		self.selectedIndex = 0
 		self.tabBar.unselectedItemTintColor = .black
-		self.tabBar.tintColor = UIColor(red: 240.0 / 255.0, green: 136.0 / 255.0, blue: 101.0 / 255.0, alpha: 1.0)
+		self.tabBar.tintColor = #colorLiteral(red: 0.9411764706, green: 0.5333333333, blue: 0.3960784314, alpha: 1)
 
 		let appearance = UITabBarItem.appearance()
 		appearance.setBadgeTextAttributes([NSAttributedString.Key.strokeColor: UIColor.systemPink], for: .normal)
