@@ -1,3 +1,2 @@
+import UIKit
 import Foundation
-
-struct App { }
