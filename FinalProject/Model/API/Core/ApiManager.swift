@@ -44,7 +44,6 @@ extension APIResult {
 let api = ApiManager()
 
 final class ApiManager {
-
 	var defaultHTTPHeaders: [String: String] {
 		var headers: [String: String] = [:]
 		headers["Content-Type"] = "application/json"
