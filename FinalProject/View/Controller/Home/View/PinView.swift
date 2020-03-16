@@ -1,13 +1,15 @@
 import Foundation
 import MapKit
 
-class PinView: MKPinAnnotationView {
+final class PinView: MKPinAnnotationView {
+
+	// MARK: - Properties
 	private var imageView: UIImageView!
 
+	// MARK: - Init
 	override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
 		super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
 
-		frame = CGRect(x: 0, y: 0, width: 50, height: 50)
 		imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
 		imageView.image = #imageLiteral(resourceName: "pin")
 		addSubview(self.imageView)

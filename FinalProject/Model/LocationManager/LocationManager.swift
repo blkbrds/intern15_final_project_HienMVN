@@ -6,14 +6,9 @@ typealias LocationCompletion = (CLLocation) -> Void
 final class LocationManager: NSObject {
 
 	// MARK: - Singleton
-	private static var sharedLocationManager: LocationManager = {
-		let locationManager = LocationManager()
-		return locationManager
+	static let shared: LocationManager = {
+		return LocationManager()
 	}()
-
-	class func shared() -> LocationManager {
-		return sharedLocationManager
-	}
 
 	// MARK: - Properties
 	private let locationManager = CLLocationManager()
@@ -22,11 +17,13 @@ final class LocationManager: NSObject {
 	private var locationCompletion: LocationCompletion?
 
 	private var isUpdatingLocation = false
+
 	// MARK: - init
 	override init() {
 		super.init()
 		configLocationManager()
 	}
+
 	// MARK: - Public Methods
 	func request() {
 		let status = CLLocationManager.authorizationStatus()
@@ -42,21 +39,23 @@ final class LocationManager: NSObject {
 		locationManager.startUpdatingLocation()
 	}
 
-	func getCurrentLocation() -> CLLocation? {
-		return currentLocation
-	}
-
 	func getCurrentLocation(completion: @escaping LocationCompletion) {
 		currentCompletion = completion
 		locationManager.requestLocation()
 	}
-	func startUpdating(completion: @escaping LocationCompletion) {
+
+	// MARK: - Private Methods
+	private func getCurrentLocation() -> CLLocation? {
+		return currentLocation
+	}
+
+	private func startUpdating(completion: @escaping LocationCompletion) {
 		locationCompletion = completion
 		isUpdatingLocation = true
 		locationManager.startUpdatingLocation()
 	}
 
-	func stopUpdating() {
+	private func stopUpdating() {
 		locationManager.stopUpdatingLocation()
 		isUpdatingLocation = false
 	}
@@ -65,10 +64,12 @@ final class LocationManager: NSObject {
 		locationManager.delegate = self
 		locationManager.desiredAccuracy = kCLLocationAccuracyBest
 		locationManager.distanceFilter = 10
-	//	locationManager.allowsBackgroundLocationUpdates = true
 	}
 }
+
+// MARK: - CLLocationManagerDelegate
 extension LocationManager: CLLocationManagerDelegate {
+
 	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 		print("location manager authorization status changed")
 
@@ -94,6 +95,7 @@ extension LocationManager: CLLocationManagerDelegate {
 			print("default")
 		}
 	}
+
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 		if let location = locations.first {
 			self.currentLocation = location
@@ -107,6 +109,7 @@ extension LocationManager: CLLocationManagerDelegate {
 			}
 		}
 	}
+
 	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
 		print("Error: \(error.localizedDescription)")
 	}

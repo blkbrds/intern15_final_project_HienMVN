@@ -4,7 +4,7 @@ import SwiftUtils
 
 class ViewController: UIViewController, MVVM.View {
 
-	// Conformance for ViewEmptyProtocol
+	// MARK: - Properties
 	var isViewEmpty: Bool = false
 
 	// MARK: - Setup Data, UI
@@ -17,7 +17,7 @@ class ViewController: UIViewController, MVVM.View {
 		setupUI()
 	}
 
-	// MARK: - Setup Data, UI
+	// MARK: - Public
 	func setupData() { }
 
 	func setupUI() { }

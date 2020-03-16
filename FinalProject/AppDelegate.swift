@@ -11,7 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let vc = TabBarViewController()
 		window?.rootViewController = vc
 		window?.makeKeyAndVisible()
-		LocationManager.shared().request()
+		LocationManager.shared.request()
 		return true
 	}
 }

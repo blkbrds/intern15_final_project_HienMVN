@@ -3,11 +3,14 @@ import MapKit
 
 final class HomeViewController: ViewController {
 
+	// MARK: - Outlet
 	@IBOutlet weak var mapView: MKMapView!
 	@IBOutlet weak var currentLocationButton: CustomButton!
 
+	// MARK: - Viewmodel
 	var viewmodel = HomeViewModel()
 
+	// MARK: - Life Cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		mapView.delegate = self
@@ -16,10 +19,12 @@ final class HomeViewController: ViewController {
 		center(location: mapView.userLocation.coordinate)
 	}
 
+	// MARK: - Override
 	override func setupUI() {
 		title = "Map"
 	}
 
+	// MARK: - Private Methods
 	private func center(location: CLLocationCoordinate2D) {
 		mapView.setCenter(location, animated: true)
 		let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
@@ -27,12 +32,15 @@ final class HomeViewController: ViewController {
 		mapView.setRegion(region, animated: true)
 	}
 
+	// MARK: - Action
 	@IBAction func moveCurrentLocation(_ sender: Any) {
-		LocationManager.shared().getCurrentLocation { (location) in
+		LocationManager.shared.getCurrentLocation { (location) in
 			self.center(location: self.mapView.userLocation.coordinate)
 		}
 	}
 }
+
+// MARK: - MKMapViewDelegate
 extension HomeViewController: MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 		if annotation is MKPointAnnotation {
@@ -65,11 +73,11 @@ extension HomeViewController: MKMapViewDelegate {
 				view.canShowCallout = true
 			}
 			return view
-
 		} else {
 			return nil
 		}
 	}
+
 	@objc func selectPinView(_ sender: UIButton?) {
 		print("select button detail")
 	}
@@ -80,6 +88,7 @@ extension HomeViewController: MKMapViewDelegate {
 	}
 }
 
+// MARK: - HomeViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate {
 	func showError(stringError: String) {
 		print(stringError)
