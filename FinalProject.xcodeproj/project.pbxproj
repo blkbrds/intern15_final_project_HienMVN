@@ -26,6 +26,8 @@
 		25BF8CD72418830A007F4C55 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BF8CD42418830A007F4C55 /* Errors.swift */; };
 		67F6E64CB6E538D500AE1D0F /* Pods_FinalProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABC9D7CFBBD93D7B323F17B /* Pods_FinalProject.framework */; };
 		FD5B6219241B43FA007811C6 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5B6218241B43FA007811C6 /* LocationManager.swift */; };
+		FD5B621C241E79F3007811C6 /* LocationPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5B621B241E79F3007811C6 /* LocationPin.swift */; };
+		FD5B621E241E7F72007811C6 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5B621D241E7F72007811C6 /* PinView.swift */; };
 		FDDF38BD2418EDF600F483B5 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDF38BB2418EDF600F483B5 /* FavoriteViewController.swift */; };
 		FDDF38BE2418EDF600F483B5 /* FavoriteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDDF38BC2418EDF600F483B5 /* FavoriteViewController.xib */; };
 		FDDF38C02418EE3300F483B5 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDF38BF2418EE3300F483B5 /* TabBarViewController.swift */; };
@@ -65,6 +67,8 @@
 		B7EBF9C38D8AACDD6066DB1F /* Pods-FinalProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.debug.xcconfig"; path = "Target Support Files/Pods-FinalProject/Pods-FinalProject.debug.xcconfig"; sourceTree = "<group>"; };
 		BABC9D7CFBBD93D7B323F17B /* Pods_FinalProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FinalProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD5B6218241B43FA007811C6 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		FD5B621B241E79F3007811C6 /* LocationPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPin.swift; sourceTree = "<group>"; };
+		FD5B621D241E7F72007811C6 /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
 		FDDF38BB2418EDF600F483B5 /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		FDDF38BC2418EDF600F483B5 /* FavoriteViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteViewController.xib; sourceTree = "<group>"; };
 		FDDF38BF2418EE3300F483B5 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -240,6 +244,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FD3B5A13241F3511005BC72C /* DetailView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DetailView;
+			sourceTree = "<group>";
+		};
 		FD5B6217241B43D0007811C6 /* LocationManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,9 +259,20 @@
 			path = LocationManager;
 			sourceTree = "<group>";
 		};
+		FD5B621A241E79B5007811C6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FD3B5A13241F3511005BC72C /* DetailView */,
+				FD5B621B241E79F3007811C6 /* LocationPin.swift */,
+				FD5B621D241E7F72007811C6 /* PinView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		FDDF38B92418ED9700F483B5 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				FD5B621A241E79B5007811C6 /* View */,
 				FDDF38C12418F07B00F483B5 /* HomeViewController.swift */,
 				FDDF38C22418F07B00F483B5 /* HomeViewController.xib */,
 				FDDF38D2241A60A200F483B5 /* HomeViewModel.swift */,
@@ -421,12 +443,14 @@
 				FDDF38D6241A9BAB00F483B5 /* API.Venue.swift in Sources */,
 				FDDF38C32418F07B00F483B5 /* HomeViewController.swift in Sources */,
 				25BF8CD72418830A007F4C55 /* Errors.swift in Sources */,
+				FD5B621C241E79F3007811C6 /* LocationPin.swift in Sources */,
 				25BF8CBD2418821C007F4C55 /* Session.swift in Sources */,
 				25BF8CD52418830A007F4C55 /* String.swift in Sources */,
 				25BF8CB124188003007F4C55 /* ViewController.swift in Sources */,
 				25BF8C8824187CFE007F4C55 /* AppDelegate.swift in Sources */,
 				25BF8CCF241882BF007F4C55 /* NSErrorExt.swift in Sources */,
 				25BF8CC824188248007F4C55 /* RequestSerializer.swift in Sources */,
+				FD5B621E241E7F72007811C6 /* PinView.swift in Sources */,
 				25BF8CC624188248007F4C55 /* ApiManager.swift in Sources */,
 				FDDF38BD2418EDF600F483B5 /* FavoriteViewController.swift in Sources */,
 				FDDF38C82419382800F483B5 /* Venue.swift in Sources */,
