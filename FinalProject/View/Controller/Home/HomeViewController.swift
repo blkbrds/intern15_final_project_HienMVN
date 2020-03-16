@@ -3,11 +3,11 @@ import MapKit
 
 final class HomeViewController: ViewController {
 
-	// MARK: - Outlet
+	// MARK: - Outlets
 	@IBOutlet weak var mapView: MKMapView!
 	@IBOutlet weak var currentLocationButton: CustomButton!
 
-	// MARK: - Viewmodel
+	// MARK: - Properties
 	var viewmodel = HomeViewModel()
 
 	// MARK: - Life Cycle
@@ -42,6 +42,7 @@ final class HomeViewController: ViewController {
 
 // MARK: - MKMapViewDelegate
 extension HomeViewController: MKMapViewDelegate {
+
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 		if annotation is MKPointAnnotation {
 			let identifier = "pin"
@@ -90,9 +91,11 @@ extension HomeViewController: MKMapViewDelegate {
 
 // MARK: - HomeViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate {
+
 	func showError(stringError: String) {
 		print(stringError)
 	}
+
 	func loadVenues(venues: [Venue]) {
 		DispatchQueue.main.async {
 			self.mapView.removeAnnotations(self.mapView.annotations)
