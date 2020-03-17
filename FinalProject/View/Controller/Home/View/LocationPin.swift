@@ -12,8 +12,8 @@ final class LocationPin: NSObject, MKAnnotation {
 		self.locationName = locationName
 		self.coordinate = coordinate
 		super.init()
-
 	}
+
 	var subtitle: String? {
 		return locationName
 

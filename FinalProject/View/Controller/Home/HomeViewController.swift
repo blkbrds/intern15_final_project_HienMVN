@@ -14,7 +14,6 @@ final class HomeViewController: ViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		mapView.delegate = self
-		viewmodel.delegate = self
 		mapView.showsUserLocation = true
 		center(location: mapView.userLocation.coordinate)
 	}
@@ -84,29 +83,22 @@ extension HomeViewController: MKMapViewDelegate {
 	}
 
 	func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-		viewmodel.getVenues(currentLocation: mapView.userLocation.coordinate)
-		center(location: mapView.userLocation.coordinate)
-	}
-}
-
-// MARK: - HomeViewModelDelegate
-extension HomeViewController: HomeViewModelDelegate {
-
-	func showError(stringError: String) {
-		print(stringError)
-	}
-
-	func loadVenues(venues: [Venue]) {
-		DispatchQueue.main.async {
-			self.mapView.removeAnnotations(self.mapView.annotations)
-			venues.forEach { (venue) in
-				if let location = venue.location {
-					let annotation = MKPointAnnotation()
-					annotation.coordinate = location
-					annotation.title = venue.name
-					self.mapView.addAnnotation(annotation)
+		viewmodel.getVenues(currentLocation: mapView.userLocation.coordinate, completion: {[weak self] (success, _) in
+			guard let self = self else { return }
+			if success {
+				DispatchQueue.main.async {
+					self.mapView.removeAnnotations(self.mapView.annotations)
+					self.viewmodel.venues.forEach { (venue) in
+						if let location = venue.location {
+							let annotation = MKPointAnnotation()
+							annotation.coordinate = location
+							annotation.title = venue.name
+							self.mapView.addAnnotation(annotation)
+						}
+					}
 				}
 			}
-		}
+		})
+		center(location: mapView.userLocation.coordinate)
 	}
 }
