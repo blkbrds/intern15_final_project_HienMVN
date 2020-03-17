@@ -1,21 +1,31 @@
-//
-//  DetailView.swift
-//  FinalProject
-//
-//  Created by Ngoc Hien on 3/17/20.
-//  Copyright © 2020 Asian Tech Inc.,. All rights reserved.
-//
-
 import UIKit
 
 class DetailView: UIView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+	@IBOutlet weak var detailCollectionView: UICollectionView!
+	@IBOutlet weak var locationNameLabel: UILabel!
+	@IBOutlet weak var addressLabel: UILabel!
 
+	var viewmodel = DetailViewModel()
+	
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		configCollectionView()
+	}
+	func configCollectionView() {
+
+		detailCollectionView.dataSource = self
+	}
 }
+extension DetailView: UICollectionViewDataSource {
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		return 10
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		<#code#>
+	}
+	
+	
+}
+

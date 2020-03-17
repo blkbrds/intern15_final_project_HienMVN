@@ -1,8 +1,6 @@
 import Foundation
 import CoreLocation
 
-typealias GetLocationCompletion = (Bool, String) -> Void
-
 protocol HomeViewModelDelegate: class {
 	func loadVenues(venues: [Venue])
 	func showError(stringError: String)

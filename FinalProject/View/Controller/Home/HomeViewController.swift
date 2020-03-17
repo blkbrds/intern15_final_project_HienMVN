@@ -13,8 +13,8 @@ final class HomeViewController: ViewController {
 	// MARK: - Life Cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		mapView.delegate = self
 		viewmodel.delegate = self
+		mapView.delegate = self
 		mapView.showsUserLocation = true
 		center(location: mapView.userLocation.coordinate)
 	}
@@ -44,43 +44,27 @@ final class HomeViewController: ViewController {
 extension HomeViewController: MKMapViewDelegate {
 
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-		if annotation is MKPointAnnotation {
-			let identifier = "pin"
-			var view: MKPinAnnotationView
+		guard let annotation = annotation as? MKPointAnnotation else { return nil }
+		let identifier = "pin"
+		var view: MKPinAnnotationView
 
-			if let dequeuwdView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
-				dequeuwdView.annotation = annotation
-				view = dequeuwdView
+		if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
+			dequeuedView.annotation = annotation
+			view = dequeuedView
 
-			} else {
-				view = PinView(annotation: annotation, reuseIdentifier: identifier)
-				view.animatesDrop = true
-				view.pinTintColor = #colorLiteral(red: 0, green: 0.9799041152, blue: 0.4211293161, alpha: 1)
-				view.canShowCallout = true
-			}
-			return view
-		} else if let annotation = annotation as? LocationPin {
-			let identifier = "mypin"
-			var view: PinView
-			if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? PinView {
-				dequeuedView.annotation = annotation
-				view = dequeuedView
-			} else {
-				view = PinView(annotation: annotation, reuseIdentifier: identifier)
-				let button = UIButton(type: .detailDisclosure)
-				button.addTarget(self, action: #selector(selectPinView(_:)), for: .touchDown)
-				view.rightCalloutAccessoryView = button
-				view.leftCalloutAccessoryView = UIImageView(image: #imageLiteral(resourceName: "pin"))
-				view.canShowCallout = true
-			}
-			return view
 		} else {
-			return nil
+			view = PinView(annotation: annotation, reuseIdentifier: identifier)
+			let button = UIButton(type: .detailDisclosure)
+			button.addTarget(self, action: #selector(selectPinView(_:)), for: .touchDown)
+			view.rightCalloutAccessoryView = button
+			view.leftCalloutAccessoryView = UIImageView(image: #imageLiteral(resourceName: "icons8-location-off-30 (3)"))
+			view.canShowCallout = true
 		}
+		return view
 	}
 
 	@objc func selectPinView(_ sender: UIButton?) {
-		print("select button detail")
+
 	}
 
 	func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
