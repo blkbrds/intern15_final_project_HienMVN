@@ -24,5 +24,7 @@ target 'FinalProject' do
 
   # Tool to enforce Swift style and conventions
   pod 'SwiftLint', '0.27.0'
+	
+	pod 'SDWebImage', '4.4.6'
 
 end

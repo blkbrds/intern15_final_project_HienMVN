@@ -1,23 +1,25 @@
+import MVVM
 import Foundation
 import UIKit
 
-typealias ItemCompletion = (Bool, String) -> Void
-typealias dowloadImageCompletion = (UIImage)
+typealias DowloadImageCompletion = (UIImage?) -> Void
 
-final class DetailViewModel {
+final class DetailViewModel: ViewModel {
 
-	private(set) var items: [Item] = []
+	private(set) var venus: [Venue] = []
 
-	func getItem(id: String, completion: @escaping ItemCompletion) {
-		Api.Item.getItem(id: id) {
-			[weak self] (result) in
-			guard let self = self else { return }
-			switch result {
-			case .failure(let error):
-				completion(false, error.localizedDescription)
-			case.success(let itemResult):
-				self.items.append(contentsOf: itemResult.item)
-			}
+	func numberOfIteam() -> Int {
+		return venus.count
+	}
+
+	init(_ venus: [Venue] = []) {
+		self.venus = venus
+	}
+
+	func updateViewModelForCell(at indexPath: IndexPath) -> LocationViewCellModel {
+		guard let name = venus[indexPath.row].name, let address = venus[indexPath.row].country, let locationImageURL = venus[indexPath.row].prefix else {
+			return LocationViewCellModel()
 		}
+		return LocationViewCellModel(locationName: name, locationImageURL: locationImageURL, address: address)
 	}
 }

@@ -9,8 +9,8 @@ final class PinView: MKPinAnnotationView {
 	// MARK: - Init
 	override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
 		super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-		frame = CGRect(x: 0, y: 0, width: 20, height: 40 )
-		imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 40 ))
+		frame = CGRect(x: 0, y: 0, width: 20, height: 40)
+		imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 40))
 		imageView.image = #imageLiteral(resourceName: "pin")
 		addSubview(self.imageView)
 	}

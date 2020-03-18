@@ -31,6 +31,14 @@ final class HomeViewController: ViewController {
 		mapView.setRegion(region, animated: true)
 	}
 
+	private func configDetailView() {
+		let userView = Bundle.main.loadNibNamed("DetailView", owner: self, options: nil)?.first as? DetailView
+		userView?.viewmodel = DetailViewModel(viewmodel.venues)
+		userView?.frame = CGRect(x: 0, y: 596, width: view.bounds.width, height: 240)
+		guard let userViews = userView else { return }
+		view.addSubview(userViews)
+	}
+
 	// MARK: - Action
 	@IBAction func moveCurrentLocation(_ sender: Any) {
 		LocationManager.shared.getCurrentLocation { (location) in
@@ -45,25 +53,12 @@ extension HomeViewController: MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 		if annotation is MKPointAnnotation {
 			let identifier = "pin"
-			var view: MKPinAnnotationView
-
-			if let dequeuwdView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
-				dequeuwdView.annotation = annotation
-				view = dequeuwdView
-
-			} else {
-				view = PinView(annotation: annotation, reuseIdentifier: identifier)
-				view.animatesDrop = true
-				view.pinTintColor = #colorLiteral(red: 0, green: 0.9799041152, blue: 0.4211293161, alpha: 1)
-				view.canShowCallout = true
-			}
-			return view
-		} else if let annotation = annotation as? LocationPin {
-			let identifier = "mypin"
 			var view: PinView
+
 			if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? PinView {
 				dequeuedView.annotation = annotation
 				view = dequeuedView
+
 			} else {
 				view = PinView(annotation: annotation, reuseIdentifier: identifier)
 				let button = UIButton(type: .detailDisclosure)
@@ -73,32 +68,39 @@ extension HomeViewController: MKMapViewDelegate {
 				view.canShowCallout = true
 			}
 			return view
-		} else {
-			return nil
 		}
+		return nil
 	}
 
 	@objc func selectPinView(_ sender: UIButton?) {
-		print("select button detail")
 	}
 
 	func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-		viewmodel.getVenues(currentLocation: mapView.userLocation.coordinate, completion: {[weak self] (success, _) in
+		getVenue(currentLocation: mapView.userLocation.coordinate)
+		center(location: mapView.userLocation.coordinate)
+	}
+}
+
+// MARK: Load Api
+extension HomeViewController {
+	func getVenue(currentLocation: CLLocationCoordinate2D) {
+		viewmodel.getVenues(currentLocation: currentLocation) { [weak self] (result) in
 			guard let self = self else { return }
-			if success {
-				DispatchQueue.main.async {
-					self.mapView.removeAnnotations(self.mapView.annotations)
-					self.viewmodel.venues.forEach { (venue) in
-						if let location = venue.location {
-							let annotation = MKPointAnnotation()
-							annotation.coordinate = location
-							annotation.title = venue.name
-							self.mapView.addAnnotation(annotation)
-						}
+			switch result {
+			case .success:
+				self.mapView.removeAnnotations(self.mapView.annotations)
+				self.viewmodel.venues.forEach { (venue) in
+					if let location = venue.location {
+						let annotation = MKPointAnnotation()
+						annotation.coordinate = location
+						annotation.title = venue.name
+						self.mapView.addAnnotation(annotation)
+						self.configDetailView()
 					}
 				}
+			case .failure(let error):
+				self.alert(msg: error.localizedDescription, handler: nil)
 			}
-		})
-		center(location: mapView.userLocation.coordinate)
+		}
 	}
 }
