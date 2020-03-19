@@ -2,24 +2,31 @@ import MVVM
 import Foundation
 import UIKit
 
-typealias DowloadImageCompletion = (UIImage?) -> Void
-
 final class DetailViewModel: ViewModel {
 
-	private(set) var venus: [Venue] = []
+	private(set) var venues: [Venue] = []
 
 	func numberOfIteam() -> Int {
-		return venus.count
+		return venues.count
 	}
 
 	init(_ venus: [Venue] = []) {
-		self.venus = venus
+		self.venues = venus
 	}
 
-	func updateViewModelForCell(at indexPath: IndexPath) -> LocationViewCellModel {
-		guard let name = venus[indexPath.row].name, let address = venus[indexPath.row].country, let locationImageURL = venus[indexPath.row].prefix else {
-			return LocationViewCellModel()
+	func getIndexPathVenus(id: String) -> IndexPath? {
+		if let index = venues.map({ $0.id }).firstIndex(of: id) {
+			print(index)
+			return IndexPath(item: index, section: 0)
 		}
-		return LocationViewCellModel(locationName: name, locationImageURL: locationImageURL, address: address)
+		return nil
+	}
+
+	func updateInformationForCell(at indexPath: IndexPath) -> LocationViewCellModel {
+		guard let name = venues[indexPath.row].name, let country = venues[indexPath.row].country else {
+			return LocationViewCellModel(locationImageURL: "")
+		}
+		let locationImageURL = venues[indexPath.row].prefix
+		return LocationViewCellModel(locationName: name, locationImageURL: locationImageURL ?? "", country: country)
 	}
 }

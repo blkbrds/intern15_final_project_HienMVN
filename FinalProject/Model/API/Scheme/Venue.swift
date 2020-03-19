@@ -24,3 +24,9 @@ final class Venue {
 		id = json["id"] as? String
 	}
 }
+
+extension Venue: Equatable {
+	static func == (lhs: Venue, rhs: Venue) -> Bool {
+		return lhs.id == rhs.id
+	}
+}

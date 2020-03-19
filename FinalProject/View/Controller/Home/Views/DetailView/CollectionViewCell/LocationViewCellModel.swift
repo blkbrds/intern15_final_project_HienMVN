@@ -2,13 +2,16 @@ import Foundation
 import UIKit
 
 class LocationViewCellModel {
-	var locationName: String
-	var address: String
-	var locationImageURL: String
 
-	init(locationName: String = "", locationImageURL: String = "", address: String = "") {
+	// MARK: - Properties
+	var locationName: String
+	var country: String
+	var locationImageURL: String?
+
+	// MARK: - Init
+	init(locationName: String = "", locationImageURL: String, country: String = "") {
 		self.locationName = locationName
 		self.locationImageURL = locationImageURL
-		self.address = address
+		self.country = country
 	}
 }

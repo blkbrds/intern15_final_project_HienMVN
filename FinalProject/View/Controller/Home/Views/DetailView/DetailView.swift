@@ -8,7 +8,7 @@ final class DetailView: UIView {
 	@IBOutlet weak private var addressLabel: UILabel!
 
 	// MARK: - Properties
-	var viewmodel = DetailViewModel() {
+	var viewModel: DetailViewModel? {
 		didSet {
 			detailCollectionView.reloadData()
 		}
@@ -27,20 +27,30 @@ final class DetailView: UIView {
 		detailCollectionView.register(nib, forCellWithReuseIdentifier: locationCollectionViewCell)
 		detailCollectionView.dataSource = self
 	}
+
+	// TODO: scroll collection by internal func 
+	func scrollCollectionView(to venue: Venue) {
+		guard let viewModel = viewModel else { return }
+		guard let index = viewModel.venues.firstIndex(of: venue) else { return }
+		let indexPath = IndexPath(row: index, section: 0)
+		detailCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+	}
 }
 
 // MARK: - UICollectionViewDataSource
 extension DetailView: UICollectionViewDataSource {
 
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return viewmodel.numberOfIteam()
+		return viewModel?.numberOfIteam() ?? 0
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: locationCollectionViewCell, for: indexPath) as? LocationCollectionViewCell else {
 			return UICollectionViewCell()
 		}
-		cell.viewModel = viewmodel.updateViewModelForCell(at: indexPath)
+		if let viewmodel = viewModel {
+			cell.viewModel = viewmodel.updateInformationForCell(at: indexPath)
+		}
 		return cell
 	}
 }

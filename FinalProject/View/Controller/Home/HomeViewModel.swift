@@ -8,6 +8,7 @@ final class HomeViewModel {
 
 	// MARK: - Public Methods
 	func getVenues(currentLocation: CLLocationCoordinate2D, completion: @escaping APICompletion) {
+		print(currentLocation)
 		Api.Venue.getHomeData(lat: currentLocation.latitude, long: currentLocation.longitude) { [weak self] (result) in
 			guard let self = self else { return }
 			switch result {
@@ -18,5 +19,11 @@ final class HomeViewModel {
 				completion(.success)
 			}
 		}
+	}
+
+	func getVenue(at location: CLLocationCoordinate2D) -> Venue? {
+		return venues.filter({
+			location.latitude == $0.location?.latitude && location.longitude == $0.location?.longitude
+		})[0]
 	}
 }

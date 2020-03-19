@@ -16,10 +16,20 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tên dia diem" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A6B-Sq-Oem">
-                        <rect key="frame" x="57" y="120" width="300" height="30"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIi-Pt-SO2">
+                        <rect key="frame" x="82" y="170" width="250" height="30"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="300" id="QBz-va-hqD"/>
+                            <constraint firstAttribute="width" constant="250" id="0fP-X8-n1G"/>
+                            <constraint firstAttribute="height" constant="30" id="W9S-1s-j4s"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tên dia diem" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A6B-Sq-Oem">
+                        <rect key="frame" x="7" y="120" width="400" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="400" id="QBz-va-hqD"/>
                             <constraint firstAttribute="height" constant="30" id="dZr-i2-8fm"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="SnellRoundhand" family="Snell Roundhand" pointSize="40"/>
@@ -28,7 +38,6 @@
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TWp-eN-Kkm">
                         <rect key="frame" x="157" y="10" width="100" height="100"/>
-                        <color key="backgroundColor" red="0.45490196078431372" green="0.63921568627450975" blue="0.76862745098039209" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="Xyc-Zp-9e0"/>
                             <constraint firstAttribute="height" constant="100" id="lLv-Hq-c7C"/>
@@ -51,16 +60,6 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIi-Pt-SO2">
-                        <rect key="frame" x="82" y="170" width="250" height="30"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="250" id="0fP-X8-n1G"/>
-                            <constraint firstAttribute="height" constant="30" id="W9S-1s-j4s"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
             </view>
             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -79,7 +78,7 @@
                 <outlet property="locationImage" destination="TWp-eN-Kkm" id="j28-ID-mXr"/>
                 <outlet property="locationNameLabel" destination="A6B-Sq-Oem" id="67k-Vu-gp6"/>
             </connections>
-            <point key="canvasLocation" x="195.6521739130435" y="144.64285714285714"/>
+            <point key="canvasLocation" x="527.536231884058" y="-1842.1875"/>
         </collectionViewCell>
     </objects>
 </document>
