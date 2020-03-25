@@ -9,13 +9,10 @@ final class PinView: MKPinAnnotationView {
 	// MARK: - Init
 	override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
 		super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-
-		imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+		frame = CGRect(x: 0, y: 0, width: 20, height: 40)
+		imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 40))
 		imageView.image = #imageLiteral(resourceName: "pin")
 		addSubview(self.imageView)
-
-		imageView.layer.cornerRadius = 5.0
-		imageView.layer.masksToBounds = true
 	}
 
 	required init?(coder aDecoder: NSCoder) {

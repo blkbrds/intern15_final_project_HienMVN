@@ -1,31 +1,29 @@
 import Foundation
 import CoreLocation
 
-typealias GetLocationCompletion = (Bool, String) -> Void
-
-protocol HomeViewModelDelegate: class {
-	func loadVenues(venues: [Venue])
-	func showError(stringError: String)
-}
-
 final class HomeViewModel {
 
 	// MARK: - Prperties
 	private(set) var venues: [Venue] = []
-	weak var delegate: HomeViewModelDelegate?
 
 	// MARK: - Public Methods
-	func getVenues(currentLocation: CLLocationCoordinate2D) {
+	func getVenues(currentLocation: CLLocationCoordinate2D, completion: @escaping APICompletion) {
+		print(currentLocation)
 		Api.Venue.getHomeData(lat: currentLocation.latitude, long: currentLocation.longitude) { [weak self] (result) in
 			guard let self = self else { return }
 			switch result {
 			case .failure(let error):
-				self.delegate?.showError(stringError: error.localizedDescription)
+				completion(.failure(error))
 			case .success(let venueResult):
 				self.venues = venueResult.venues
-				self.delegate?.loadVenues(venues: self.venues)
+				completion(.success)
 			}
 		}
 	}
 
+	func getVenue(at location: CLLocationCoordinate2D) -> Venue? {
+		return venues.filter({
+			location.latitude == $0.location?.latitude && location.longitude == $0.location?.longitude
+		})[0]
+	}
 }
