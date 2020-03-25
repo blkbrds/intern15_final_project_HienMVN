@@ -1,7 +1,7 @@
 import Foundation
 import CoreLocation
 
-class DetailViewControllerModel {
+final class DetailViewControllerModel {
 
 	// MARK: - Prperties
 	private(set) var item = Item()

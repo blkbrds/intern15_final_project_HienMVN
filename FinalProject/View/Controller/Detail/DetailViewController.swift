@@ -5,18 +5,18 @@ import SDWebImage
 final class DetailViewController: ViewController {
 
 	// MARK: Outlet
-	@IBOutlet weak var ratingLabel: UILabel!
-	@IBOutlet weak var locationNameLabel: UILabel!
-	@IBOutlet weak var locationImageView: UIImageView!
-	@IBOutlet weak var addressLabel: UILabel!
-	@IBOutlet weak var mapView: MKMapView!
-	@IBOutlet weak var descriptionTextView: UITextView!
-	@IBOutlet weak var textViewCH: NSLayoutConstraint!
-	@IBOutlet weak var timeOpenLabel: UILabel!
-	@IBOutlet weak var dislikeLabel: UILabel!
-	@IBOutlet weak var loveLabel: UILabel!
-	@IBOutlet weak var likeLabel: UILabel!
-	@IBOutlet weak var cityLabel: UILabel!
+	@IBOutlet weak private var ratingLabel: UILabel!
+	@IBOutlet weak private var locationNameLabel: UILabel!
+	@IBOutlet weak private var locationImageView: UIImageView!
+	@IBOutlet weak private var addressLabel: UILabel!
+	@IBOutlet weak private var mapView: MKMapView!
+	@IBOutlet weak private var descriptionTextView: UITextView!
+	@IBOutlet weak private var textViewCH: NSLayoutConstraint!
+	@IBOutlet weak private var timeOpenLabel: UILabel!
+	@IBOutlet weak private var dislikeLabel: UILabel!
+	@IBOutlet weak private var loveLabel: UILabel!
+	@IBOutlet weak private var likeLabel: UILabel!
+	@IBOutlet weak private var cityLabel: UILabel!
 
 	// MARK: Properties
 	var viewModel: DetailViewControllerModel?

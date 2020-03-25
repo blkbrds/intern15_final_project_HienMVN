@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class LocationViewCellModel {
+final class LocationViewCellModel {
 
 	// MARK: - Properties
 	var locationName: String

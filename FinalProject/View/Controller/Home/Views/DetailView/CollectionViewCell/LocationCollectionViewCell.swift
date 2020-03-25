@@ -1,12 +1,12 @@
 import UIKit
 import SDWebImage
 
-class LocationCollectionViewCell: UICollectionViewCell {
+final class LocationCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Outlet
-	@IBOutlet weak var locationImageView: UIImageView!
-	@IBOutlet weak var addressLabel: UILabel!
-	@IBOutlet weak var locationNameLabel: UILabel!
+	@IBOutlet weak private var locationImageView: UIImageView!
+	@IBOutlet weak private var addressLabel: UILabel!
+	@IBOutlet weak private var locationNameLabel: UILabel!
 
 	// MARK: - Properties
 	private let backgroundImageView = UIImageView()
@@ -24,7 +24,7 @@ class LocationCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Private Method
 	private func setBackground() {
-		self.addSubview(backgroundImageView)
+		addSubview(backgroundImageView)
 		backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
 		backgroundImageView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
 		backgroundImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
@@ -32,7 +32,7 @@ class LocationCollectionViewCell: UICollectionViewCell {
 		backgroundImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
 		backgroundImageView.image = #imageLiteral(resourceName: "anhnhoem")
 		backgroundImageView.alpha = 0.7
-		self.sendSubviewToBack(backgroundImageView)
+		sendSubviewToBack(backgroundImageView)
 	}
 
 	private func updateView() {
