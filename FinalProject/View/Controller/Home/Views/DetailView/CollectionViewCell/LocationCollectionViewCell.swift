@@ -5,6 +5,7 @@ final class LocationCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Outlet
 	@IBOutlet weak private var locationImageView: UIImageView!
+
 	@IBOutlet weak private var addressLabel: UILabel!
 	@IBOutlet weak private var locationNameLabel: UILabel!
 
