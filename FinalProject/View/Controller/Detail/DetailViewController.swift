@@ -111,20 +111,20 @@ extension DetailViewController {
 	func getItem() {
 		guard let id = viewModel?.venue.id else { return }
 		viewModel?.getItems(with: id) { [weak self] (result) in
-			guard let self = self else { return }
+			guard let this = self else { return }
 			switch result {
 			case .success:
-				self.updateUI()
-				self.configTextView()
+				this.updateUI()
+				this.configTextView()
 				let annotation = MKPointAnnotation()
-				guard let viewModel = self.viewModel else { return }
+				guard let viewModel = this.viewModel else { return }
 				annotation.coordinate = viewModel.getCoordinateForDetail()
-				self.mapView.addAnnotation(annotation)
-				self.routing(source: self.mapView.userLocation.coordinate, destination: viewModel.getCoordinateForDetail())
+				this.mapView.addAnnotation(annotation)
+				this.routing(source: this.mapView.userLocation.coordinate, destination: viewModel.getCoordinateForDetail())
 				print(viewModel.getCoordinateForDetail())
-				print(self.mapView.userLocation.coordinate)
+				print(this.mapView.userLocation.coordinate)
 			case .failure(let error):
-				self.alert(msg: error.localizedDescription, handler: nil)
+				this.alert(msg: error.localizedDescription, handler: nil)
 			}
 		}
 	}

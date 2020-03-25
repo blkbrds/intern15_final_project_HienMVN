@@ -101,21 +101,21 @@ extension HomeViewController: MKMapViewDelegate {
 extension HomeViewController {
 	func getVenue(currentLocation: CLLocationCoordinate2D) {
 		viewModel.getVenues(currentLocation: currentLocation) { [weak self] (result) in
-			guard let self = self else { return }
+			guard let this = self else { return }
 			switch result {
 			case .success:
 //				self.mapView.removeAnnotations(self.mapView.annotations)
-				self.viewModel.venues.forEach { (venue) in
+				this.viewModel.venues.forEach { (venue) in
 					if let location = venue.location {
 						let annotation = MKPointAnnotation()
 						annotation.coordinate = location
 						annotation.title = venue.name
-						self.mapView.addAnnotation(annotation)
+						this.mapView.addAnnotation(annotation)
 					}
 				}
-				self.detailView.viewModel = DetailViewModel(self.viewModel.venues)
+				this.detailView.viewModel = DetailViewModel(this.viewModel.venues)
 			case .failure(let error):
-				self.alert(msg: error.localizedDescription, handler: nil)
+				this.alert(msg: error.localizedDescription, handler: nil)
 			}
 		}
 	}

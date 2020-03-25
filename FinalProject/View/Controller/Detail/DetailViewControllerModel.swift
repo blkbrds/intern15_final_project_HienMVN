@@ -69,13 +69,13 @@ final class DetailViewControllerModel {
 	// MARK: - Public Methods
 	func getItems(with IDLocation: String, completion: @escaping APICompletion) {
 		Api.Item.getItem(id: IDLocation) { [weak self] (result) in
-			guard let self = self else { return }
+			guard let this = self else { return }
 			DispatchQueue.main.async {
 				switch result {
 				case .failure(let error):
 					completion(.failure(error))
 				case .success(let data):
-					self.item = data
+					this.item = data
 					completion(.success)
 				}
 			}
