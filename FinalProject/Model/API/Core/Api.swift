@@ -9,7 +9,7 @@ final class Api {
 	}
 
 	struct Venue { }
-
+	// venues for detail
 	struct Item { }
 }
 

@@ -4,8 +4,9 @@ import Alamofire
 typealias JSObject = [String: Any]
 typealias JSArray = [JSObject]
 
-typealias Completion<Value> = (Result<Value>) -> Void
+typealias Completion<Value> = (Result<Any>) -> Void
 typealias APICompletion = (APIResult) -> Void
+typealias DataCompletion<Value> = (Result<Value>) -> Void
 
 enum APIResult {
 	case success

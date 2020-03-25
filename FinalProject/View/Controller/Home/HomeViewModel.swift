@@ -26,4 +26,11 @@ final class HomeViewModel {
 			location.latitude == $0.location?.latitude && location.longitude == $0.location?.longitude
 		})[0]
 	}
+
+	var selectedVenue: Venue?
+
+	func detailViewControllerModel() -> DetailViewControllerModel? {
+		guard let selectedVenue = selectedVenue else { return nil }
+		return DetailViewControllerModel(venue: selectedVenue)
+	}
 }

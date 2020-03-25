@@ -11,7 +11,7 @@ extension Api.Venue {
 		}
 	}
 
-	static func getHomeData(lat: Double, long: Double, completion: @escaping Completion<VenueResult>) {
+	static func getHomeData(lat: Double, long: Double, completion: @escaping DataCompletion<VenueResult>) {
 		let urlString: String = QueryString.getVenue(lat: lat, long: long)
 		api.request(method: .get, urlString: urlString) { (resutl) in
 			DispatchQueue.main.async {

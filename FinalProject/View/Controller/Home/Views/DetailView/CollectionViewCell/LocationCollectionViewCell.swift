@@ -4,7 +4,7 @@ import SDWebImage
 class LocationCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Outlet
-	@IBOutlet weak var locationImage: UIImageView!
+	@IBOutlet weak var locationImageView: UIImageView!
 	@IBOutlet weak var addressLabel: UILabel!
 	@IBOutlet weak var locationNameLabel: UILabel!
 
@@ -31,6 +31,7 @@ class LocationCollectionViewCell: UICollectionViewCell {
 		backgroundImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
 		backgroundImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
 		backgroundImageView.image = #imageLiteral(resourceName: "anhnhoem")
+		backgroundImageView.alpha = 0.7
 		self.sendSubviewToBack(backgroundImageView)
 	}
 
@@ -38,6 +39,6 @@ class LocationCollectionViewCell: UICollectionViewCell {
 		addressLabel.text = viewModel.country
 		locationNameLabel.text = viewModel.locationName
 		guard let locationImageURL = viewModel.locationImageURL else { return }
-		locationImage.sd_setImage(with: URL(string: locationImageURL + "64.png"), placeholderImage: #imageLiteral(resourceName: "icons8-star-100"))
+		locationImageView.sd_setImage(with: URL(string: locationImageURL + "64.png"), placeholderImage: #imageLiteral(resourceName: "icons8-star-100"))
 	}
 }
