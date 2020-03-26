@@ -20,13 +20,14 @@ final class FavoriteViewController: ViewController {
 		})
 	}
 
-	// MARK: - overide Methods
+	// MARK: - Override Method
 	override func setupUI() {
 		title = "Favorite"
 		let nib = UINib(nibName: Config.favoriteTableViewCell, bundle: .main)
 		tableView.register(nib, forCellReuseIdentifier: Config.favoriteTableViewCell)
 		tableView.dataSource = self
 		tableView.delegate = self
+
 		let deleteAllBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteAllDataRealm))
 		deleteAllBarButtonItem.tintColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
 		self.navigationItem.rightBarButtonItem = deleteAllBarButtonItem
@@ -40,7 +41,6 @@ final class FavoriteViewController: ViewController {
 			} else {
 				print("Error: Can't deleted 🐥")
 			}
-
 		}
 	}
 }
