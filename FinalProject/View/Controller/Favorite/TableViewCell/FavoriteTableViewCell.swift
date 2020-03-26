@@ -8,12 +8,15 @@
 
 import UIKit
 
-class FavoriteTableViewCell: UITableViewCell {
-	@IBOutlet weak var addressLabel: UILabel!
-	@IBOutlet weak var favoriteImageView: UIImageView!
-	@IBOutlet weak var nameLabel: UILabel!
+final class FavoriteTableViewCell: UITableViewCell {
+
+	// MARK: - Outlets
+	@IBOutlet weak private var addressLabel: UILabel!
+	@IBOutlet weak private var favoriteImageView: UIImageView!
+	@IBOutlet weak private var nameLabel: UILabel!
+
+	// MARK: - Life Cycle
 	override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+		super.awakeFromNib()
+	}
 }
