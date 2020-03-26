@@ -21,7 +21,7 @@ final class HomeViewController: ViewController {
 
 	// MARK: - Override
 	override func setupUI() {
-		title = "Map"
+		title = "Home"
 	}
 
 	// MARK: - Private Methods
@@ -71,7 +71,10 @@ extension HomeViewController: MKMapViewDelegate {
 		return nil
 	}
 
-	@objc func selectPinView(_ sender: UIButton?) {
+	@objc private func selectPinView(_ sender: UIButton?) {
+		let detailVC = DetailViewController()
+		detailVC.viewModel = viewModel.detailViewControllerModel()
+		navigationController?.pushViewController(detailVC, animated: true)
 	}
 
 	func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
@@ -84,13 +87,13 @@ extension HomeViewController: MKMapViewDelegate {
 		guard let coordinate = selectedAnnotation?.coordinate else { return }
 		center(location: coordinate)
 		if let venue = viewModel.getVenue(at: coordinate) {
+			viewModel.selectedVenue = venue
 			detailView.scrollCollectionView(to: venue)
 		}
 	}
 
 	func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-		let center = mapView.centerCoordinate
-		print(center)
+	//	let center = mapView.centerCoordinate
 	}
 }
 
@@ -98,21 +101,21 @@ extension HomeViewController: MKMapViewDelegate {
 extension HomeViewController {
 	func getVenue(currentLocation: CLLocationCoordinate2D) {
 		viewModel.getVenues(currentLocation: currentLocation) { [weak self] (result) in
-			guard let self = self else { return }
+			guard let this = self else { return }
 			switch result {
 			case .success:
 //				self.mapView.removeAnnotations(self.mapView.annotations)
-				self.viewModel.venues.forEach { (venue) in
+				this.viewModel.venues.forEach { (venue) in
 					if let location = venue.location {
 						let annotation = MKPointAnnotation()
 						annotation.coordinate = location
 						annotation.title = venue.name
-						self.mapView.addAnnotation(annotation)
+						this.mapView.addAnnotation(annotation)
 					}
 				}
-				self.detailView.viewModel = DetailViewModel(self.viewModel.venues)
+				this.detailView.viewModel = DetailViewModel(this.viewModel.venues)
 			case .failure(let error):
-				self.alert(msg: error.localizedDescription, handler: nil)
+				this.alert(msg: error.localizedDescription, handler: nil)
 			}
 		}
 	}
@@ -126,8 +129,8 @@ extension HomeViewController {
 		static let originX: CGFloat = 0
 		static let originY: CGFloat = 610
 		static let hightView: CGFloat = 200
-		static let latitudeDelta: CLLocationDegrees = 0.01
-		static let longitudeDelta: CLLocationDegrees = 0.01
+		static let latitudeDelta: CLLocationDegrees = 0.005
+		static let longitudeDelta: CLLocationDegrees = 0.005
 
 	}
 }

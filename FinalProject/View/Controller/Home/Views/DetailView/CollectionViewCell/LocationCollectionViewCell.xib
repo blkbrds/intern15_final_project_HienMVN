@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -26,6 +25,30 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="color blu" translatesAutoresizingMaskIntoConstraints="NO" id="4yI-R3-Kpv">
+                        <rect key="frame" x="157" y="10" width="100" height="100"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="100" id="f0r-H4-RNu"/>
+                            <constraint firstAttribute="width" constant="100" id="rH1-AL-wkg"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="50"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                <size key="value" width="0.0" height="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tên dia diem" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A6B-Sq-Oem">
                         <rect key="frame" x="7" y="120" width="400" height="30"/>
                         <constraints>
@@ -65,8 +88,10 @@
             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="A6B-Sq-Oem" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="2iK-zA-fRL"/>
+                <constraint firstItem="4yI-R3-Kpv" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="CrQ-o3-MLo"/>
                 <constraint firstItem="xIi-Pt-SO2" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="N5E-Rc-rru"/>
                 <constraint firstItem="xIi-Pt-SO2" firstAttribute="top" secondItem="A6B-Sq-Oem" secondAttribute="bottom" constant="20" id="U4U-dT-Sw8"/>
+                <constraint firstItem="4yI-R3-Kpv" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="VVq-ZY-uni"/>
                 <constraint firstAttribute="bottom" secondItem="xIi-Pt-SO2" secondAttribute="bottom" id="rjH-Ox-dcA"/>
                 <constraint firstItem="TWp-eN-Kkm" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="rvr-XI-7gs"/>
                 <constraint firstItem="TWp-eN-Kkm" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="uuU-Rl-fkx"/>
@@ -75,10 +100,13 @@
             <size key="customSize" width="130" height="158"/>
             <connections>
                 <outlet property="addressLabel" destination="xIi-Pt-SO2" id="qTu-7C-rft"/>
-                <outlet property="locationImage" destination="TWp-eN-Kkm" id="j28-ID-mXr"/>
+                <outlet property="locationImageView" destination="TWp-eN-Kkm" id="j28-ID-mXr"/>
                 <outlet property="locationNameLabel" destination="A6B-Sq-Oem" id="67k-Vu-gp6"/>
             </connections>
             <point key="canvasLocation" x="527.536231884058" y="-1842.1875"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="color blu" width="567" height="567"/>
+    </resources>
 </document>

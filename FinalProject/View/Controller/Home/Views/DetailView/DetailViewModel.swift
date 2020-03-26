@@ -16,7 +16,6 @@ final class DetailViewModel: ViewModel {
 
 	func getIndexPathVenus(id: String) -> IndexPath? {
 		if let index = venues.map({ $0.id }).firstIndex(of: id) {
-			print(index)
 			return IndexPath(item: index, section: 0)
 		}
 		return nil
