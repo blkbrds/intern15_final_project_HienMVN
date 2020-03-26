@@ -50,6 +50,8 @@
 		FDDF38D3241A60A200F483B5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDF38D2241A60A200F483B5 /* HomeViewModel.swift */; };
 		FDDF38D6241A9BAB00F483B5 /* API.Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDF38D5241A9BAB00F483B5 /* API.Venue.swift */; };
 		FDDF38D8241B3B9B00F483B5 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDF38D7241B3B9B00F483B5 /* Button.swift */; };
+		FDDFC331242B550C0087142F /* FavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDFC32F242B550C0087142F /* FavoriteTableViewCell.swift */; };
+		FDDFC332242B550C0087142F /* FavoriteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDDFC330242B550C0087142F /* FavoriteTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,6 +105,8 @@
 		FDDF38D2241A60A200F483B5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		FDDF38D5241A9BAB00F483B5 /* API.Venue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.Venue.swift; sourceTree = "<group>"; };
 		FDDF38D7241B3B9B00F483B5 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		FDDFC32F242B550C0087142F /* FavoriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewCell.swift; sourceTree = "<group>"; };
+		FDDFC330242B550C0087142F /* FavoriteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,6 +354,7 @@
 		FDDF38BA2418EDAC00F483B5 /* Favorite */ = {
 			isa = PBXGroup;
 			children = (
+				FDDFC32E242B54D90087142F /* TableViewCell */,
 				FDDF38BB2418EDF600F483B5 /* FavoriteViewController.swift */,
 				FDDF38BC2418EDF600F483B5 /* FavoriteViewController.xib */,
 			);
@@ -363,6 +368,15 @@
 				FD3B5A1F24209B09005BC72C /* Item.swift */,
 			);
 			path = Scheme;
+			sourceTree = "<group>";
+		};
+		FDDFC32E242B54D90087142F /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				FDDFC32F242B550C0087142F /* FavoriteTableViewCell.swift */,
+				FDDFC330242B550C0087142F /* FavoriteTableViewCell.xib */,
+			);
+			path = TableViewCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -431,6 +445,7 @@
 				FDDF38BE2418EDF600F483B5 /* FavoriteViewController.xib in Resources */,
 				FD83B32424284F9A008DAE09 /* DetailViewController.xib in Resources */,
 				FD3B5A2924210B03005BC72C /* LocationCollectionViewCell.xib in Resources */,
+				FDDFC332242B550C0087142F /* FavoriteTableViewCell.xib in Resources */,
 				FDDF38C42418F07B00F483B5 /* HomeViewController.xib in Resources */,
 				FD3B5A2F2422270D005BC72C /* Podfile in Resources */,
 				FD3B5A1C24208625005BC72C /* DetailView.xib in Resources */,
@@ -523,6 +538,7 @@
 				FDDF38C32418F07B00F483B5 /* HomeViewController.swift in Sources */,
 				FD83B32624286802008DAE09 /* DetailViewControllerModel.swift in Sources */,
 				25BF8CD72418830A007F4C55 /* Errors.swift in Sources */,
+				FDDFC331242B550C0087142F /* FavoriteTableViewCell.swift in Sources */,
 				25BF8CBD2418821C007F4C55 /* Session.swift in Sources */,
 				25BF8CD52418830A007F4C55 /* String.swift in Sources */,
 				25BF8CB124188003007F4C55 /* ViewController.swift in Sources */,
