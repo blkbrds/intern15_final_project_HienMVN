@@ -36,7 +36,7 @@ final class DetailViewController: ViewController {
 	}
 
 	private func updateUI() {
-		guard let item = viewModel.item else { return }
+		guard let item = viewModel.venueDetail else { return }
 		locationNameLabel.text = item.name
 		addressLabel.text = item.address
 		cityLabel.text = item.city
@@ -94,7 +94,7 @@ extension DetailViewController {
 			case .success:
 				this.updateUI()
 				this.configTextView()
-				if let lat = this.viewModel.item?.lat, let lon = this.viewModel.item?.lng {
+				if let lat = this.viewModel.venueDetail?.lat, let lon = this.viewModel.venueDetail?.lng {
 					let annotation = MKPointAnnotation()
 					let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
 					annotation.coordinate = location
