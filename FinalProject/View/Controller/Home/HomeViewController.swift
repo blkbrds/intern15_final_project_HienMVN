@@ -6,9 +6,10 @@ final class HomeViewController: ViewController {
 	// MARK: - Outlets
 	@IBOutlet weak var mapView: MKMapView!
 	@IBOutlet weak var currentLocationButton: CustomButton!
-	private var detailView: DetailView!
+
 	// MARK: - Properties
-	var viewModel = HomeViewModel()
+	private var detailView: DetailView!
+	private var viewModel = HomeViewModel()
 
 	// MARK: - Life Cycle
 	override func viewDidLoad() {

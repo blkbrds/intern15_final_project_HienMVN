@@ -4,13 +4,13 @@ import UIKit
 
 final class DetailViewModel: ViewModel {
 
-	private(set) var venues: [Venue] = []
+	private(set) var venues: [VenueHome] = []
 
 	func numberOfIteam() -> Int {
 		return venues.count
 	}
 
-	init(_ venus: [Venue] = []) {
+	init(_ venus: [VenueHome] = []) {
 		self.venues = venus
 	}
 

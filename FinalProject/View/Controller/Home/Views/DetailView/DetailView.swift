@@ -29,7 +29,7 @@ final class DetailView: UIView {
 	}
 
 	// TODO: scroll collection by internal func 
-	func scrollCollectionView(to venue: Venue) {
+	func scrollCollectionView(to venue: VenueHome) {
 		guard let viewModel = viewModel else { return }
 		guard let index = viewModel.venues.firstIndex(of: venue) else { return }
 		let indexPath = IndexPath(row: index, section: 0)
