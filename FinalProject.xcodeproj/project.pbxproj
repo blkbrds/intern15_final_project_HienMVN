@@ -28,13 +28,10 @@
 		FD3B5A1A24208609005BC72C /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3B5A1924208609005BC72C /* DetailView.swift */; };
 		FD3B5A1C24208625005BC72C /* DetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD3B5A1B24208625005BC72C /* DetailView.xib */; };
 		FD3B5A1E242098F3005BC72C /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3B5A1D242098F3005BC72C /* DetailViewModel.swift */; };
-		FD3B5A2024209B09005BC72C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3B5A1F24209B09005BC72C /* Item.swift */; };
-		FD3B5A2324209FA7005BC72C /* API.Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3B5A2224209FA7005BC72C /* API.Item.swift */; };
 		FD3B5A2824210B03005BC72C /* LocationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3B5A2624210B03005BC72C /* LocationCollectionViewCell.swift */; };
 		FD3B5A2924210B03005BC72C /* LocationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD3B5A2724210B03005BC72C /* LocationCollectionViewCell.xib */; };
 		FD3B5A2B24214A21005BC72C /* CustomCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3B5A2A24214A21005BC72C /* CustomCallout.swift */; };
 		FD3B5A2D24221243005BC72C /* LocationViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3B5A2C24221243005BC72C /* LocationViewCellModel.swift */; };
-		FD3B5A2F2422270D005BC72C /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = FD3B5A2E2422270D005BC72C /* Podfile */; };
 		FD5B6219241B43FA007811C6 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5B6218241B43FA007811C6 /* LocationManager.swift */; };
 		FD5B621E241E7F72007811C6 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5B621D241E7F72007811C6 /* PinView.swift */; };
 		FD83B32324284F9A008DAE09 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD83B32124284F9A008DAE09 /* DetailViewController.swift */; };
@@ -45,13 +42,17 @@
 		FDDF38C02418EE3300F483B5 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDF38BF2418EE3300F483B5 /* TabBarViewController.swift */; };
 		FDDF38C32418F07B00F483B5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDF38C12418F07B00F483B5 /* HomeViewController.swift */; };
 		FDDF38C42418F07B00F483B5 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDDF38C22418F07B00F483B5 /* HomeViewController.xib */; };
-		FDDF38C82419382800F483B5 /* Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDF38C72419382800F483B5 /* Venue.swift */; };
 		FDDF38D0241A41A900F483B5 /* DataExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDF38CF241A41A900F483B5 /* DataExt.swift */; };
 		FDDF38D3241A60A200F483B5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDF38D2241A60A200F483B5 /* HomeViewModel.swift */; };
-		FDDF38D6241A9BAB00F483B5 /* API.Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDF38D5241A9BAB00F483B5 /* API.Venue.swift */; };
 		FDDF38D8241B3B9B00F483B5 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDF38D7241B3B9B00F483B5 /* Button.swift */; };
 		FDDFC331242B550C0087142F /* FavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDFC32F242B550C0087142F /* FavoriteTableViewCell.swift */; };
 		FDDFC332242B550C0087142F /* FavoriteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDDFC330242B550C0087142F /* FavoriteTableViewCell.xib */; };
+		FDDFC335242BA42E0087142F /* FavoriteViewControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDFC334242BA42E0087142F /* FavoriteViewControllerModel.swift */; };
+		FDDFC337242BA8D40087142F /* FavoriteTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDFC336242BA8D40087142F /* FavoriteTableViewCellModel.swift */; };
+		FDDFC33C242C7DE20087142F /* VenueDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDFC33A242C7DE10087142F /* VenueDetail.swift */; };
+		FDDFC33D242C7DE20087142F /* VenueHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDFC33B242C7DE10087142F /* VenueHome.swift */; };
+		FDDFC33F242C7E6A0087142F /* Api.VenueHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDFC33E242C7E6A0087142F /* Api.VenueHome.swift */; };
+		FDDFC341242C7E710087142F /* Api.VenueDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDFC340242C7E710087142F /* Api.VenueDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,13 +84,10 @@
 		FD3B5A1924208609005BC72C /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		FD3B5A1B24208625005BC72C /* DetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailView.xib; sourceTree = "<group>"; };
 		FD3B5A1D242098F3005BC72C /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
-		FD3B5A1F24209B09005BC72C /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
-		FD3B5A2224209FA7005BC72C /* API.Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.Item.swift; sourceTree = "<group>"; };
 		FD3B5A2624210B03005BC72C /* LocationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCollectionViewCell.swift; sourceTree = "<group>"; };
 		FD3B5A2724210B03005BC72C /* LocationCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationCollectionViewCell.xib; sourceTree = "<group>"; };
 		FD3B5A2A24214A21005BC72C /* CustomCallout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCallout.swift; sourceTree = "<group>"; };
 		FD3B5A2C24221243005BC72C /* LocationViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewCellModel.swift; sourceTree = "<group>"; };
-		FD3B5A2E2422270D005BC72C /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = Podfile; sourceTree = "<group>"; };
 		FD5B6218241B43FA007811C6 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		FD5B621D241E7F72007811C6 /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
 		FD83B32124284F9A008DAE09 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -100,13 +98,17 @@
 		FDDF38BF2418EE3300F483B5 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		FDDF38C12418F07B00F483B5 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		FDDF38C22418F07B00F483B5 /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
-		FDDF38C72419382800F483B5 /* Venue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Venue.swift; sourceTree = "<group>"; };
 		FDDF38CF241A41A900F483B5 /* DataExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExt.swift; sourceTree = "<group>"; };
 		FDDF38D2241A60A200F483B5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		FDDF38D5241A9BAB00F483B5 /* API.Venue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.Venue.swift; sourceTree = "<group>"; };
 		FDDF38D7241B3B9B00F483B5 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		FDDFC32F242B550C0087142F /* FavoriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewCell.swift; sourceTree = "<group>"; };
 		FDDFC330242B550C0087142F /* FavoriteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteTableViewCell.xib; sourceTree = "<group>"; };
+		FDDFC334242BA42E0087142F /* FavoriteViewControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewControllerModel.swift; sourceTree = "<group>"; };
+		FDDFC336242BA8D40087142F /* FavoriteTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewCellModel.swift; sourceTree = "<group>"; };
+		FDDFC33A242C7DE10087142F /* VenueDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VenueDetail.swift; sourceTree = "<group>"; };
+		FDDFC33B242C7DE10087142F /* VenueHome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VenueHome.swift; sourceTree = "<group>"; };
+		FDDFC33E242C7E6A0087142F /* Api.VenueHome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Api.VenueHome.swift; sourceTree = "<group>"; };
+		FDDFC340242C7E710087142F /* Api.VenueDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Api.VenueDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,7 +164,6 @@
 				25BF8C9524187CFF007F4C55 /* Info.plist */,
 				25BF8C9224187CFF007F4C55 /* LaunchScreen.storyboard */,
 				25BF8CD82418AE73007F4C55 /* Dev.xcconfig */,
-				FD3B5A2E2422270D005BC72C /* Podfile */,
 			);
 			path = FinalProject;
 			sourceTree = "<group>";
@@ -290,7 +291,7 @@
 		FD3B5A2124209F8B005BC72C /* API.Detail */ = {
 			isa = PBXGroup;
 			children = (
-				FD3B5A2224209FA7005BC72C /* API.Item.swift */,
+				FDDFC340242C7E710087142F /* Api.VenueDetail.swift */,
 			);
 			path = API.Detail;
 			sourceTree = "<group>";
@@ -298,7 +299,7 @@
 		FD3B5A242420A04D005BC72C /* API.Home */ = {
 			isa = PBXGroup;
 			children = (
-				FDDF38D5241A9BAB00F483B5 /* API.Venue.swift */,
+				FDDFC33E242C7E6A0087142F /* Api.VenueHome.swift */,
 			);
 			path = API.Home;
 			sourceTree = "<group>";
@@ -356,6 +357,7 @@
 			children = (
 				FDDFC32E242B54D90087142F /* TableViewCell */,
 				FDDF38BB2418EDF600F483B5 /* FavoriteViewController.swift */,
+				FDDFC334242BA42E0087142F /* FavoriteViewControllerModel.swift */,
 				FDDF38BC2418EDF600F483B5 /* FavoriteViewController.xib */,
 			);
 			path = Favorite;
@@ -364,8 +366,8 @@
 		FDDF38C624192E5600F483B5 /* Scheme */ = {
 			isa = PBXGroup;
 			children = (
-				FDDF38C72419382800F483B5 /* Venue.swift */,
-				FD3B5A1F24209B09005BC72C /* Item.swift */,
+				FDDFC33A242C7DE10087142F /* VenueDetail.swift */,
+				FDDFC33B242C7DE10087142F /* VenueHome.swift */,
 			);
 			path = Scheme;
 			sourceTree = "<group>";
@@ -374,6 +376,7 @@
 			isa = PBXGroup;
 			children = (
 				FDDFC32F242B550C0087142F /* FavoriteTableViewCell.swift */,
+				FDDFC336242BA8D40087142F /* FavoriteTableViewCellModel.swift */,
 				FDDFC330242B550C0087142F /* FavoriteTableViewCell.xib */,
 			);
 			path = TableViewCell;
@@ -387,11 +390,11 @@
 			buildConfigurationList = 25BF8C9824187CFF007F4C55 /* Build configuration list for PBXNativeTarget "FinalProject" */;
 			buildPhases = (
 				6A54B43B0C3C908128B7B82C /* [CP] Check Pods Manifest.lock */,
-				25BF8CDE2418C88F007F4C55 /* SwiftLint */,
 				25BF8C8024187CFE007F4C55 /* Sources */,
 				25BF8C8124187CFE007F4C55 /* Frameworks */,
 				25BF8C8224187CFE007F4C55 /* Resources */,
 				87A70151DBB136B90AA3822F /* [CP] Embed Pods Frameworks */,
+				FDDFC345242C96B20087142F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -447,7 +450,6 @@
 				FD3B5A2924210B03005BC72C /* LocationCollectionViewCell.xib in Resources */,
 				FDDFC332242B550C0087142F /* FavoriteTableViewCell.xib in Resources */,
 				FDDF38C42418F07B00F483B5 /* HomeViewController.xib in Resources */,
-				FD3B5A2F2422270D005BC72C /* Podfile in Resources */,
 				FD3B5A1C24208625005BC72C /* DetailView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,24 +457,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		25BF8CDE2418C88F007F4C55 /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
-		};
 		6A54B43B0C3C908128B7B82C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -512,6 +496,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FinalProject/Pods-FinalProject-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		FDDFC345242C96B20087142F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -519,11 +520,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDDFC335242BA42E0087142F /* FavoriteViewControllerModel.swift in Sources */,
 				FD83B32324284F9A008DAE09 /* DetailViewController.swift in Sources */,
-				FD3B5A2024209B09005BC72C /* Item.swift in Sources */,
 				25BF8CD0241882BF007F4C55 /* UIViewExt.swift in Sources */,
 				FD3B5A2824210B03005BC72C /* LocationCollectionViewCell.swift in Sources */,
-				FD3B5A2324209FA7005BC72C /* API.Item.swift in Sources */,
+				FDDFC337242BA8D40087142F /* FavoriteTableViewCellModel.swift in Sources */,
 				FDDF38D8241B3B9B00F483B5 /* Button.swift in Sources */,
 				FDDF38D3241A60A200F483B5 /* HomeViewModel.swift in Sources */,
 				25BF8CCE241882BF007F4C55 /* UIViewControllerExt.swift in Sources */,
@@ -534,7 +535,6 @@
 				25BF8CD62418830A007F4C55 /* App.swift in Sources */,
 				FD3B5A1A24208609005BC72C /* DetailView.swift in Sources */,
 				FDDF38C02418EE3300F483B5 /* TabBarViewController.swift in Sources */,
-				FDDF38D6241A9BAB00F483B5 /* API.Venue.swift in Sources */,
 				FDDF38C32418F07B00F483B5 /* HomeViewController.swift in Sources */,
 				FD83B32624286802008DAE09 /* DetailViewControllerModel.swift in Sources */,
 				25BF8CD72418830A007F4C55 /* Errors.swift in Sources */,
@@ -542,16 +542,19 @@
 				25BF8CBD2418821C007F4C55 /* Session.swift in Sources */,
 				25BF8CD52418830A007F4C55 /* String.swift in Sources */,
 				25BF8CB124188003007F4C55 /* ViewController.swift in Sources */,
+				FDDFC33F242C7E6A0087142F /* Api.VenueHome.swift in Sources */,
 				25BF8C8824187CFE007F4C55 /* AppDelegate.swift in Sources */,
+				FDDFC33C242C7DE20087142F /* VenueDetail.swift in Sources */,
 				25BF8CCF241882BF007F4C55 /* NSErrorExt.swift in Sources */,
 				25BF8CC824188248007F4C55 /* RequestSerializer.swift in Sources */,
 				FD5B621E241E7F72007811C6 /* PinView.swift in Sources */,
 				25BF8CC624188248007F4C55 /* ApiManager.swift in Sources */,
 				FDDF38BD2418EDF600F483B5 /* FavoriteViewController.swift in Sources */,
-				FDDF38C82419382800F483B5 /* Venue.swift in Sources */,
+				FDDFC33D242C7DE20087142F /* VenueHome.swift in Sources */,
 				FD3B5A2D24221243005BC72C /* LocationViewCellModel.swift in Sources */,
 				FD5B6219241B43FA007811C6 /* LocationManager.swift in Sources */,
 				25BF8CC724188248007F4C55 /* ResponseSerializer.swift in Sources */,
+				FDDFC341242C7E710087142F /* Api.VenueDetail.swift in Sources */,
 				25BF8CC424188248007F4C55 /* Api.swift in Sources */,
 				25BF8CC524188248007F4C55 /* Error.swift in Sources */,
 			);

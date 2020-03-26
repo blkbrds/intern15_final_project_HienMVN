@@ -1,13 +1,13 @@
 import Foundation
 
-extension Api.Venue {
+extension Api.VenueHome {
 	struct VenueResult {
-		var venues: [Venue]
+		var venues: [VenueHome]
 	}
 
 	struct QueryString {
 		static func getVenue(lat: Double, long: Double) -> String {
-			return Api.Path.Venue.venueURL + "\(lat),\(long)"
+			return Api.Path.VenueHome.venueURL + "\(lat),\(long)"
 		}
 	}
 
@@ -27,9 +27,9 @@ extension Api.Venue {
 							completion(.failure(Api.Error.json))
 							return }
 
-					var venues: [Venue] = []
+					var venues: [VenueHome] = []
 					for item in result {
-						let venue = Venue(json: item)
+						let venue = VenueHome(json: item)
 						venues.append(venue)
 					}
 					let venueResult = VenueResult(venues: venues)
