@@ -8,7 +8,6 @@ final class HomeViewModel {
 
 	// MARK: - Public Methods
 	func getVenues(currentLocation: CLLocationCoordinate2D, completion: @escaping APICompletion) {
-		print(currentLocation)
 		Api.VenueHome.getHomeData(lat: currentLocation.latitude, long: currentLocation.longitude) { [weak self] (result) in
 			guard let this = self else { return }
 			switch result {
@@ -31,13 +30,6 @@ final class HomeViewModel {
 
 	func detailViewControllerModel() -> DetailViewControllerModel? {
 		guard let selectedVenue = selectedVenue else { return nil }
-		return DetailViewControllerModel(venueId: selectedVenue.id ?? "", delegate: self)
-	}
-}
-extension HomeViewModel: DetailViewControllerModelDelegate {
-	func passData(with item: VenueDetail, favoriting: Bool) {
-		for index in venues where index.id == item.id {
-			index.favorite = favoriting
-		}
+		return DetailViewControllerModel(venueId: selectedVenue.id ?? "")
 	}
 }

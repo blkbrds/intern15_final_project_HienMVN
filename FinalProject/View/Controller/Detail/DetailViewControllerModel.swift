@@ -2,16 +2,12 @@ import Foundation
 import CoreLocation
 import RealmSwift
 
-protocol DetailViewControllerModelDelegate: class {
-	func passData(with item: VenueDetail, favoriting: Bool)
-}
-
 final class DetailViewControllerModel {
 
 	// MARK: - Prperties
-	var item: VenueDetail?
-	weak var delegate: DetailViewControllerModelDelegate?
+	var venueDetail: VenueDetail?
 
+	// MARK: - Add For Realm
 	func addRealm(data: VenueDetail) {
 		do {
 			let realm = try Realm()
@@ -24,9 +20,10 @@ final class DetailViewControllerModel {
 		}
 	}
 
+	// MARK: - Update For Realm
 	func updateRealm(isFavorite: Bool) {
 		do {
-			guard let item = item else { return }
+			guard let item = venueDetail else { return }
 			// realm
 			let realm = try Realm()
 			// edit
@@ -39,6 +36,7 @@ final class DetailViewControllerModel {
 		}
 	}
 
+	// MARK: - Get Realm
 	func getRealm() -> Results<VenueDetail>? {
 		do {
 			let realm = try Realm()
@@ -51,19 +49,23 @@ final class DetailViewControllerModel {
 
 	}
 
+	// MARK: - Update Favorite Realm
+	func didUpdateFavorite(isFav: Bool) {
+		updateRealm(isFavorite: isFav)
+	}
+
 	// MARK: - Prperties
 	let venueId: String
 
 	// MARK: - init
-	init(venueId: String, delegate: DetailViewControllerModelDelegate?) {
+	init(venueId: String) {
 		self.venueId = venueId
-		self.delegate = delegate
 	}
 
 	// MARK: - Public Methods
 	func getItems(completion: @escaping APICompletion) {
 		if let item = getRealm()?.first(where: { ($0.id == venueId) }) {
-			self.item = item
+			self.venueDetail = item
 			completion(.success)
 		} else {
 			Api.VenueDetail.getItem(id: venueId) { [weak self] (result) in
@@ -73,16 +75,12 @@ final class DetailViewControllerModel {
 					case .failure(let error):
 						completion(.failure(error))
 					case .success(let data):
-						this.item = data
+						this.venueDetail = data
 						this.addRealm(data: data)
 						completion(.success)
 					}
 				}
 			}
 		}
-	}
-
-	func didUpdateFavorite(isFav: Bool) {
-		updateRealm(isFavorite: isFav)
 	}
 }

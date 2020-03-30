@@ -26,7 +26,7 @@ final class TabBarViewController: UITabBarController {
 		self.viewControllers = [homeNaVi, favoriteNavi]
 		self.selectedIndex = 0
 		self.tabBar.unselectedItemTintColor = .black
-		self.tabBar.tintColor = #colorLiteral(red: 0.9411764706, green: 0.5333333333, blue: 0.3960784314, alpha: 1)
+		self.tabBar.tintColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
 
 		let appearance = UITabBarItem.appearance()
 		appearance.setBadgeTextAttributes([NSAttributedString.Key.strokeColor: UIColor.systemPink], for: .normal)
