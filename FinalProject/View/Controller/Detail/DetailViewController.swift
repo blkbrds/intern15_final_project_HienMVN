@@ -6,6 +6,7 @@ final class DetailViewController: ViewController {
 
 	// MARK: Outlet
 	@IBOutlet weak private var ratingLabel: UILabel!
+	@IBOutlet weak var scrollView: UIScrollView!
 	@IBOutlet weak var favoriteButton: UIButton!
 	@IBOutlet weak private var locationNameLabel: UILabel!
 	@IBOutlet weak private var locationImageView: UIImageView!
@@ -20,14 +21,19 @@ final class DetailViewController: ViewController {
 	@IBOutlet weak private var cityLabel: UILabel!
 
 	// MARK: Properties
-	var viewModel: DetailViewControllerModel!
+	var viewModel: DetailViewControllerModel?
 
 	// MARK: Life Cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		mapView.delegate = self
-		getAPIForDetail()
 		center(location: mapView.userLocation.coordinate)
+		scrollView.isHidden = true
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		getAPIForDetail()
 	}
 
 	// MARK: Private Methods
@@ -36,7 +42,7 @@ final class DetailViewController: ViewController {
 	}
 
 	private func updateUI() {
-		guard let item = viewModel.venueDetail else { return }
+		guard let item = viewModel?.venueDetail else { return }
 		locationNameLabel.text = item.name
 		addressLabel.text = item.address
 		cityLabel.text = item.city
@@ -45,7 +51,7 @@ final class DetailViewController: ViewController {
 		descriptionTextView.text = item.descriptionText
 		if let prefix = item.prefix, let sufix = item.suffix {
 			let url = prefix + "414x400" + sufix
-			locationImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "icons8-star-100"))
+			locationImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "paris"))
 		}
 		timeOpenLabel.text = item.openTime
 		favoriteButton.isSelected = item.favorite
@@ -81,25 +87,26 @@ final class DetailViewController: ViewController {
 	// MARK: Action
 	@IBAction func favoriteButtonTouchUpInside(_ sender: Any) {
 		favoriteButton.isSelected = !favoriteButton.isSelected
-		viewModel.didUpdateFavorite(isFav: favoriteButton.isSelected)
+		viewModel?.didUpdateFavorite(isFav: favoriteButton.isSelected)
 	}
 }
 // MARK: Get API
 extension DetailViewController {
 
 	func getAPIForDetail() {
-		viewModel.getItems {[weak self] (result) in
+		viewModel?.getItems {[weak self] (result) in
 			guard let this = self else { return }
 			switch result {
 			case .success:
 				this.updateUI()
 				this.configTextView()
-				if let lat = this.viewModel.venueDetail?.lat, let lon = this.viewModel.venueDetail?.lng {
+				if let lat = this.viewModel?.venueDetail?.lat, let lon = this.viewModel?.venueDetail?.lng {
 					let annotation = MKPointAnnotation()
 					let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
 					annotation.coordinate = location
 					this.mapView.addAnnotation(annotation)
 					this.routing(source: this.mapView.userLocation.coordinate, destination: location)
+					this.scrollView.isHidden = false
 				}
 			case .failure(let error):
 				this.alert(msg: error.localizedDescription, handler: nil)

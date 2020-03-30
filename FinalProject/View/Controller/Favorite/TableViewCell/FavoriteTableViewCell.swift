@@ -14,7 +14,7 @@ final class FavoriteTableViewCell: UITableViewCell {
 			guard let viewModel = viewModel else { return }
 			addressLabel.text = viewModel.address
 			nameLabel.text = viewModel.locationName
-			favoriteImageView.sd_setImage(with: URL(string: viewModel.prefix + "100x100" + viewModel.suffix), placeholderImage: #imageLiteral(resourceName: "icons8-star-96 (1)"))
+			favoriteImageView.sd_setImage(with: URL(string: viewModel.prefix + "100x100" + viewModel.suffix), placeholderImage: #imageLiteral(resourceName: "paris"))
 		}
 	}
 

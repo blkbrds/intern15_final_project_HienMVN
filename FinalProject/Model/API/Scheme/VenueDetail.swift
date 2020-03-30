@@ -9,13 +9,13 @@ final class VenueDetail: Object, Mappable {
 	@objc dynamic var city: String?
 	@objc dynamic var lat: Double = 0
 	@objc dynamic var lng: Double = 0
-	@objc dynamic var countOfLike: Int = 0
-	@objc dynamic var descriptionText: String?
+	@objc dynamic var countOfLike: Int = 3
+	@objc dynamic var descriptionText: String = ""
 	@objc dynamic var openTime: String?
 	@objc dynamic var prefix: String?
 	@objc dynamic var suffix: String?
 	var groups: JSArray?
-	@objc dynamic var rating: Int = 0
+	@objc dynamic var rating: Int = 6
 	@objc dynamic var favorite: Bool = false
 
 	required convenience init?(map: Map) {
