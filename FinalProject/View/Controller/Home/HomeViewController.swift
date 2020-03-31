@@ -20,7 +20,7 @@ final class HomeViewController: ViewController {
 		mapView.showsUserLocation = true
 		configDetailView()
 		LocationManager.shared.startUpdating { [weak self] (location) in
-			guard let `self` = self else { return }
+			guard self != nil else { return }
 			print("latitude: \(location.coordinate.latitude), longitude: \(location.coordinate.longitude)")
 		}
 		LocationManager.shared.getCurrentLocation(completion: { [weak self] (location) in
@@ -30,32 +30,42 @@ final class HomeViewController: ViewController {
 		})
 	}
 
-// MARK: - Override
-override func setupUI() {
-	title = "Home"
-}
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		makeNavigationBarTransparent()
+	}
+
+	func makeNavigationBarTransparent(isTranslucent: Bool = true) {
+		if let navBar = self.navigationController?.navigationBar {
+			let blankImage = UIImage()
+			navBar.setBackgroundImage(blankImage, for: .default)
+			navBar.shadowImage = blankImage
+			navBar.isTranslucent = isTranslucent
+		}
+	}
 
 // MARK: - Private Methods
-private func center(location: CLLocationCoordinate2D) {
-	mapView.setCenter(location, animated: true)
-	let span = MKCoordinateSpan(latitudeDelta: Config.latitudeDelta, longitudeDelta: Config.longitudeDelta)
-	let region = MKCoordinateRegion(center: location, span: span)
-	mapView.setRegion(region, animated: true)
-}
-
-private func configDetailView() {
-	if detailView == nil {
-		guard let userView = Bundle.main.loadNibNamed(Config.detailView, owner: self, options: nil)?.first as? DetailView else { return }
-		userView.frame = CGRect(x: Config.originX, y: Config.originY, width: view.bounds.width, height: Config.hightView)
-		detailView = userView
-		view.addSubview(detailView)
+	private func center(location: CLLocationCoordinate2D) {
+		mapView.setCenter(location, animated: true)
+		let span = MKCoordinateSpan(latitudeDelta: Config.latitudeDelta, longitudeDelta: Config.longitudeDelta)
+		let region = MKCoordinateRegion(center: location, span: span)
+		mapView.setRegion(region, animated: true)
 	}
-}
+
+	private func configDetailView() {
+		if detailView == nil {
+			guard let userView = Bundle.main.loadNibNamed(Config.detailView, owner: self, options: nil)?.first as? DetailView else { return }
+			userView.frame = CGRect(x: Config.originX, y: Config.originY, width: view.bounds.width, height: Config.hightView)
+			detailView = userView
+			view.addSubview(detailView)
+		}
+	}
 
 // MARK: - Action
-@IBAction func moveCurrentLocation(_ sender: Any) {
-	center(location: self.mapView.userLocation.coordinate)
-}
+	@IBAction func moveCurrentLocation(_ sender: Any) {
+		guard let currentLocation = self.currentLocation else { return }
+		center(location: currentLocation)
+	}
 }
 
 // MARK: - MKMapViewDelegate
@@ -103,20 +113,30 @@ extension HomeViewController: MKMapViewDelegate {
 		}
 	}
 
-	func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-		//	let center = mapView.centerCoordinate
-	}
 }
 
 // MARK: Load Api
 extension HomeViewController {
 	func getVenueForHome(currentLocation: CLLocationCoordinate2D) {
 		viewModel.getVenues(currentLocation: currentLocation) { [weak self] (result) in
-			guard let this = self else { return }
+			guard let this = self else {
+				return
+			}
 			switch result {
 			case .success:
-//				self.mapView.removeAnnotations(self.mapView.annotations)
+				print(this.viewModel.venues.count)
 				this.viewModel.venues.forEach { (venue) in
+					if let id = venue.id {
+						this.viewModel.getVenuesHome(venueID: id) { (resultDetail) in
+							guard let this = self else { return }
+							switch resultDetail {
+							case .success:
+								venue.venuesDetail = this.viewModel.venueDetail
+							case .failure(let error):
+								this.alert(msg: error.localizedDescription, handler: nil)
+							}
+						}
+					}
 					if let location = venue.location {
 						let annotation = MKPointAnnotation()
 						annotation.coordinate = location

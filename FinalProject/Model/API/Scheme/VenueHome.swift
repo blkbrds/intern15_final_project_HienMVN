@@ -9,6 +9,7 @@ final class VenueHome {
 	var id: String?
 	var prefix: String?
 	var favorite: Bool = false
+	var venuesDetail: VenueDetail?
 
 	init(json: JSON) {
 		if let location = json["location"] as? [String: Any], let lat = location["lat"] as? Double, let lng = location["lng"] as? Double, let country = location["country"] as? String {

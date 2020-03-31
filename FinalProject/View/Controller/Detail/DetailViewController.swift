@@ -5,20 +5,18 @@ import SDWebImage
 final class DetailViewController: ViewController {
 
 	// MARK: Outlet
-	@IBOutlet weak private var ratingLabel: UILabel!
-	@IBOutlet weak var scrollView: UIScrollView!
-	@IBOutlet weak var favoriteButton: UIButton!
-	@IBOutlet weak private var locationNameLabel: UILabel!
-	@IBOutlet weak private var locationImageView: UIImageView!
-	@IBOutlet weak private var addressLabel: UILabel!
-	@IBOutlet weak private var mapView: MKMapView!
-	@IBOutlet weak private var timeOpenLabel: UILabel!
-	@IBOutlet weak private var dislikeLabel: UILabel!
-	@IBOutlet weak var discriptionLabel: UILabel!
-	@IBOutlet weak private var loveLabel: UILabel!
-	@IBOutlet weak private var likeLabel: UILabel!
-	@IBOutlet weak private var cityLabel: UILabel!
 
+	@IBOutlet weak var mapView: MKMapView!
+	@IBOutlet weak var cityLabel: UILabel!
+
+	@IBOutlet weak var favoriteButton: UIButton!
+	@IBOutlet weak var timeOpenLabel: UILabel!
+	@IBOutlet weak var locationImageView: UIImageView!
+	@IBOutlet weak var discriptionLabel: UILabel!
+	@IBOutlet weak var likeLabel: UILabel!
+	@IBOutlet weak var ratingLabel: UILabel!
+	@IBOutlet weak var locationNameLabel: UILabel!
+	@IBOutlet weak var addressLabel: UILabel!
 	// MARK: Properties
 	var viewModel: DetailViewControllerModel?
 
@@ -26,13 +24,15 @@ final class DetailViewController: ViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		mapView.delegate = self
+		// sua lai core location
 		center(location: mapView.userLocation.coordinate)
-	navigationController?.setNavigationBarHidden(true, animated: true)
+//	navigationController?.setNavigationBarHidden(true, animated: true)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		getAPIForDetail()
+		// getAPIForDetail()
+		makeNavigationBarTransparent()
 	}
 
 	func makeNavigationBarTransparent(isTranslucent: Bool = true) {
@@ -42,10 +42,16 @@ final class DetailViewController: ViewController {
 			navBar.shadowImage = blankImage
 			navBar.isTranslucent = isTranslucent
 		}
+		let rightButon = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-back-50"), style: .plain, target: self, action: #selector(backToHomeTouchUpInside))
+		navigationItem.leftBarButtonItem = rightButon
+	}
+
+	@objc func backToHomeTouchUpInside () {
+		navigationController?.popToRootViewController(animated: true)
 	}
 
 	// MARK: Private Methods
-	private func updateUI() {
+	override func setupUI() {
 		guard let item = viewModel?.venueDetail else { return }
 		locationNameLabel.text = item.name
 		addressLabel.text = item.address
@@ -55,7 +61,7 @@ final class DetailViewController: ViewController {
 		discriptionLabel.text = item.descriptionText
 		if let prefix = item.prefix, let sufix = item.suffix {
 			let url = prefix + "414x414" + sufix
-			locationImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "paris"))
+			locationImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "dsad") )
 		}
 		timeOpenLabel.text = item.openTime
 		favoriteButton.isSelected = item.favorite
@@ -96,28 +102,29 @@ final class DetailViewController: ViewController {
 	}
 }
 // MARK: Get API
-extension DetailViewController {
-
-	func getAPIForDetail() {
-		viewModel?.getItems { [weak self] (result) in
-			guard let this = self else { return }
-			switch result {
-			case .success:
-				this.updateUI()
-				if let lat = this.viewModel?.venueDetail?.lat, let lon = this.viewModel?.venueDetail?.lng {
-					let annotation = MKPointAnnotation()
-					let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-					annotation.coordinate = location
-					this.mapView.addAnnotation(annotation)
-					this.routing(source: this.mapView.userLocation.coordinate, destination: location)
-					this.scrollView.isHidden = false
-				}
-			case .failure(let error):
-				this.alert(msg: error.localizedDescription, handler: nil)
-			}
-		}
-	}
-}
+// extension DetailViewController {
+//
+//	func getAPIForDetail() {
+//		viewModel?.getItems { [weak self] (result) in
+//			guard let this = self else { return }
+//			switch result {
+//			case .success:
+//				this.updateUI()
+//				if let lat = this.viewModel?.venueDetail?.lat, let lon = this.viewModel?.venueDetail?.lng {
+//					let annotation = MKPointAnnotation()
+//					let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+//					annotation.coordinate = location
+//					this.mapView.addAnnotation(annotation)
+//						// sua lai core location
+//					this.routing(source: this.mapView.userLocation.coordinate, destination: location)
+//					this.scrollView.isHidden = false
+//				}
+//			case .failure(let error):
+//				this.alert(msg: error.localizedDescription, handler: nil)
+//			}
+//		}
+//	}
+//}
 
 // MARK: MKMapViewDelegate
 extension DetailViewController: MKMapViewDelegate {

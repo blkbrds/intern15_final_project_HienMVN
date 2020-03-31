@@ -20,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ZRo-Sf-nWT" customClass="M">
-                    <rect key="frame" x="0.0" y="44" width="414" height="618"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="662"/>
                 </mapView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tgg-do-E85" customClass="CustomButton" customModule="FinalProject" customModuleProvider="target">
                     <rect key="frame" x="354" y="562" width="50" height="50"/>
@@ -41,8 +41,8 @@
             <constraints>
                 <constraint firstItem="ZRo-Sf-nWT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="CYd-xn-d1F"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ZRo-Sf-nWT" secondAttribute="bottom" constant="200" id="GVg-33-gLl"/>
+                <constraint firstItem="ZRo-Sf-nWT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="T2R-Pf-QNl"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="tgg-do-E85" secondAttribute="bottom" constant="250" id="Tkk-xQ-371"/>
-                <constraint firstItem="ZRo-Sf-nWT" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="W6K-JG-Xvd"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tgg-do-E85" secondAttribute="trailing" constant="10" id="nfY-Rp-Fja"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ZRo-Sf-nWT" secondAttribute="trailing" id="sA8-kV-0H5"/>
             </constraints>

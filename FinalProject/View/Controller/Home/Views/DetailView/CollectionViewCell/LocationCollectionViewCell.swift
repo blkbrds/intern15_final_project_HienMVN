@@ -30,7 +30,6 @@ final class LocationCollectionViewCell: UICollectionViewCell {
 		backgroundImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 		backgroundImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
 		backgroundImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-		backgroundImageView.image = #imageLiteral(resourceName: "anhnhoem")
 		backgroundImageView.alpha = 0.7
 		sendSubviewToBack(backgroundImageView)
 	}
@@ -38,7 +37,10 @@ final class LocationCollectionViewCell: UICollectionViewCell {
 	private func updateView() {
 		addressLabel.text = viewModel.country
 		locationNameLabel.text = viewModel.locationName
-		guard let locationImageURL = viewModel.locationImageURL else { return }
-		locationImageView.sd_setImage(with: URL(string: locationImageURL + "64.png"), placeholderImage: #imageLiteral(resourceName: "icons8-star-100"))
+
+		guard let locationImageURL = viewModel.locationImageURL,
+			let imageDetail = viewModel.imageDetail else { return }
+		locationImageView.sd_setImage(with: URL(string: locationImageURL + "64.png"), placeholderImage: #imageLiteral(resourceName: "icons8-star-96"))
+		backgroundImageView.sd_setImage(with: URL(string: imageDetail), placeholderImage: #imageLiteral(resourceName: "dsad"))
 	}
 }

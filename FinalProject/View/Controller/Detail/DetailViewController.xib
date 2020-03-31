@@ -9,18 +9,16 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailViewController" customModule="FinalProject" customModuleProvider="target">
             <connections>
-                <outlet property="addressLabel" destination="8YQ-Tw-bRC" id="sf0-sG-FRS"/>
-                <outlet property="cityLabel" destination="fn9-61-yTR" id="Xk9-sg-Q9i"/>
-                <outlet property="discriptionLabel" destination="YHp-D1-waH" id="h1V-Nk-7OB"/>
-                <outlet property="favoriteButton" destination="qCE-BD-YfO" id="79S-JG-pHV"/>
-                <outlet property="likeLabel" destination="0lP-40-mg7" id="yOq-QD-EyA"/>
-                <outlet property="locationImageView" destination="VvS-Zb-qEh" id="wGZ-b3-o6d"/>
-                <outlet property="locationNameLabel" destination="PIg-ZO-ytF" id="Xrr-Ol-rNu"/>
-                <outlet property="loveLabel" destination="Mtk-U2-VCQ" id="OTV-Yf-IEt"/>
-                <outlet property="mapView" destination="Cki-oG-b6d" id="7iY-Tf-X9F"/>
-                <outlet property="ratingLabel" destination="h1j-xN-LkS" id="08n-jN-cnK"/>
-                <outlet property="scrollView" destination="NSS-ZO-Ay9" id="Zws-A6-4Ou"/>
-                <outlet property="timeOpenLabel" destination="kBN-Rj-aTc" id="lhQ-kk-7Sb"/>
+                <outlet property="addressLabel" destination="8YQ-Tw-bRC" id="tc1-St-443"/>
+                <outlet property="cityLabel" destination="fn9-61-yTR" id="INT-R0-M6O"/>
+                <outlet property="discriptionLabel" destination="YHp-D1-waH" id="N8M-Hu-U8w"/>
+                <outlet property="favoriteButton" destination="qCE-BD-YfO" id="hC7-KD-IQc"/>
+                <outlet property="likeLabel" destination="0lP-40-mg7" id="Sdz-eO-eis"/>
+                <outlet property="locationImageView" destination="VvS-Zb-qEh" id="4nq-Wu-BXw"/>
+                <outlet property="locationNameLabel" destination="PIg-ZO-ytF" id="oQ9-V2-eeH"/>
+                <outlet property="mapView" destination="Cki-oG-b6d" id="py5-x3-wn0"/>
+                <outlet property="ratingLabel" destination="h1j-xN-LkS" id="EY4-Ym-JAL"/>
+                <outlet property="timeOpenLabel" destination="kBN-Rj-aTc" id="BDg-uO-ikB"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
