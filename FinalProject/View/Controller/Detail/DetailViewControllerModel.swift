@@ -1,82 +1,84 @@
 import Foundation
 import CoreLocation
+import RealmSwift
 
 final class DetailViewControllerModel {
 
 	// MARK: - Prperties
-	private(set) var item = Item()
+	var venueDetail: VenueDetail?
 
-	// MARK: - Puclic Methods
-	func getAddressForDetail() -> String {
-		guard let address = item.address else { return "" }
-		return address
+	// MARK: - Add For Realm
+	func addRealm(data: VenueDetail) {
+		do {
+			let realm = try Realm()
+			try realm.write {
+				let data = data
+				realm.add(data)
+			}
+		} catch {
+			print("Lỗi thêm đối tượng vào Realm")
+		}
 	}
 
-	func getLocationNameForDetail() -> String {
-		guard let locationName = item.name else { return "" }
-		return locationName
+	// MARK: - Update For Realm
+	func updateRealm(isFavorite: Bool) {
+		do {
+			guard let item = venueDetail else { return }
+			// realm
+			let realm = try Realm()
+			// edit
+			try realm.write {
+				item.favorite = isFavorite
+			}
+		} catch {
+			print("Lỗi edit đối tượng 🇺🇸")
+
+		}
 	}
 
-	func getCityForDetail() -> String {
-		guard let city = item.city else { return "" }
-		return city
+	// MARK: - Get Realm
+	func getRealm() -> Results<VenueDetail>? {
+		do {
+			let realm = try Realm()
+			let listVenueDetail: Results<VenueDetail> = { realm.objects(VenueDetail.self) }()
+			return listVenueDetail
+		} catch {
+			print("Lỗi GET đối tượng 🇺🇸")
+			return nil
+		}
+
 	}
 
-	func getRatingForDetail() -> String {
-		guard let rating = item.rating else { return String("7.5") }
-		return String(rating)
-	}
-
-	func getLikeForDetail() -> String {
-		guard let like = item.countOfLike else { return String("21") }
-		return String(like) + "Like"
-	}
-
-	func getTimeOpen() -> String {
-		guard let time = item.closeTime else { return "Open until 7:00 PM" }
-		return time
-	}
-
-	func getCoordinateForDetail() -> CLLocationCoordinate2D {
-		guard let latitude = item.lat, let longitude = item.lng else { return CLLocationCoordinate2D(latitude: 0, longitude: 0) }
-		return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-	}
-
-	func getDescriptionForDetail() -> String {
-		guard let description = item.description else { return String("Venez vous évader de votre routine quotidienne pour faire une petite pause de beauté pour vos mains ou vos pieds.") }
-		return description
-	}
-
-	func getURLForDetail() -> String {
-		guard let prefix = item.prefix, let sufix = item.suffix else { return "" }
-		return prefix + "414x400" + sufix
+	// MARK: - Update Favorite Realm
+	func didUpdateFavorite(isFav: Bool) {
+		updateRealm(isFavorite: isFav)
 	}
 
 	// MARK: - Prperties
-	let venue: Venue
+	let venueId: String
 
 	// MARK: - init
-	init(venue: Venue) {
-		self.venue = venue
-	}
-
-	// MARK: - Get ID
-	func getID() -> String {
-		guard let id = venue.id else { return "" }
-		return id
+	init(venueId: String) {
+		self.venueId = venueId
 	}
 
 	// MARK: - Public Methods
-	func getItems(with IDLocation: String, completion: @escaping APICompletion) {
-		Api.Item.getItem(id: IDLocation) { [weak self] (result) in
-			guard let this = self else { return }
-			DispatchQueue.main.async {
-				switch result {
-				case .failure(let error):
-					completion(.failure(error))
-				case .success(let data):
-					this.item = data
-					completion(.success)
+	func getItems(completion: @escaping APICompletion) {
+		if let item = getRealm()?.first(where: { ($0.id == venueId) }) {
+			self.venueDetail = item
+			completion(.success)
+		} else {
+			Api.VenueDetail.getItem(id: venueId) { [weak self] (result) in
+				guard let this = self else { return }
+				DispatchQueue.main.async {
+					switch result {
+					case .failure(let error):
+						completion(.failure(error))
+					case .success(let data):
+						this.venueDetail = data
+						this.addRealm(data: data)
+						completion(.success)
+					}
 				}
 			}
 		}

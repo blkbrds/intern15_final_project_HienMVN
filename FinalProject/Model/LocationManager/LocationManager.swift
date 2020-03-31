@@ -49,18 +49,18 @@ final class LocationManager: NSObject {
 		return currentLocation
 	}
 
-	private func startUpdating(completion: @escaping LocationCompletion) {
+	func startUpdating(completion: @escaping LocationCompletion) {
 		locationCompletion = completion
 		isUpdatingLocation = true
 		locationManager.startUpdatingLocation()
 	}
 
-	private func stopUpdating() {
+	func stopUpdating() {
 		locationManager.stopUpdatingLocation()
 		isUpdatingLocation = false
 	}
 
-	private func configLocationManager() {
+	func configLocationManager() {
 		locationManager.delegate = self
 		locationManager.desiredAccuracy = kCLLocationAccuracyBest
 		locationManager.distanceFilter = 10

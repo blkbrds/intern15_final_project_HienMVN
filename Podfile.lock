@@ -37,7 +37,7 @@ PODS:
   - SwiftUtils (4.2)
 
 DEPENDENCIES:
-  - Alamofire (= 4.9.0)
+  - Alamofire (~> 4.7)
   - IQKeyboardManagerSwift (~> 6.0.4)
   - MVVM-Swift (= 1.1.0)
   - ObjectMapper (= 3.5.1)
@@ -75,6 +75,6 @@ SPEC CHECKSUMS:
   SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
   SwiftUtils: de77bcd1df216c9be6ec7011777302c60a2018a6
 
-PODFILE CHECKSUM: 2706135640c22a6a2264b11eeb50306e2d19f868
+PODFILE CHECKSUM: 95cf6fdcd1d3fc827ab487be0ef0b557c010ac82
 
 COCOAPODS: 1.8.4

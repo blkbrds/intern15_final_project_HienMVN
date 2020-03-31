@@ -1,4 +1,7 @@
-platform :ios, '12.0'
+source ‘https://github.com/CocoaPods/Specs.git’
+platform :ios, ‘10.0’
+inhibit_all_warnings!
+use_frameworks!
 
 target 'FinalProject' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -12,7 +15,7 @@ target 'FinalProject' do
   pod 'RealmSwift', :inhibit_warnings => true
 
   # Network
-  pod 'Alamofire', '4.9.0' # Elegant HTTP Networking in Swift.
+  pod 'Alamofire', '~> 4.7' # Elegant HTTP Networking in Swift.
 
   # Utils
   pod 'SwifterSwift', '~> 5.0'

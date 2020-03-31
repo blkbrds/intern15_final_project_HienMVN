@@ -4,12 +4,11 @@ import CoreLocation
 final class HomeViewModel {
 
 	// MARK: - Prperties
-	private(set) var venues: [Venue] = []
+	private(set) var venues: [VenueHome] = []
 
 	// MARK: - Public Methods
 	func getVenues(currentLocation: CLLocationCoordinate2D, completion: @escaping APICompletion) {
-		print(currentLocation)
-		Api.Venue.getHomeData(lat: currentLocation.latitude, long: currentLocation.longitude) { [weak self] (result) in
+		Api.VenueHome.getHomeData(lat: currentLocation.latitude, long: currentLocation.longitude) { [weak self] (result) in
 			guard let this = self else { return }
 			switch result {
 			case .failure(let error):
@@ -21,16 +20,16 @@ final class HomeViewModel {
 		}
 	}
 
-	func getVenue(at location: CLLocationCoordinate2D) -> Venue? {
+	func getVenue(at location: CLLocationCoordinate2D) -> VenueHome? {
 		return venues.filter({
 			location.latitude == $0.location?.latitude && location.longitude == $0.location?.longitude
 		})[0]
 	}
 
-	var selectedVenue: Venue?
+	var selectedVenue: VenueHome?
 
 	func detailViewControllerModel() -> DetailViewControllerModel? {
 		guard let selectedVenue = selectedVenue else { return nil }
-		return DetailViewControllerModel(venue: selectedVenue)
+		return DetailViewControllerModel(venueId: selectedVenue.id ?? "")
 	}
 }

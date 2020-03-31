@@ -1,14 +1,17 @@
 import UIKit
 import MapKit
+import CoreLocation
 
 final class HomeViewController: ViewController {
 
 	// MARK: - Outlets
 	@IBOutlet weak var mapView: MKMapView!
 	@IBOutlet weak var currentLocationButton: CustomButton!
-	private var detailView: DetailView!
+
 	// MARK: - Properties
-	var viewModel = HomeViewModel()
+	private var detailView: DetailView!
+	private var viewModel = HomeViewModel()
+	private var currentLocation: CLLocationCoordinate2D?
 
 	// MARK: - Life Cycle
 	override func viewDidLoad() {
@@ -16,35 +19,43 @@ final class HomeViewController: ViewController {
 		mapView.delegate = self
 		mapView.showsUserLocation = true
 		configDetailView()
-		center(location: mapView.userLocation.coordinate)
-	}
-
-	// MARK: - Override
-	override func setupUI() {
-		title = "Home"
-	}
-
-	// MARK: - Private Methods
-	private func center(location: CLLocationCoordinate2D) {
-		mapView.setCenter(location, animated: true)
-		let span = MKCoordinateSpan(latitudeDelta: Config.latitudeDelta, longitudeDelta: Config.longitudeDelta)
-		let region = MKCoordinateRegion(center: location, span: span)
-		mapView.setRegion(region, animated: true)
-	}
-
-	private func configDetailView() {
-		if detailView == nil {
-			guard let userView = Bundle.main.loadNibNamed(Config.detailView, owner: self, options: nil)?.first as? DetailView else { return }
-			userView.frame = CGRect(x: Config.originX, y: Config.originY, width: view.bounds.width, height: Config.hightView)
-			detailView = userView
-			view.addSubview(detailView)
+		LocationManager.shared.startUpdating { [weak self] (location) in
+			guard let `self` = self else { return }
+			print("latitude: \(location.coordinate.latitude), longitude: \(location.coordinate.longitude)")
 		}
+		LocationManager.shared.getCurrentLocation(completion: { [weak self] (location) in
+			guard let `self` = self else { return }
+			self.currentLocation = location.coordinate
+			self.center(location: location.coordinate)
+		})
 	}
 
-	// MARK: - Action
-	@IBAction func moveCurrentLocation(_ sender: Any) {
-		center(location: self.mapView.userLocation.coordinate)
+// MARK: - Override
+override func setupUI() {
+	title = "Home"
+}
+
+// MARK: - Private Methods
+private func center(location: CLLocationCoordinate2D) {
+	mapView.setCenter(location, animated: true)
+	let span = MKCoordinateSpan(latitudeDelta: Config.latitudeDelta, longitudeDelta: Config.longitudeDelta)
+	let region = MKCoordinateRegion(center: location, span: span)
+	mapView.setRegion(region, animated: true)
+}
+
+private func configDetailView() {
+	if detailView == nil {
+		guard let userView = Bundle.main.loadNibNamed(Config.detailView, owner: self, options: nil)?.first as? DetailView else { return }
+		userView.frame = CGRect(x: Config.originX, y: Config.originY, width: view.bounds.width, height: Config.hightView)
+		detailView = userView
+		view.addSubview(detailView)
 	}
+}
+
+// MARK: - Action
+@IBAction func moveCurrentLocation(_ sender: Any) {
+	center(location: self.mapView.userLocation.coordinate)
+}
 }
 
 // MARK: - MKMapViewDelegate
@@ -78,8 +89,8 @@ extension HomeViewController: MKMapViewDelegate {
 	}
 
 	func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-		getVenue(currentLocation: mapView.userLocation.coordinate)
-		center(location: mapView.userLocation.coordinate)
+		guard let currentLocation = currentLocation else { return }
+		getVenueForHome(currentLocation: currentLocation)
 	}
 
 	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -93,13 +104,13 @@ extension HomeViewController: MKMapViewDelegate {
 	}
 
 	func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-	//	let center = mapView.centerCoordinate
+		//	let center = mapView.centerCoordinate
 	}
 }
 
 // MARK: Load Api
 extension HomeViewController {
-	func getVenue(currentLocation: CLLocationCoordinate2D) {
+	func getVenueForHome(currentLocation: CLLocationCoordinate2D) {
 		viewModel.getVenues(currentLocation: currentLocation) { [weak self] (result) in
 			guard let this = self else { return }
 			switch result {

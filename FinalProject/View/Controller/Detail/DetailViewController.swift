@@ -6,6 +6,8 @@ final class DetailViewController: ViewController {
 
 	// MARK: Outlet
 	@IBOutlet weak private var ratingLabel: UILabel!
+	@IBOutlet weak var scrollView: UIScrollView!
+	@IBOutlet weak var favoriteButton: UIButton!
 	@IBOutlet weak private var locationNameLabel: UILabel!
 	@IBOutlet weak private var locationImageView: UIImageView!
 	@IBOutlet weak private var addressLabel: UILabel!
@@ -25,8 +27,13 @@ final class DetailViewController: ViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		mapView.delegate = self
-		getItem()
 		center(location: mapView.userLocation.coordinate)
+		scrollView.isHidden = true
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		getAPIForDetail()
 	}
 
 	// MARK: Private Methods
@@ -35,14 +42,19 @@ final class DetailViewController: ViewController {
 	}
 
 	private func updateUI() {
-		locationNameLabel.text = viewModel?.getLocationNameForDetail()
-		addressLabel.text = viewModel?.getAddressForDetail()
-		cityLabel.text = viewModel?.getCityForDetail()
-		ratingLabel.text = viewModel?.getRatingForDetail()
-		likeLabel.text = viewModel?.getLikeForDetail()
-		descriptionTextView.text = viewModel?.getDescriptionForDetail()
-		locationImageView.sd_setImage(with: URL(string: viewModel?.getURLForDetail() ?? ""), placeholderImage: #imageLiteral(resourceName: "icons8-star-100"))
-		timeOpenLabel.text = viewModel?.getTimeOpen()
+		guard let item = viewModel?.venueDetail else { return }
+		locationNameLabel.text = item.name
+		addressLabel.text = item.address
+		cityLabel.text = item.city
+		ratingLabel.text = String(item.rating)
+		likeLabel.text = String(item.countOfLike) + "Like"
+		descriptionTextView.text = item.descriptionText
+		if let prefix = item.prefix, let sufix = item.suffix {
+			let url = prefix + "414x400" + sufix
+			locationImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "paris"))
+		}
+		timeOpenLabel.text = item.openTime
+		favoriteButton.isSelected = item.favorite
 	}
 
 	private func center(location: CLLocationCoordinate2D) {
@@ -72,6 +84,35 @@ final class DetailViewController: ViewController {
 			}
 		}
 	}
+	// MARK: Action
+	@IBAction func favoriteButtonTouchUpInside(_ sender: Any) {
+		favoriteButton.isSelected = !favoriteButton.isSelected
+		viewModel?.didUpdateFavorite(isFav: favoriteButton.isSelected)
+	}
+}
+// MARK: Get API
+extension DetailViewController {
+
+	func getAPIForDetail() {
+		viewModel?.getItems {[weak self] (result) in
+			guard let this = self else { return }
+			switch result {
+			case .success:
+				this.updateUI()
+				this.configTextView()
+				if let lat = this.viewModel?.venueDetail?.lat, let lon = this.viewModel?.venueDetail?.lng {
+					let annotation = MKPointAnnotation()
+					let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+					annotation.coordinate = location
+					this.mapView.addAnnotation(annotation)
+					this.routing(source: this.mapView.userLocation.coordinate, destination: location)
+					this.scrollView.isHidden = false
+				}
+			case .failure(let error):
+				this.alert(msg: error.localizedDescription, handler: nil)
+			}
+		}
+	}
 }
 
 // MARK: MKMapViewDelegate
@@ -98,35 +139,10 @@ extension DetailViewController: MKMapViewDelegate {
 		if let polyline = overlay as? MKPolyline {
 			let renderer = MKPolylineRenderer(polyline: polyline)
 			renderer.strokeColor = #colorLiteral(red: 0, green: 0.7669754028, blue: 0.3210973144, alpha: 1)
-			renderer.lineWidth = 6
+			renderer.lineWidth = Config.lineWidth
 			return renderer
 		}
 		return MKOverlayRenderer()
-	}
-}
-
-// MARK: Load Api
-extension DetailViewController {
-
-	func getItem() {
-		guard let id = viewModel?.venue.id else { return }
-		viewModel?.getItems(with: id) { [weak self] (result) in
-			guard let this = self else { return }
-			switch result {
-			case .success:
-				this.updateUI()
-				this.configTextView()
-				let annotation = MKPointAnnotation()
-				guard let viewModel = this.viewModel else { return }
-				annotation.coordinate = viewModel.getCoordinateForDetail()
-				this.mapView.addAnnotation(annotation)
-				this.routing(source: this.mapView.userLocation.coordinate, destination: viewModel.getCoordinateForDetail())
-				print(viewModel.getCoordinateForDetail())
-				print(this.mapView.userLocation.coordinate)
-			case .failure(let error):
-				this.alert(msg: error.localizedDescription, handler: nil)
-			}
-		}
 	}
 }
 
@@ -141,5 +157,6 @@ extension DetailViewController {
 		static let hightView: CGFloat = 200
 		static let latitudeDelta: CLLocationDegrees = 0.1
 		static let longitudeDelta: CLLocationDegrees = 0.1
+		static let lineWidth: CGFloat = 6
 	}
 }
