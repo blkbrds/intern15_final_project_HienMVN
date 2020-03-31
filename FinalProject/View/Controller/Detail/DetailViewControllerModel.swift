@@ -6,6 +6,7 @@ final class DetailViewControllerModel {
 
 	// MARK: - Prperties
 	var venueDetail: VenueDetail?
+	var venues : [VenueHome]?
 
 	// MARK: - Add For Realm
 	func addRealm(data: VenueDetail) {
@@ -64,8 +65,8 @@ final class DetailViewControllerModel {
 
 	// MARK: - Public Methods
 	func getItems(completion: @escaping APICompletion) {
-		if let item = getRealm()?.first(where: { ($0.id == venueId) }) {
-			self.venueDetail = item
+		if let item = venues?.first(where: { ($0.venuesDetail == venueDetail) }) {
+			self.venueDetail = item.venuesDetail
 			completion(.success)
 		} else {
 			Api.VenueDetail.getItem(id: venueId) { [weak self] (result) in
