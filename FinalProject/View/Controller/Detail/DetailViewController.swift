@@ -6,15 +6,15 @@ final class DetailViewController: ViewController {
 
 	// MARK: Outlet
 	@IBOutlet weak private var ratingLabel: UILabel!
-	@IBOutlet weak var scrollView: UIScrollView!
-	@IBOutlet weak var favoriteButton: UIButton!
+	@IBOutlet weak private var scrollView: UIScrollView!
+	@IBOutlet weak private var favoriteButton: UIButton!
 	@IBOutlet weak private var locationNameLabel: UILabel!
 	@IBOutlet weak private var locationImageView: UIImageView!
 	@IBOutlet weak private var addressLabel: UILabel!
 	@IBOutlet weak private var mapView: MKMapView!
 	@IBOutlet weak private var timeOpenLabel: UILabel!
 	@IBOutlet weak private var dislikeLabel: UILabel!
-	@IBOutlet weak var discriptionLabel: UILabel!
+	@IBOutlet weak private var discriptionLabel: UILabel!
 	@IBOutlet weak private var loveLabel: UILabel!
 	@IBOutlet weak private var likeLabel: UILabel!
 	@IBOutlet weak private var cityLabel: UILabel!
@@ -27,7 +27,7 @@ final class DetailViewController: ViewController {
 		super.viewDidLoad()
 		mapView.delegate = self
 		center(location: mapView.userLocation.coordinate)
-	navigationController?.setNavigationBarHidden(true, animated: true)
+		navigationController?.setNavigationBarHidden(true, animated: true)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -36,7 +36,7 @@ final class DetailViewController: ViewController {
 	}
 
 	func makeNavigationBarTransparent(isTranslucent: Bool = true) {
-		if let navBar = self.navigationController?.navigationBar {
+		if let navBar = navigationController?.navigationBar {
 			let blankImage = UIImage()
 			navBar.setBackgroundImage(blankImage, for: .default)
 			navBar.shadowImage = blankImage
@@ -92,9 +92,9 @@ final class DetailViewController: ViewController {
 	@IBAction func favoriteButtonTouchUpInside(_ sender: Any) {
 		favoriteButton.isSelected = !favoriteButton.isSelected
 		viewModel?.didUpdateFavorite(isFav: favoriteButton.isSelected)
-		print("c")
 	}
 }
+
 // MARK: Get API
 extension DetailViewController {
 
