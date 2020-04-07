@@ -7,13 +7,15 @@ final class LocationViewCellModel {
 	var locationName: String
 	var country: String
 	var locationImageURL: String?
-	var imageDetail: String?
+	var suffix: String?
+	var prefix: String?
 
 	// MARK: - Init
-	init(locationName: String = "", locationImageURL: String, country: String = "", imageDetail: String = "") {
+	init(locationName: String = "", locationImageURL: String = "", country: String = "", suffix: String = "", prefix: String = "") {
 		self.locationName = locationName
 		self.locationImageURL = locationImageURL
 		self.country = country
-		self.imageDetail = imageDetail
+		self.suffix = suffix
+		self.prefix = prefix
 	}
 }

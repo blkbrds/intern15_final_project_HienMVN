@@ -1,14 +1,13 @@
 import UIKit
 import MapKit
 import SDWebImage
+import SVProgressHUD
 
 final class DetailViewController: ViewController {
 
 	// MARK: Outlet
-
 	@IBOutlet weak var mapView: MKMapView!
 	@IBOutlet weak var cityLabel: UILabel!
-
 	@IBOutlet weak var favoriteButton: UIButton!
 	@IBOutlet weak var timeOpenLabel: UILabel!
 	@IBOutlet weak var locationImageView: UIImageView!
@@ -17,37 +16,59 @@ final class DetailViewController: ViewController {
 	@IBOutlet weak var ratingLabel: UILabel!
 	@IBOutlet weak var locationNameLabel: UILabel!
 	@IBOutlet weak var addressLabel: UILabel!
+
 	// MARK: Properties
-	var viewModel: DetailViewControllerModel?
+	var viewModel: DetailViewControllerModel? {
+		didSet {
+			if viewModel?.venueDetail == nil {
+				viewModel?.getVenuesDetail(completion: { [weak self] (result) in
+					guard let this = self else { return }
+					switch result {
+					case .failure(let error):
+						self?.alert(msg: error.localizedDescription, handler: nil)
+					case .success:
+						DispatchQueue.main.async {
+							this.getAPIForDetail()
+							guard let location = this.viewModel?.getLocationCoordinate() else { return }
+							this.center(location: location)
+							this.setupUI()
+						}
+
+					}
+				})
+			}
+			getAPIForDetail()
+		}
+	}
 
 	// MARK: Life Cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		view.backgroundColor = #colorLiteral(red: 0.2901675105, green: 0.29021433, blue: 0.2901572585, alpha: 1)
 		mapView.delegate = self
-		// sua lai core location
-		center(location: mapView.userLocation.coordinate)
-//	navigationController?.setNavigationBarHidden(true, animated: true)
+		guard let location = viewModel?.getLocationCoordinate() else { return }
+		center(location: location)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		// getAPIForDetail()
+		guard let realm = RealmManager.shared.realm else { return }
+		guard let locationName = locationNameLabel.text else { return }
+		if realm.objects(VenueDetail.self).filter(NSPredicate(format: "name = %@", locationName)).isEmpty {
+			favoriteButton.isSelected = false
+		} else {
+			favoriteButton.isSelected = true
+		}
 		makeNavigationBarTransparent()
 	}
 
-	func makeNavigationBarTransparent(isTranslucent: Bool = true) {
+	private func makeNavigationBarTransparent(isTranslucent: Bool = true) {
 		if let navBar = self.navigationController?.navigationBar {
 			let blankImage = UIImage()
 			navBar.setBackgroundImage(blankImage, for: .default)
 			navBar.shadowImage = blankImage
 			navBar.isTranslucent = isTranslucent
 		}
-		let rightButon = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-back-50"), style: .plain, target: self, action: #selector(backToHomeTouchUpInside))
-		navigationItem.leftBarButtonItem = rightButon
-	}
-
-	@objc func backToHomeTouchUpInside () {
-		navigationController?.popToRootViewController(animated: true)
 	}
 
 	// MARK: Private Methods
@@ -57,11 +78,11 @@ final class DetailViewController: ViewController {
 		addressLabel.text = item.address
 		cityLabel.text = item.city
 		ratingLabel.text = String(item.rating)
-		likeLabel.text = String(item.countOfLike) + "Like"
+		likeLabel.text = String(item.countOfLike)
 		discriptionLabel.text = item.descriptionText
 		if let prefix = item.prefix, let sufix = item.suffix {
 			let url = prefix + "414x414" + sufix
-			locationImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "dsad") )
+			locationImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "dsad"))
 		}
 		timeOpenLabel.text = item.openTime
 		favoriteButton.isSelected = item.favorite
@@ -71,64 +92,43 @@ final class DetailViewController: ViewController {
 		mapView.setCenter(location, animated: true)
 		let span = MKCoordinateSpan(latitudeDelta: Config.latitudeDelta, longitudeDelta: Config.longitudeDelta)
 		let region = MKCoordinateRegion(center: location, span: span)
-		mapView.showsUserLocation = true
 		mapView.setRegion(region, animated: true)
 	}
 
-	// MARK: Routing
-	func routing(source: CLLocationCoordinate2D, destination: CLLocationCoordinate2D) {
-		let request = MKDirections.Request()
-		request.source = MKMapItem(placemark: MKPlacemark(coordinate: source, addressDictionary: nil))
-		request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destination, addressDictionary: nil))
-		request.requestsAlternateRoutes = true
-		request.transportType = .automobile
-
-		let directions = MKDirections(request: request)
-
-		directions.calculate { [unowned self] response, _ in
-			guard let unwrappedResponse = response else { return }
-
-			for route in unwrappedResponse.routes {
-				self.mapView.addOverlay(route.polyline)
-				self.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
-			}
-		}
-	}
 	// MARK: Action
 	@IBAction func favoriteButtonTouchUpInside(_ sender: Any) {
 		favoriteButton.isSelected = !favoriteButton.isSelected
-		viewModel?.didUpdateFavorite(isFav: favoriteButton.isSelected)
-		print("c")
+		viewModel?.didUpdateFavorite()
 	}
 }
+
 // MARK: Get API
-// extension DetailViewController {
-//
-//	func getAPIForDetail() {
-//		viewModel?.getItems { [weak self] (result) in
-//			guard let this = self else { return }
-//			switch result {
-//			case .success:
-//				this.updateUI()
-//				if let lat = this.viewModel?.venueDetail?.lat, let lon = this.viewModel?.venueDetail?.lng {
-//					let annotation = MKPointAnnotation()
-//					let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-//					annotation.coordinate = location
-//					this.mapView.addAnnotation(annotation)
-//						// sua lai core location
-//					this.routing(source: this.mapView.userLocation.coordinate, destination: location)
-//					this.scrollView.isHidden = false
-//				}
-//			case .failure(let error):
-//				this.alert(msg: error.localizedDescription, handler: nil)
-//			}
-//		}
-//	}
-//}
+extension DetailViewController {
+	func getAPIForDetail() {
+		SVProgressHUD.show()
+		guard let locationCoordinate = viewModel?.getLocationCoordinate() else { return }
+		viewModel?.getVenues(currentLocation: locationCoordinate) { [weak self] (result) in
+			guard let this = self else { return }
+			switch result {
+			case .success:
+				this.viewModel?.venues.forEach({ (venue) in
+					if let location = venue.location {
+						let annotation = MKPointAnnotation()
+						annotation.coordinate = location
+						annotation.title = venue.name
+						this.mapView.addAnnotation(annotation)
+					}
+				})
+			case .failure(let error):
+				this.alert(msg: error.localizedDescription, handler: nil)
+			}
+		}
+		SVProgressHUD.dismiss()
+	}
+}
 
 // MARK: MKMapViewDelegate
 extension DetailViewController: MKMapViewDelegate {
-
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 		if annotation is MKPointAnnotation {
 			let identifier = Config.identifier
@@ -139,35 +139,43 @@ extension DetailViewController: MKMapViewDelegate {
 				view = dequeuedView
 			} else {
 				view = PinView(annotation: annotation, reuseIdentifier: identifier)
+				let button = UIButton(type: .detailDisclosure)
+				button.addTarget(self, action: #selector(selectPinView(_:)), for: .touchDown)
+				view.rightCalloutAccessoryView = button
+				view.leftCalloutAccessoryView = UIImageView(image: #imageLiteral(resourceName: "pin"))
+				view.canShowCallout = true
 			}
 			return view
 		}
 		return nil
 	}
 
-	func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-
-		if let polyline = overlay as? MKPolyline {
-			let renderer = MKPolylineRenderer(polyline: polyline)
-			renderer.strokeColor = #colorLiteral(red: 0, green: 0.7669754028, blue: 0.3210973144, alpha: 1)
-			renderer.lineWidth = Config.lineWidth
-			return renderer
+	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+		let selectedAnnotation = view.annotation as? MKPointAnnotation
+		guard let coordinate = selectedAnnotation?.coordinate else { return }
+		guard let viewModel = viewModel else { return }
+		if let venue = viewModel.getVenue(at: coordinate) {
+			viewModel.selectedVenue = venue
 		}
-		return MKOverlayRenderer()
+	}
+
+	@objc private func selectPinView(_ sender: UIButton?) {
+		let detailVC = DetailViewController()
+		detailVC.viewModel = viewModel?.detailViewControllerModel()
+		navigationController?.pushViewController(detailVC, animated: true)
 	}
 }
 
 // MARK: Config
 extension DetailViewController {
-
 	struct Config {
 		static let detailView: String = "DetailView"
 		static let identifier: String = "Pin"
 		static let originX: CGFloat = 0
 		static let originY: CGFloat = 610
 		static let hightView: CGFloat = 200
-		static let latitudeDelta: CLLocationDegrees = 0.1
-		static let longitudeDelta: CLLocationDegrees = 0.1
+		static let latitudeDelta: CLLocationDegrees = 0.005
+		static let longitudeDelta: CLLocationDegrees = 0.005
 		static let lineWidth: CGFloat = 6
 	}
 }

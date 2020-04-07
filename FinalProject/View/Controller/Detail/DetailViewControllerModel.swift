@@ -5,86 +5,80 @@ import RealmSwift
 final class DetailViewControllerModel {
 
 	// MARK: - Prperties
-	var venueDetail: VenueDetail
-	
-	init(venue: VenueDetail) {
+	var venueDetail: VenueDetail?
+	private let limitVenue: Int = 5
+	private(set) var venues: [VenueHome] = []
+	var selectedVenue: VenueHome?
+	var id: String?
+
+	// MARK: - Init
+	init(venue: VenueDetail?, id: String?) {
 		self.venueDetail = venue
-	}
-
-	// MARK: - Add For Realm
-	func addRealm(data: VenueDetail) {
-		do {
-			let realm = try Realm()
-			try realm.write {
-				let data = data
-				realm.add(data)
-			}
-		} catch {
-			print("Lỗi thêm đối tượng vào Realm")
-		}
-	}
-
-	// MARK: - Update For Realm
-	func updateRealm(isFavorite: Bool) {
-		do {
-			// realm
-			let realm = try Realm()
-			// edit
-			try realm.write {
-				venueDetail.favorite = isFavorite
-			}
-		} catch {
-			print("Lỗi edit đối tượng 🇺🇸")
-
-		}
-	}
-
-	// MARK: - Get Realm
-	func getRealm() -> Results<VenueDetail>? {
-		do {
-			let realm = try Realm()
-			let listVenueDetail: Results<VenueDetail> = { realm.objects(VenueDetail.self) }()
-			return listVenueDetail
-		} catch {
-			print("Lỗi GET đối tượng 🇺🇸")
-			return nil
-		}
-
+		self.id = id
 	}
 
 	// MARK: - Update Favorite Realm
-	func didUpdateFavorite(isFav: Bool) {
-		addRealm(data: venueDetail)
-		updateRealm(isFavorite: isFav)
+	func didUpdateFavorite() {
+		guard let venueDetail = venueDetail else { return }
+		RealmManager.shared.addRealm(data: venueDetail)
 	}
 
-	// MARK: - Prperties
-//	let venueId: String
+	// MARK: - Get Coordinate of pin
+	func getLocationCoordinate() -> CLLocationCoordinate2D {
+		guard let venueDetail = venueDetail else { return CLLocationCoordinate2D(latitude: 0, longitude: 0) }
+		return CLLocationCoordinate2D(latitude: venueDetail.lat, longitude: venueDetail.lng)
+	}
 
-//	// MARK: - init
-//	init(venueId: String) {
-//		self.venueId = venueId
-//	}
-//
-//	// MARK: - Public Methods
-//	func getItems(completion: @escaping APICompletion) {
-//		if let item = venues?.first(where: { ($0.venuesDetail == venueDetail) }) {
-//			self.venueDetail = item.venuesDetail
-//			completion(.success)
-//		} else {
-//			Api.VenueDetail.getItem(id: venueId) { [weak self] (result) in
-//				guard let this = self else { return }
-//				DispatchQueue.main.async {
-//					switch result {
-//					case .failure(let error):
-//						completion(.failure(error))
-//					case .success(let data):
-//						this.venueDetail = data
-//						this.addRealm(data: data)
-//						completion(.success)
-//					}
-//				}
-//			}
-//		}
-//	}
+	// MARK: - Get API
+	func getVenues(currentLocation: CLLocationCoordinate2D, completion: @escaping APICompletion) {
+		guard let lat = venueDetail?.lat,
+			let lng = venueDetail?.lng else {
+				completion(.failure(Api.Error.emptyData))
+				return
+		}
+		Api.VenueHome.getHomeData(lat: lat, long: lng, limit: limitVenue) { [weak self] (result) in
+			guard let this = self else { return }
+			switch result {
+			case .failure(let error):
+				completion(.failure(error))
+			case .success(let venueResult):
+				this.venues = venueResult.venues
+				completion(.success)
+			}
+		}
+	}
+
+	func getVenuesDetail(completion: @escaping APICompletion) {
+		guard let id = id else {
+			completion(.failure(Api.Error.emptyData))
+			return
+		}
+		Api.VenueDetail.getItem(id: id) { [weak self] (result) in
+			guard let this = self else { return }
+			switch result {
+			case.failure(let error):
+				completion(.failure(error))
+			case.success(let data):
+				this.venueDetail = data
+				completion(.success)
+			}
+		}
+	}
+
+	// MARK: - Get venue đid select
+	func getVenue(at location: CLLocationCoordinate2D) -> VenueHome? {
+		return venues.filter({
+			location.latitude == $0.location?.latitude && location.longitude == $0.location?.longitude
+		})[0]
+	}
+
+	// MARK: - Push venueID and venuedetail  for detail
+	func detailViewControllerModel() -> DetailViewControllerModel {
+		let venueDetail = ObjectManager.share.venueDetails.first { $0.id == selectedVenue?.id }
+		if venueDetail != nil {
+			return DetailViewControllerModel(venue: venueDetail, id: nil)
+		} else {
+			return DetailViewControllerModel(venue: nil, id: selectedVenue?.id)
+		}
+	}
 }

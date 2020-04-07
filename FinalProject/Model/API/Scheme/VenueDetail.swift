@@ -10,7 +10,7 @@ final class VenueDetail: Object, Mappable {
 	@objc dynamic var lat: Double = 0
 	@objc dynamic var lng: Double = 0
 	@objc dynamic var countOfLike: Int = 3
-	@objc dynamic var descriptionText: String = ""
+	@objc dynamic var descriptionText: String = "Если tour Eiffel лицо и визитная карточка Парижа, то Cité и расположенный тут Notre Dame его сердце ♥ а еще старинные улочки 😊"
 	@objc dynamic var openTime: String?
 	@objc dynamic var prefix: String?
 	@objc dynamic var suffix: String?
@@ -20,6 +20,9 @@ final class VenueDetail: Object, Mappable {
 
 	required convenience init?(map: Map) {
 		self.init()
+	}
+	override static func primaryKey() -> String? {
+		return "id"
 	}
 
 	func mapping(map: Map) {
@@ -45,4 +48,5 @@ final class VenueDetail: Object, Mappable {
 			}
 		}
 	}
+
 }

@@ -1,6 +1,7 @@
 import UIKit
 import Realm
 import RealmSwift
+import SVProgressHUD
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -8,8 +9,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+		// config
+		configHUD()
 		let realm = try? Realm()
-		print(realm?.configuration.fileURL)
+		print(realm?.configuration.fileURL ?? "")
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.backgroundColor = .white
 		let vc = TabBarViewController()
@@ -17,5 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window?.makeKeyAndVisible()
 		LocationManager.shared.request()
 		return true
+	}
+
+	private func configHUD() {
+		SVProgressHUD.setDefaultStyle(.custom)
+		SVProgressHUD.setDefaultMaskType(.custom)
+		SVProgressHUD.setBackgroundLayerColor(UIColor.black.withAlphaComponent(0.5))
 	}
 }

@@ -8,8 +8,8 @@ extension Api.VenueDetail {
 
 	struct QueryString {
 		static func getItem(id: String) -> String {
-			let idClient: String = "?client_id=U15EYIZEPQYA1J4OD4RDOX3AODLXS2BEVPB0Q50MDV51CIQL&client_"
-			let secret: String = "secret=Z11A3B140OMH0NZEMM2URPCCFEE1FVPB0YEPAOD5G3NB1DXE&ll"
+			let idClient: String = "?client_id=UHEETIQPRKDJLTOG0U3Y0T2HA1YLWZ0O4WKTUO4ZACC3PQ4T&client_"
+			let secret: String = "secret=TMMAE4EHASF05XOHOR5MZDR4JDHVR2U21LS0T3HKBCYSNQQ2&ll"
 			return Api.Path.VenueDetail.itemURL + "/\(id)" + idClient + secret + "=16.0776738%2C108.197205&v=20162502"
 		}
 	}

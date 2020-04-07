@@ -53,6 +53,9 @@
 		FDDFC33D242C7DE20087142F /* VenueHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDFC33B242C7DE10087142F /* VenueHome.swift */; };
 		FDDFC33F242C7E6A0087142F /* Api.VenueHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDFC33E242C7E6A0087142F /* Api.VenueHome.swift */; };
 		FDDFC341242C7E710087142F /* Api.VenueDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDFC340242C7E710087142F /* Api.VenueDetail.swift */; };
+		FDF19E822436FEDA00B5F3B5 /* Realm.Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF19E812436FEDA00B5F3B5 /* Realm.Manager.swift */; };
+		FDF19E842437144500B5F3B5 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF19E832437144500B5F3B5 /* Image.swift */; };
+		FDF19EAB24387A2A00B5F3B5 /* Object.Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF19EAA24387A2A00B5F3B5 /* Object.Manager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,6 +111,9 @@
 		FDDFC340242C7E710087142F /* Api.VenueDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Api.VenueDetail.swift; sourceTree = "<group>"; };
 		FDDFC346242DE88B0087142F /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDDFC348242DE8C20087142F /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDF19E812436FEDA00B5F3B5 /* Realm.Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Realm.Manager.swift; sourceTree = "<group>"; };
+		FDF19E832437144500B5F3B5 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		FDF19EAA24387A2A00B5F3B5 /* Object.Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Object.Manager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +177,7 @@
 				25BF8CD42418830A007F4C55 /* Errors.swift */,
 				25BF8CD22418830A007F4C55 /* String.swift */,
 				FDDF38D7241B3B9B00F483B5 /* Button.swift */,
+				FDF19E832437144500B5F3B5 /* Image.swift */,
 			);
 			path = Define;
 			sourceTree = "<group>";
@@ -186,6 +193,8 @@
 		25BF8C9D24187F5E007F4C55 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FDF19EA9243879E200B5F3B5 /* ObjectManager */,
+				FDCBAB032434493C000BBE2D /* RealmManager */,
 				FD5B6217241B43D0007811C6 /* LocationManager */,
 				25BF8CBC2418821C007F4C55 /* Session.swift */,
 				25BF8CBA24188200007F4C55 /* API */,
@@ -338,6 +347,14 @@
 			path = Detail;
 			sourceTree = "<group>";
 		};
+		FDCBAB032434493C000BBE2D /* RealmManager */ = {
+			isa = PBXGroup;
+			children = (
+				FDF19E812436FEDA00B5F3B5 /* Realm.Manager.swift */,
+			);
+			path = RealmManager;
+			sourceTree = "<group>";
+		};
 		FDDF38B92418ED9700F483B5 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -378,6 +395,14 @@
 				FDDFC330242B550C0087142F /* FavoriteTableViewCell.xib */,
 			);
 			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		FDF19EA9243879E200B5F3B5 /* ObjectManager */ = {
+			isa = PBXGroup;
+			children = (
+				FDF19EAA24387A2A00B5F3B5 /* Object.Manager.swift */,
+			);
+			path = ObjectManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -524,6 +549,7 @@
 				FD3B5A2824210B03005BC72C /* LocationCollectionViewCell.swift in Sources */,
 				FDDFC337242BA8D40087142F /* FavoriteTableViewCellModel.swift in Sources */,
 				FDDF38D8241B3B9B00F483B5 /* Button.swift in Sources */,
+				FDF19E822436FEDA00B5F3B5 /* Realm.Manager.swift in Sources */,
 				FDDF38D3241A60A200F483B5 /* HomeViewModel.swift in Sources */,
 				25BF8CCE241882BF007F4C55 /* UIViewControllerExt.swift in Sources */,
 				FD3B5A1E242098F3005BC72C /* DetailViewModel.swift in Sources */,
@@ -536,6 +562,7 @@
 				FDDF38C32418F07B00F483B5 /* HomeViewController.swift in Sources */,
 				FD83B32624286802008DAE09 /* DetailViewControllerModel.swift in Sources */,
 				25BF8CD72418830A007F4C55 /* Errors.swift in Sources */,
+				FDF19E842437144500B5F3B5 /* Image.swift in Sources */,
 				FDDFC331242B550C0087142F /* FavoriteTableViewCell.swift in Sources */,
 				25BF8CBD2418821C007F4C55 /* Session.swift in Sources */,
 				25BF8CD52418830A007F4C55 /* String.swift in Sources */,
@@ -555,6 +582,7 @@
 				FDDFC341242C7E710087142F /* Api.VenueDetail.swift in Sources */,
 				25BF8CC424188248007F4C55 /* Api.swift in Sources */,
 				25BF8CC524188248007F4C55 /* Error.swift in Sources */,
+				FDF19EAB24387A2A00B5F3B5 /* Object.Manager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
