@@ -22,10 +22,15 @@ final class DetailViewModel: ViewModel {
 	}
 
 	func updateInformationForCell(at indexPath: IndexPath) -> LocationViewCellModel {
-		guard let name = venues[indexPath.row].name, let country = venues[indexPath.row].country else {
-			return LocationViewCellModel(locationImageURL: "")
+		guard let name = venues[indexPath.row].name,
+			let country = venues[indexPath.row].country,
+			let prefixDetail = venues[indexPath.row].venuesDetail?.prefix,
+			let suffixDetail = venues[indexPath.row].venuesDetail?.suffix
+			else {
+				return LocationViewCellModel(locationImageURL: "", imageDetail: "")
 		}
+
 		let locationImageURL = venues[indexPath.row].prefix
-		return LocationViewCellModel(locationName: name, locationImageURL: locationImageURL ?? "", country: country)
+		return LocationViewCellModel(locationName: name, locationImageURL: locationImageURL ?? "", country: country, imageDetail: prefixDetail + "400x400" + suffixDetail)
 	}
 }
