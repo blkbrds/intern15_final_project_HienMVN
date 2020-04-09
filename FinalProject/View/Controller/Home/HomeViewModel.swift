@@ -5,7 +5,7 @@ import RealmSwift
 final class HomeViewModel {
 
 	// MARK: - Prperties
-	private let limitVenue: Int = 7
+	private let limitVenue: Int = 5
 
 	// MARK: - Public Methods
 	func getVenues(currentLocation: CLLocationCoordinate2D, completion: @escaping APICompletion) {
@@ -47,7 +47,6 @@ final class HomeViewModel {
 			tempIndex += 1
 			switch result {
 			case .failure(let error):
-				ObjectManager.share.venues.removeAll()
 				completion(.failure(error))
 			case .success(let data):
 				ObjectManager.share.venueDetails.append(data)
