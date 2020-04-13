@@ -39,6 +39,7 @@
 		FD83B32424284F9A008DAE09 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD83B32224284F9A008DAE09 /* DetailViewController.xib */; };
 		FD83B32624286802008DAE09 /* DetailViewControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD83B32524286802008DAE09 /* DetailViewControllerModel.swift */; };
 		FDA38B6B243DB7B500F13001 /* URL.Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA38B6A243DB7B500F13001 /* URL.Client.swift */; };
+		FDA38B6E243EFDEB00F13001 /* SliderBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA38B6D243EFDEB00F13001 /* SliderBarView.swift */; };
 		FDDF38BD2418EDF600F483B5 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDF38BB2418EDF600F483B5 /* FavoriteViewController.swift */; };
 		FDDF38BE2418EDF600F483B5 /* FavoriteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDDF38BC2418EDF600F483B5 /* FavoriteViewController.xib */; };
 		FDDF38C02418EE3300F483B5 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDF38BF2418EE3300F483B5 /* TabBarViewController.swift */; };
@@ -97,6 +98,7 @@
 		FD83B32224284F9A008DAE09 /* DetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
 		FD83B32524286802008DAE09 /* DetailViewControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewControllerModel.swift; sourceTree = "<group>"; };
 		FDA38B6A243DB7B500F13001 /* URL.Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.Client.swift; sourceTree = "<group>"; };
+		FDA38B6D243EFDEB00F13001 /* SliderBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderBarView.swift; sourceTree = "<group>"; };
 		FDDF38BB2418EDF600F483B5 /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		FDDF38BC2418EDF600F483B5 /* FavoriteViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteViewController.xib; sourceTree = "<group>"; };
 		FDDF38BF2418EE3300F483B5 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -281,6 +283,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FD37C0C6244077A100B84E0F /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
 		FD3B5A13241F3511005BC72C /* MyPin */ = {
 			isa = PBXGroup;
 			children = (
@@ -338,6 +347,7 @@
 		FD5B621A241E79B5007811C6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FDA38B6C243EFD8000F13001 /* SliderBarView */,
 				FD3B5A18242085D7005BC72C /* DetailView */,
 				FD3B5A13241F3511005BC72C /* MyPin */,
 			);
@@ -347,11 +357,20 @@
 		FD83B32024284EB1008DAE09 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				FD37C0C6244077A100B84E0F /* TableView */,
 				FD83B32124284F9A008DAE09 /* DetailViewController.swift */,
 				FD83B32224284F9A008DAE09 /* DetailViewController.xib */,
 				FD83B32524286802008DAE09 /* DetailViewControllerModel.swift */,
 			);
 			path = Detail;
+			sourceTree = "<group>";
+		};
+		FDA38B6C243EFD8000F13001 /* SliderBarView */ = {
+			isa = PBXGroup;
+			children = (
+				FDA38B6D243EFDEB00F13001 /* SliderBarView.swift */,
+			);
+			path = SliderBarView;
 			sourceTree = "<group>";
 		};
 		FDCBAB032434493C000BBE2D /* RealmManager */ = {
@@ -577,6 +596,7 @@
 				25BF8C8824187CFE007F4C55 /* AppDelegate.swift in Sources */,
 				FDDFC33C242C7DE20087142F /* VenueDetail.swift in Sources */,
 				FDA38B6B243DB7B500F13001 /* URL.Client.swift in Sources */,
+				FDA38B6E243EFDEB00F13001 /* SliderBarView.swift in Sources */,
 				25BF8CCF241882BF007F4C55 /* NSErrorExt.swift in Sources */,
 				25BF8CC824188248007F4C55 /* RequestSerializer.swift in Sources */,
 				FD5B621E241E7F72007811C6 /* PinView.swift in Sources */,

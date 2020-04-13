@@ -23,7 +23,7 @@ extension Api {
         static let authen = NSError(domain: Api.Path.baseURL, status: HTTPStatus.unauthorized)
         static let apiKey = NSError(domain: Api.Path.baseURL, status: HTTPStatus.badRequest)
         static let json = NSError(domain: NSCocoaErrorDomain, code: 3_840, message: "The operation couldn’t be completed.")
-        static let cancelRequest = NSError(domain: Api.Path.baseURL, code: 999, message: "Server returns no information and closes the connection.")
+		static let cancelRequest = NSError(domain: Api.Path.baseURL, code: 999, message: "Server returns no information and closes the connection.")
         static let emptyData = NSError(domain: Api.Path.baseURL, code: 997, message: "Server returns no data")
         static let noResponse = NSError(status: .noResponse)
         static let invalidURL = NSError(domain: Api.Path.baseURL, code: 998, message: "Cannot detect URL")

@@ -15,7 +15,7 @@ final class FavoriteViewController: ViewController {
 			if success {
 				tableView.reloadData()
 			} else {
-				print("Error: Can't reload 🐥")
+				print("Error: Can't reload ")
 			}
 		})
 	}
@@ -41,7 +41,7 @@ final class FavoriteViewController: ViewController {
 			if success {
 				tableView.reloadData()
 			} else {
-				print("Error: Can't deleted 🐥")
+				print("Error: Can't deleted ")
 			}
 		}
 	}
@@ -50,7 +50,8 @@ final class FavoriteViewController: ViewController {
 // MARK: - UITableViewDataSource
 extension FavoriteViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return RealmManager.shared.listItemFavorite?.count ?? 0
+		guard let numberOfCount = RealmManager.shared.listItemFavorite?.count else { return 0 }
+		return numberOfCount
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -77,7 +78,7 @@ extension FavoriteViewController: UITableViewDelegate {
 					tableView.endUpdates()
 					tableView.reloadData()
 				} else {
-					print("Error: Can't deleted 🐥")
+					print("Error: Can't deleted ")
 				}
 			}
 		}
@@ -90,10 +91,10 @@ extension FavoriteViewController: UITableViewDelegate {
 }
 
 // MARK: - Config
-	extension FavoriteViewController {
-		struct Config {
-			static var favoriteTableViewCell = "FavoriteTableViewCell"
-			static var numberOfRow: Int = 10
-			static var heightForRow: CGFloat = 100
-		}
+extension FavoriteViewController {
+	struct Config {
+		static var favoriteTableViewCell = "FavoriteTableViewCell"
+		static var numberOfRow: Int = 10
+		static var heightForRow: CGFloat = 100
 	}
+}

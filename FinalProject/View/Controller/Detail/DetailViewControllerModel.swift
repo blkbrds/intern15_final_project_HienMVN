@@ -36,7 +36,7 @@ final class DetailViewControllerModel {
 				completion(.failure(Api.Error.emptyData))
 				return
 		}
-		Api.VenueHome.getHomeData(lat: lat, long: lng, limit: limitVenue) { [weak self] (result) in
+		Api.VenueHome.getHomeData(lat: lat, long: lng, limit: limitVenue, query: "") { [weak self] (result) in
 			guard let this = self else { return }
 			switch result {
 			case .failure(let error):
@@ -53,7 +53,7 @@ final class DetailViewControllerModel {
 			completion(.failure(Api.Error.emptyData))
 			return
 		}
-		Api.VenueDetail.getItem(id: id) { [weak self] (result) in
+		Api.VenueDetail.getVenueDetail(id: id) { [weak self] (result) in
 			guard let this = self else { return }
 			switch result {
 			case.failure(let error):

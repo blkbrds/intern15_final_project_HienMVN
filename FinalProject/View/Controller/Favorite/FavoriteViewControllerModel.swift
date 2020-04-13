@@ -3,7 +3,7 @@ import RealmSwift
 
 final class FavoriteViewControllerModel {
 
-// MARK: - Private Method
+// MARK: - Public Method
 	func getCellViewModel(at indexPath: IndexPath) -> FavoriteTableViewCellModel? {
 		guard let listFavorite = RealmManager.shared.listItemFavorite else { return nil }
 		return FavoriteTableViewCellModel(locationName: listFavorite[indexPath.row].name ?? "",

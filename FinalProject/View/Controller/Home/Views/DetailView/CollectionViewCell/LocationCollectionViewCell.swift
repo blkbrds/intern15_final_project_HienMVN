@@ -10,7 +10,7 @@ final class LocationCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Properties
 	private let backgroundImageView = UIImageView()
-	var viewModel = LocationViewCellModel() {
+	var viewModel: LocationViewCellModel? {
 		didSet {
 			updateView()
 		}
@@ -35,6 +35,7 @@ final class LocationCollectionViewCell: UICollectionViewCell {
 	}
 
 	private func updateView() {
+		guard let viewModel = viewModel else { return }
 		addressLabel.text = viewModel.country
 		locationNameLabel.text = viewModel.locationName
 

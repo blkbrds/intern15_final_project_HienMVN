@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -129,7 +129,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#1" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YHp-D1-waH">
-                                                    <rect key="frame" x="10" y="128" width="344" height="20.5"/>
+                                                    <rect key="frame" x="10" y="128" width="334" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -165,7 +165,7 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="YHp-D1-waH" secondAttribute="trailing" id="0HX-vH-IEw"/>
+                                                <constraint firstAttribute="trailing" secondItem="YHp-D1-waH" secondAttribute="trailing" constant="10" id="0HX-vH-IEw"/>
                                                 <constraint firstItem="5Ru-br-cGI" firstAttribute="leading" secondItem="c2l-Tj-jtS" secondAttribute="leading" id="5K7-Pm-tkc"/>
                                                 <constraint firstItem="sRu-EA-Cqm" firstAttribute="leading" secondItem="c2l-Tj-jtS" secondAttribute="leading" id="8Ym-ga-lTl"/>
                                                 <constraint firstItem="YHp-D1-waH" firstAttribute="top" secondItem="5Ru-br-cGI" secondAttribute="bottom" id="GdH-FG-Nra"/>
@@ -335,7 +335,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="8.6956521739130448" y="388.72767857142856"/>
+            <point key="canvasLocation" x="7.5" y="388.2042253521127"/>
         </view>
     </objects>
     <resources>

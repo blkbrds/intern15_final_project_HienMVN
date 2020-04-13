@@ -33,7 +33,7 @@
                     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <state key="normal" image="icons8-location-off-30 (2)"/>
                     <connections>
-                        <action selector="moveCurrentLocation:" destination="-1" eventType="touchUpInside" id="mhf-Xq-fxI"/>
+                        <action selector="moveCurrentLocationTouchUpInside:" destination="-1" eventType="touchUpInside" id="mhf-Xq-fxI"/>
                     </connections>
                 </button>
             </subviews>
