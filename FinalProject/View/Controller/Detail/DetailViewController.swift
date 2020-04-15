@@ -6,38 +6,37 @@ import SVProgressHUD
 final class DetailViewController: ViewController {
 
 	// MARK: Outlet
-	@IBOutlet weak var mapView: MKMapView!
-	@IBOutlet weak var cityLabel: UILabel!
-	@IBOutlet weak var favoriteButton: UIButton!
-	@IBOutlet weak var timeOpenLabel: UILabel!
-	@IBOutlet weak var locationImageView: UIImageView!
-	@IBOutlet weak var discriptionLabel: UILabel!
-	@IBOutlet weak var likeLabel: UILabel!
-	@IBOutlet weak var ratingLabel: UILabel!
-	@IBOutlet weak var locationNameLabel: UILabel!
-	@IBOutlet weak var addressLabel: UILabel!
+	@IBOutlet weak private var mapView: MKMapView!
+	@IBOutlet weak private var cityLabel: UILabel!
+	@IBOutlet weak private var favoriteButton: UIButton!
+	@IBOutlet weak private var timeOpenLabel: UILabel!
+	@IBOutlet weak private var locationImageView: UIImageView!
+	@IBOutlet weak private var discriptionLabel: UILabel!
+	@IBOutlet weak private var likeLabel: UILabel!
+	@IBOutlet weak private var ratingLabel: UILabel!
+	@IBOutlet weak private var locationNameLabel: UILabel!
+	@IBOutlet weak private var addressLabel: UILabel!
+	@IBOutlet weak private var tableView: UITableView!
 
 	// MARK: Properties
+	private var currentLocation: CLLocationCoordinate2D?
 	var viewModel: DetailViewControllerModel? {
 		didSet {
-//			if viewModel?.venueDetail == nil {
-//				viewModel?.getVenuesDetail(completion: { [weak self] (result) in
-//					guard let this = self else { return }
-//					switch result {
-//					case .failure(let error):
-//						self?.alert(msg: error.localizedDescription, handler: nil)
-//					case .success:
-//						this.getAPIForDetail()
-//						DispatchQueue.main.async {
-//							guard let location = this.viewModel?.getLocationCoordinate() else { return }
-//							this.center(location: location)
-//							this.setupUI()
-//						}
-//
-//					}
-//				})
-//			}
-//			getAPIForDetail()
+			if viewModel?.venueDetail == nil {
+				viewModel?.getVenuesDetail(completion: { [weak self] (result) in
+					guard let this = self else { return }
+					switch result {
+					case .failure(let error):
+						self?.alert(msg: error.localizedDescription, handler: nil)
+					case .success:
+						this.getAPIVenuesSimilar()
+						DispatchQueue.main.async {
+							this.setupUI()
+						}
+					}
+				})
+			}
+			getAPIVenuesSimilar()
 		}
 	}
 
@@ -45,14 +44,9 @@ final class DetailViewController: ViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = #colorLiteral(red: 0.2901675105, green: 0.29021433, blue: 0.2901572585, alpha: 1)
-		mapView.delegate = self
-		mapView.showsUserLocation = true
-		guard let lat = viewModel?.venueDetail?.lat, let long = viewModel?.venueDetail?.lng else { return }
-		let venueCoordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-		guard let location = viewModel?.getLocationCoordinate() else { return }
-		addPin(coordinate: venueCoordinate)
-		center(location: location)
-//		routing(source: venueCoordinate, destination: location)
+		configMapView()
+		configTableView()
+		getAPIVenuesSimilar()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -66,7 +60,28 @@ final class DetailViewController: ViewController {
 		}
 		makeNavigationBarTransparent()
 	}
-	//private func configMap
+
+	// MARK: Private Methods
+	private func configMapView() {
+		mapView.delegate = self
+		mapView.showsUserLocation = true
+		LocationManager.shared.locationDetailDelegate = self
+		LocationManager.shared.startUpdating { _ in }
+		guard let lat = viewModel?.venueDetail?.lat,
+			let long = viewModel?.venueDetail?.lng else { return }
+		let venueCoordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+		// test routing
+		routing(source: mapView.userLocation.coordinate, destination: venueCoordinate)
+		addPin(coordinate: venueCoordinate)
+		center(location: venueCoordinate)
+	}
+
+	private func configTableView() {
+		let nib = UINib(nibName: Config.detailTableViewCell, bundle: .main)
+		tableView.register(nib, forCellReuseIdentifier: Config.detailTableViewCell)
+		tableView.dataSource = self
+		tableView.delegate = self
+	}
 
 	private func makeNavigationBarTransparent(isTranslucent: Bool = true) {
 		let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-back-52"), style: .plain, target: self, action: #selector(backTouchUpInside))
@@ -100,9 +115,10 @@ final class DetailViewController: ViewController {
 		}
 		timeOpenLabel.text = item.openTime
 		favoriteButton.isSelected = item.favorite
+		let venueCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: item.lat, longitude: item.lng)
+		addPin(coordinate: venueCoordinate)
+		routing(source: mapView.userLocation.coordinate, destination: venueCoordinate)
 	}
-
-
 
 	private func center(location: CLLocationCoordinate2D) {
 		mapView.setCenter(location, animated: true)
@@ -110,6 +126,7 @@ final class DetailViewController: ViewController {
 		let region = MKCoordinateRegion(center: location, span: span)
 		mapView.setRegion(region, animated: true)
 	}
+
 	private func addPin(coordinate: CLLocationCoordinate2D) {
 		let annotation = MKPointAnnotation()
 		annotation.coordinate = coordinate
@@ -125,7 +142,7 @@ final class DetailViewController: ViewController {
 
 		let directions = MKDirections(request: request)
 
-		directions.calculate { [unowned self] (response, error) in
+		directions.calculate { [unowned self] (response, _) in
 			guard let unwrappedResponse = response else { return }
 
 			for route in unwrappedResponse.routes {
@@ -143,27 +160,23 @@ final class DetailViewController: ViewController {
 }
 
 // MARK: Get API
-//extension DetailViewController {
-//	func getAPIForDetail() {
-//		guard let locationCoordinate = viewModel?.getLocationCoordinate() else { return }
-//		viewModel?.getVenues(currentLocation: locationCoordinate) { [weak self] (result) in
-//			guard let this = self else { return }
-//			switch result {
-//			case .success:
-//				this.viewModel?.venues.forEach({ (venue) in
-//					if let location = venue.location {
-//						let annotation = MKPointAnnotation()
-//						annotation.coordinate = location
-//						annotation.title = venue.name
-//						this.mapView.addAnnotation(annotation)
-//					}
-//				})
-//			case .failure(let error):
-//				this.alert(msg: error.localizedDescription, handler: nil)
-//			}
-//		}
-//	}
-//}
+extension DetailViewController {
+	func getAPIVenuesSimilar() {
+		SVProgressHUD.show()
+		guard let locationCoordinate = viewModel?.getLocationCoordinate() else { return }
+		viewModel?.getVenues(currentLocation: locationCoordinate) { [weak self] (result) in
+			guard let this = self else { return }
+			switch result {
+			case .success:
+				this.tableView.reloadData()
+				print("Get API success")
+				SVProgressHUD.dismiss()
+			case .failure(let error):
+				this.alert(msg: error.localizedDescription, handler: nil)
+			}
+		}
+	}
+}
 
 // MARK: MKMapViewDelegate
 extension DetailViewController: MKMapViewDelegate {
@@ -182,45 +195,53 @@ extension DetailViewController: MKMapViewDelegate {
 		}
 		return nil
 	}
-	
-	//MARK: - Renderer
+
+	// MARK: - Renderer
 	func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
 
 		if let polyline = overlay as? MKPolyline {
 			let renderer = MKPolylineRenderer(polyline: polyline)
-			renderer.strokeColor = UIColor.blue
-			renderer.lineWidth = 3
+			renderer.strokeColor = #colorLiteral(red: 0, green: 0.7669754028, blue: 0.3210973144, alpha: 1)
+			renderer.lineWidth = 6
 			return renderer
-
-		} else if let circle = overlay as? MKCircle {
-			let circleRenderer = MKCircleRenderer(circle: circle)
-			circleRenderer.fillColor = UIColor(red: 0, green: 0, blue: 1, alpha: 0.5)
-			circleRenderer.strokeColor = .blue
-			circleRenderer.lineWidth = 1
-			circleRenderer.lineDashPhase = 10
-			return circleRenderer
-
-		} else {
-			return MKOverlayRenderer()
 		}
+		return MKOverlayRenderer()
+	}
+}
 
+// MARK: TableViewDataSource
+extension DetailViewController: UITableViewDataSource {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		guard let numberofRows = viewModel?.venues.count else { return 0 }
+		return numberofRows
 	}
 
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: Config.detailTableViewCell, for: indexPath) as? DetailTableViewCell else {
+			return DetailTableViewCell()
+		}
+		cell.viewModel = viewModel?.getDetailTableViewModel(at: indexPath)
+		return cell
+	}
+}
 
-//	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-//		let selectedAnnotation = view.annotation as? MKPointAnnotation
-//		guard let coordinate = selectedAnnotation?.coordinate else { return }
-//		guard let viewModel = viewModel else { return }
-//		if let venue = viewModel.getVenue(at: coordinate) {
-//			viewModel.selectedVenue = venue
-//		}
-//	}
-//
-//	@objc private func selectPinView(_ sender: UIButton?) {
-//		let detailVC = DetailViewController()
-//		detailVC.viewModel = viewModel?.detailViewControllerModel()
-//		navigationController?.pushViewController(detailVC, animated: true)
-//	}
+// MARK: TableViewDelegate
+extension DetailViewController: UITableViewDelegate {
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return Config.heightForRow
+	}
+
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let detailVC = DetailViewController()
+		viewModel?.selectedVenue = viewModel?.venues[indexPath.row]
+		detailVC.viewModel = viewModel?.detailViewControllerModel()
+		navigationController?.pushViewController(detailVC, animated: true)
+	}
+}
+
+extension DetailViewController: LocationManagerDelegate {
+	func locationManager(locationManager: LocationManager, didUpdateCurrentLocation currentLocation: CLLocation) {
+	}
 }
 
 // MARK: Config
@@ -231,9 +252,11 @@ extension DetailViewController {
 		static let originX: CGFloat = 0
 		static let originY: CGFloat = 610
 		static let hightView: CGFloat = 200
-		static let latitudeDelta: CLLocationDegrees = 0.005
-		static let longitudeDelta: CLLocationDegrees = 0.005
+		static let latitudeDelta: CLLocationDegrees = 0.01
+		static let longitudeDelta: CLLocationDegrees = 0.01
 		static let lineWidth: CGFloat = 6
 		static let sizeOfImage: String = "414x414"
+		static let detailTableViewCell: String = "DetailTableViewCell"
+		static let heightForRow: CGFloat = 130
 	}
 }

@@ -3,6 +3,10 @@ import CoreLocation
 
 typealias LocationCompletion = (CLLocation) -> Void
 
+protocol LocationManagerDelegate: class {
+	func locationManager(locationManager: LocationManager, didUpdateCurrentLocation currentLocation: CLLocation)
+}
+
 final class LocationManager: NSObject {
 
 	// MARK: - Singleton
@@ -15,8 +19,11 @@ final class LocationManager: NSObject {
 	private var currentLocation: CLLocation?
 	private var currentCompletion: LocationCompletion?
 	private var locationCompletion: LocationCompletion?
-
 	private var isUpdatingLocation = false
+
+	// Delegate
+	weak var locationHomeDelegate: LocationManagerDelegate?
+	weak var locationDetailDelegate: LocationManagerDelegate?
 
 	// MARK: - init
 	override init() {
@@ -103,6 +110,8 @@ extension LocationManager: CLLocationManagerDelegate {
 			if let current = currentCompletion {
 				current(location)
 			}
+			locationHomeDelegate?.locationManager(locationManager: self, didUpdateCurrentLocation: location)
+			locationDetailDelegate?.locationManager(locationManager: self, didUpdateCurrentLocation: location)
 
 			if isUpdatingLocation, let updating = locationCompletion {
 				updating(location)

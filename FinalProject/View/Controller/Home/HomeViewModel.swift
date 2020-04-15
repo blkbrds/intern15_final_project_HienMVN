@@ -5,7 +5,7 @@ import RealmSwift
 final class HomeViewModel {
 
 	// MARK: - Prperties
-	private let limitVenue: Int = 5
+	private let limitVenue: Int = 7
 	var selectedVenue: VenueHome?
 
 	// MARK: - Public Method
@@ -16,7 +16,7 @@ final class HomeViewModel {
 			case .failure(let error):
 				completion(.failure(error))
 			case .success(let venueResult):
-				ObjectManager.share.venueHomes = venueResult.venues
+				ObjectManager.share.venueHomes = venueResult.venues.filter({ $0.location != nil })
 				completion(.success)
 			}
 		}
@@ -36,9 +36,10 @@ final class HomeViewModel {
 	}
 
 	func getVenue(at location: CLLocationCoordinate2D) -> VenueHome? {
-		return ObjectManager.share.venueHomes.filter({
-			location.latitude == $0.location?.latitude && location.longitude == $0.location?.longitude
-		})[0]
+		let venueHome = ObjectManager.share.venueHomes.first(where: { (venueHome) -> Bool in
+			location.latitude == venueHome.location?.latitude
+				&& location.longitude == venueHome.location?.longitude })
+		return venueHome
 	}
 
 	func detailViewControllerModel() -> DetailViewControllerModel? {

@@ -59,7 +59,7 @@ extension FavoriteViewController: UITableViewDataSource {
 			let viewModel = viewModel else {
 				fatalError("Imposible case")
 		}
-		cell.viewModel = viewModel.getCellViewModel(at: indexPath)
+		cell.viewModel = viewModel.getFavoriteTableViewCellModel(at: indexPath)
 		return cell
 	}
 }
@@ -83,6 +83,7 @@ extension FavoriteViewController: UITableViewDelegate {
 			}
 		}
 	}
+
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let detailVC = DetailViewController()
 		detailVC.viewModel = viewModel?.detailViewControllerModel(at: indexPath)
@@ -94,7 +95,6 @@ extension FavoriteViewController: UITableViewDelegate {
 extension FavoriteViewController {
 	struct Config {
 		static var favoriteTableViewCell = "FavoriteTableViewCell"
-		static var numberOfRow: Int = 10
-		static var heightForRow: CGFloat = 100
+		static var heightForRow: CGFloat = 150
 	}
 }

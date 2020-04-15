@@ -1,14 +1,7 @@
-//
-//  TabBarViewController.swift
-//  FinalProject
-//
-//  Created by Ngoc Hien on 3/11/20.
-//  Copyright © 2020 Asian Tech Inc.,. All rights reserved.
-//
-
 import UIKit
 
 final class TabBarViewController: UITabBarController {
+
 	// MARK: - Life cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -20,7 +13,8 @@ final class TabBarViewController: UITabBarController {
 		makeNavigationBarTransparent()
 	}
 
-	func makeNavigationBarTransparent(isTranslucent: Bool = true) {
+	// MARK: - Private Methods
+	private func makeNavigationBarTransparent(isTranslucent: Bool = true) {
 		if let navBar = self.navigationController?.navigationBar {
 			let blankImage = UIImage()
 			navBar.setBackgroundImage(blankImage, for: .default)
@@ -28,7 +22,7 @@ final class TabBarViewController: UITabBarController {
 			navBar.isTranslucent = isTranslucent
 		}
 	}
-	// MARK: - Private
+
 	private func setupTabBar() {
 		let homeVC = HomeViewController()
 		let homeNaVi = UINavigationController(rootViewController: homeVC)

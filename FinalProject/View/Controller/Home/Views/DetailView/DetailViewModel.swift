@@ -4,14 +4,17 @@ import UIKit
 
 final class DetailViewModel: ViewModel {
 
+	// MARK: - Properties
 	var venuesHome: [VenueHome] = []
 	var venuesDetail: [VenueDetail] = []
 
+	// MARK: - Life Cycle
 	init(_ venuesHome: [VenueHome] = [], _ venuesDetail: [VenueDetail] = []) {
 		self.venuesHome = venuesHome
 		self.venuesDetail = venuesDetail
 	}
 
+	// MARK: - Puclic Methods
 	func numberOfItem() -> Int {
 		return venuesDetail.count
 	}

@@ -6,7 +6,7 @@ final class DetailViewControllerModel {
 
 	// MARK: - Prperties
 	var venueDetail: VenueDetail?
-	private let limitVenue: Int = 5
+	private let limitVenue: Int = 10
 	private(set) var venues: [VenueHome] = []
 	var selectedVenue: VenueHome?
 	var id: String?
@@ -29,7 +29,7 @@ final class DetailViewControllerModel {
 		return CLLocationCoordinate2D(latitude: venueDetail.lat, longitude: venueDetail.lng)
 	}
 
-	// MARK: - Get API
+	// MARK: - Get API for VenuesSimilar
 	func getVenues(currentLocation: CLLocationCoordinate2D, completion: @escaping APICompletion) {
 		guard let lat = venueDetail?.lat,
 			let lng = venueDetail?.lng else {
@@ -48,6 +48,7 @@ final class DetailViewControllerModel {
 		}
 	}
 
+// MARK: - Get API for VenuesDetail
 	func getVenuesDetail(completion: @escaping APICompletion) {
 		guard let id = id else {
 			completion(.failure(Api.Error.emptyData))
@@ -65,13 +66,6 @@ final class DetailViewControllerModel {
 		}
 	}
 
-	// MARK: - Get venue đid select
-	func getVenue(at location: CLLocationCoordinate2D) -> VenueHome? {
-		return venues.filter({
-			location.latitude == $0.location?.latitude && location.longitude == $0.location?.longitude
-		})[0]
-	}
-
 	// MARK: - Push venueID and venuedetail  for detail
 	func detailViewControllerModel() -> DetailViewControllerModel {
 		let venueDetail = ObjectManager.share.venueDetails.first { $0.id == selectedVenue?.id }
@@ -80,5 +74,10 @@ final class DetailViewControllerModel {
 		} else {
 			return DetailViewControllerModel(venue: nil, id: selectedVenue?.id)
 		}
+	}
+	// MARK: -
+	func getDetailTableViewModel(at indexPath: IndexPath) -> DetailTableViewModel? {
+		guard indexPath.row < venues.count else { return nil }
+		return DetailTableViewModel(imageURL: venues[indexPath.row].prefix, locationName: venues[indexPath.row].name, address: venues[indexPath.row].address, city: venues[indexPath.row].country)
 	}
 }
