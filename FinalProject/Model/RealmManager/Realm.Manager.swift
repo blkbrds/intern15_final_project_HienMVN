@@ -74,4 +74,23 @@ class RealmManager {
 			print("Lỗi thêm đối tượng vào Realm")
 		}
 	}
+	func deleteOjbectInRealm(at id : String) {
+		do {
+			// realm
+			let realm = try Realm()
+			listItemFavorite = realm.objects(VenueDetail.self)
+			var itemFavorite: VenueDetail?
+			guard let listItemFavorite = listItemFavorite else { return }
+			for index in listItemFavorite where id == index.id {
+				itemFavorite = index
+			}
+			try realm.write {
+				guard let itemFavorite = itemFavorite else { return }
+				realm.delete(itemFavorite)
+			}
+			
+		} catch {
+			print("Lỗi xoá đối tượng vào Realm")
+		}
+	}
 }

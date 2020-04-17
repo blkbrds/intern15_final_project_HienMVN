@@ -22,11 +22,11 @@ class DetailTableViewCell: UITableViewCell {
 		cityLabel.text = viewModel?.city
 		locationNameLabel.text = viewModel?.locationName
 		guard let imageURL = viewModel?.imageURL else { return }
-		locationImageView.sd_setImage(with: URL(string: imageURL + "64.png"), placeholderImage: #imageLiteral(resourceName: "icons8-star-96"))
+		locationImageView.sd_setImage(with: URL(string: imageURL + "64.png"), placeholderImage: #imageLiteral(resourceName: "icons8-hand-drawn-star-100"))
 	}
 
 	private func setupUITableView() {
-		locationImageView.backgroundColor = #colorLiteral(red: 0.8795893192, green: 0.9392406344, blue: 0.9337235689, alpha: 1)
+		locationImageView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
 		locationImageView.layer.cornerRadius = 5
 		locationImageView.layer.shadowColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
 		locationImageView.layer.shadowOffset = CGSize(width: 0, height: 5.75)

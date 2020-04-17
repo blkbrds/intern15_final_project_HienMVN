@@ -10,7 +10,7 @@ final class VenueDetail: Object, Mappable {
 	@objc dynamic var lat: Double = 0
 	@objc dynamic var lng: Double = 0
 	@objc dynamic var countOfLike: Int = 3
-	@objc dynamic var descriptionText: String = "Если tour Eiffel лицо и визитная карточка Парижа, то Cité и расположенный тут Notre Dame его сердце ♥ а еще старинные улочки 😊"
+	@objc dynamic var descriptionText: String = "..."
 	@objc dynamic var openTime: String = "Closed until 2:00 PM"
 	@objc dynamic var prefix: String?
 	@objc dynamic var suffix: String?

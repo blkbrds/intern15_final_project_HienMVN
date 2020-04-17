@@ -20,6 +20,10 @@ final class FavoriteViewController: ViewController {
 		})
 	}
 
+	override func viewDidLoad() {
+		super.viewDidLoad()
+	}
+
 	// MARK: - Override Method
 	override func setupUI() {
 		title = "Favorite"
@@ -29,10 +33,14 @@ final class FavoriteViewController: ViewController {
 		tableView.delegate = self
 		tableView.allowsMultipleSelection = true
 		tableView.allowsSelectionDuringEditing = true
-
+		let imageBackgrond = UIImageView()
+		imageBackgrond.image = #imageLiteral(resourceName: "dsad")
+		imageBackgrond.alpha = 0.7
+		tableView.backgroundView = imageBackgrond
 		let deleteAllBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteAllDataRealm))
-		deleteAllBarButtonItem.tintColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+		deleteAllBarButtonItem.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 		self.navigationItem.rightBarButtonItem = deleteAllBarButtonItem
+		navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
 	}
 
 	// MARK: - Action
@@ -66,9 +74,6 @@ extension FavoriteViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension FavoriteViewController: UITableViewDelegate {
-	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return Config.heightForRow
-	}
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
 			tableView.beginUpdates()

@@ -14,7 +14,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Iyc-9e-0yw">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
+                    <rect key="frame" x="0.0" y="2" width="414" height="196"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="VmT-ls-V5K">
                         <size key="itemSize" width="414" height="200"/>
@@ -24,12 +24,12 @@
                     </collectionViewFlowLayout>
                 </collectionView>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="Iyc-9e-0yw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="9Fq-Sj-3lY"/>
+                <constraint firstItem="Iyc-9e-0yw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="9Fq-Sj-3lY"/>
                 <constraint firstItem="Iyc-9e-0yw" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Dey-Rb-BP8"/>
-                <constraint firstItem="Iyc-9e-0yw" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="kBE-KK-f0J"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Iyc-9e-0yw" secondAttribute="bottom" id="uJ9-Je-sI6"/>
+                <constraint firstAttribute="trailing" secondItem="Iyc-9e-0yw" secondAttribute="trailing" id="LHS-sj-8TU"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Iyc-9e-0yw" secondAttribute="bottom" constant="2" id="uJ9-Je-sI6"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

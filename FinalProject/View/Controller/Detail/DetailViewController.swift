@@ -2,10 +2,12 @@ import UIKit
 import MapKit
 import SDWebImage
 import SVProgressHUD
+import Cosmos
 
 final class DetailViewController: ViewController {
 
 	// MARK: Outlet
+	@IBOutlet weak var ratingView: RatingView!
 	@IBOutlet weak private var mapView: MKMapView!
 	@IBOutlet weak private var cityLabel: UILabel!
 	@IBOutlet weak private var favoriteButton: UIButton!
@@ -13,13 +15,13 @@ final class DetailViewController: ViewController {
 	@IBOutlet weak private var locationImageView: UIImageView!
 	@IBOutlet weak private var discriptionLabel: UILabel!
 	@IBOutlet weak private var likeLabel: UILabel!
-	@IBOutlet weak private var ratingLabel: UILabel!
 	@IBOutlet weak private var locationNameLabel: UILabel!
 	@IBOutlet weak private var addressLabel: UILabel!
 	@IBOutlet weak private var tableView: UITableView!
 
 	// MARK: Properties
 	private var currentLocation: CLLocationCoordinate2D?
+	private var favoriting: Bool = true
 	var viewModel: DetailViewControllerModel? {
 		didSet {
 			if viewModel?.venueDetail == nil {
@@ -43,10 +45,10 @@ final class DetailViewController: ViewController {
 	// MARK: Life Cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.backgroundColor = #colorLiteral(red: 0.2901675105, green: 0.29021433, blue: 0.2901572585, alpha: 1)
 		configMapView()
 		configTableView()
 		getAPIVenuesSimilar()
+		navigationController?.isNavigationBarHidden = true
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -58,7 +60,6 @@ final class DetailViewController: ViewController {
 		} else {
 			favoriteButton.isSelected = true
 		}
-		makeNavigationBarTransparent()
 	}
 
 	// MARK: Private Methods
@@ -83,35 +84,41 @@ final class DetailViewController: ViewController {
 		tableView.delegate = self
 	}
 
-	private func makeNavigationBarTransparent(isTranslucent: Bool = true) {
-		let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-back-52"), style: .plain, target: self, action: #selector(backTouchUpInside))
-		navigationItem.leftBarButtonItem = backButton
-		backButton.tintColor = #colorLiteral(red: 0.8098723292, green: 0.02284341678, blue: 0.3325383663, alpha: 1)
-		if let navBar = self.navigationController?.navigationBar {
-			let blankImage = UIImage()
-			navBar.setBackgroundImage(blankImage, for: .default)
-			navBar.shadowImage = blankImage
-			navBar.isTranslucent = isTranslucent
+	// MARK: Action Back To Home_VC
+	@IBAction func backTouchUpInside(_ sender: Any) {
+		navigationController?.popViewController(animated: true)
+		navigationController?.isNavigationBarHidden = false
+	}
+
+// MARK: Action Favorite
+	@IBAction func favoriteTouchUpInside(_ sender: Any) {
+		if favoriting {
+			favoriteButton.isSelected = !favoriteButton.isSelected
+			viewModel?.didUpdateFavorite()
+			favoriting = false
+		} else {
+			favoriteButton.isSelected = !favoriteButton.isSelected
+			viewModel?.deleteFavorite()
+			favoriting = true
 		}
 	}
 
-	// MARK: Action Back To Home_VC
-	@objc func backTouchUpInside() {
-		navigationController?.popViewController(animated: true)
-	}
-
-	// MARK: Private Methods
+// MARK: Private Methods
 	override func setupUI() {
 		guard let item = viewModel?.venueDetail else { return }
 		locationNameLabel.text = item.name
 		addressLabel.text = item.address
 		cityLabel.text = item.city
-		ratingLabel.text = String(item.rating)
+		ratingView.rating = item.rating / 2
 		likeLabel.text = String(item.countOfLike)
 		discriptionLabel.text = item.descriptionText
 		if let prefix = item.prefix, let sufix = item.suffix {
 			let url = prefix + Config.sizeOfImage + sufix
 			locationImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "dsad"))
+			let imageBackgrond = UIImageView()
+			imageBackgrond.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "dsad"))
+			imageBackgrond.alpha = 0.7
+			tableView.backgroundView = imageBackgrond
 		}
 		timeOpenLabel.text = item.openTime
 		favoriteButton.isSelected = item.favorite
@@ -151,18 +158,12 @@ final class DetailViewController: ViewController {
 			}
 		}
 	}
-
-	// MARK: Action
-	@IBAction func favoriteButtonTouchUpInside(_ sender: Any) {
-		favoriteButton.isSelected = !favoriteButton.isSelected
-		viewModel?.didUpdateFavorite()
-	}
 }
 
 // MARK: Get API
 extension DetailViewController {
 	func getAPIVenuesSimilar() {
-		SVProgressHUD.show()
+
 		guard let locationCoordinate = viewModel?.getLocationCoordinate() else { return }
 		viewModel?.getVenues(currentLocation: locationCoordinate) { [weak self] (result) in
 			guard let this = self else { return }
@@ -170,7 +171,6 @@ extension DetailViewController {
 			case .success:
 				this.tableView.reloadData()
 				print("Get API success")
-				SVProgressHUD.dismiss()
 			case .failure(let error):
 				this.alert(msg: error.localizedDescription, handler: nil)
 			}
@@ -255,7 +255,7 @@ extension DetailViewController {
 		static let latitudeDelta: CLLocationDegrees = 0.01
 		static let longitudeDelta: CLLocationDegrees = 0.01
 		static let lineWidth: CGFloat = 6
-		static let sizeOfImage: String = "414x414"
+		static let sizeOfImage: String = "414x854"
 		static let detailTableViewCell: String = "DetailTableViewCell"
 		static let heightForRow: CGFloat = 130
 	}

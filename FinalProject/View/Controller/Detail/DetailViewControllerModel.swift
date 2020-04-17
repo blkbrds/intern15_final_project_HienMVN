@@ -23,6 +23,11 @@ final class DetailViewControllerModel {
 		RealmManager.shared.addRealm(data: venueDetail)
 	}
 
+	func deleteFavorite() {
+		guard let idVenueDetail = venueDetail?.id else { return }
+		RealmManager.shared.deleteOjbectInRealm(at: idVenueDetail)
+	}
+
 	// MARK: - Get Coordinate of pin
 	func getLocationCoordinate() -> CLLocationCoordinate2D {
 		guard let venueDetail = venueDetail else { return CLLocationCoordinate2D(latitude: 0, longitude: 0) }

@@ -26,11 +26,11 @@ final class HomeViewController: ViewController {
 		configMapView()
 		configDetailView()
 		setupMenu()
+		makeNavigationBarTransparent()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		makeNavigationBarTransparent()
 	}
 
 	// MARK: - ConfigMap
@@ -43,13 +43,14 @@ final class HomeViewController: ViewController {
 
 	// MARK: - NavigationBar
 	private func makeNavigationBarTransparent(isTranslucent: Bool = true) {
-		title = " "
+		title = "Home "
 		let searchButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-search-50"), style: .plain, target: self, action: #selector(searchTouchUpInside))
 		let menuButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-menu-51"), style: .plain, target: self, action: #selector(menuTouchUpInside))
-		searchButton.tintColor = #colorLiteral(red: 0.8098723292, green: 0.02284341678, blue: 0.3325383663, alpha: 1)
-		menuButton.tintColor = #colorLiteral(red: 0.8098723292, green: 0.02284341678, blue: 0.3325383663, alpha: 1)
+		searchButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+		menuButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 		navigationItem.rightBarButtonItem = searchButton
 		navigationItem.leftBarButtonItem = menuButton
+		navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.482308507, green: 0.4823814631, blue: 0.4822924733, alpha: 1)
 	}
 
 	// MARK: - Setup Menu Method
@@ -113,7 +114,7 @@ final class HomeViewController: ViewController {
 	private func configDetailView() {
 		if detailView == nil {
 			guard let userView = Bundle.main.loadNibNamed(Config.detailView, owner: self, options: nil)?.first as? DetailView else { return }
-			userView.frame = CGRect(x: Config.originX, y: Config.originY, width: view.bounds.width, height: Config.hightView)
+			userView.frame = CGRect(x: Config.originX, y: UIScreen.main.bounds.height - Config.hightView - Config.originY, width: view.bounds.width, height: Config.hightView)
 			detailView = userView
 			view.addSubview(detailView)
 		}
@@ -136,7 +137,7 @@ extension HomeViewController: MKMapViewDelegate {
 			view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
 			let button = UIButton(type: .infoLight)
 			button.setImage(#imageLiteral(resourceName: "icons8-more-than-52"), for: .normal)
-			button.tintColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+			button.tintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
 			button.addTarget(self, action: #selector(selectPinView(_:)), for: .touchDown)
 			view.rightCalloutAccessoryView = button
 
@@ -222,7 +223,7 @@ extension HomeViewController {
 						anotation.title = venueHome.element.name
 						anotation.subtitle = venueHome.element.city
 						self?.mapView.addAnnotation(anotation)
-
+						
 					}
 				}
 			case .failure(let error):
@@ -289,7 +290,7 @@ extension HomeViewController {
 		static let detailView: String = "DetailView"
 		static let identifier: String = "Pin"
 		static let originX: CGFloat = 0
-		static let originY: CGFloat = 610
+		static let originY: CGFloat = 84
 		static let hightView: CGFloat = 200
 		static let latitudeDelta: CLLocationDegrees = 0.01
 		static let longitudeDelta: CLLocationDegrees = 0.01
