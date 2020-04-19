@@ -46,11 +46,11 @@ final class HomeViewController: ViewController {
 		title = "Home "
 		let searchButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-search-50"), style: .plain, target: self, action: #selector(searchTouchUpInside))
 		let menuButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-menu-51"), style: .plain, target: self, action: #selector(menuTouchUpInside))
-		searchButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-		menuButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+		searchButton.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+		menuButton.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
 		navigationItem.rightBarButtonItem = searchButton
 		navigationItem.leftBarButtonItem = menuButton
-		navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.482308507, green: 0.4823814631, blue: 0.4822924733, alpha: 1)
+		navigationController?.navigationBar.barTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 	}
 
 	// MARK: - Setup Menu Method

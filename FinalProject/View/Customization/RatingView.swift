@@ -29,7 +29,7 @@ class RatingView: UIStackView {
 			addArrangedSubview(image)
 		}
 	}
-	
+
 	private func updateUI() {
 		for i in 0..<subviews.count {
 			if let view = subviews[i] as? UIImageView {

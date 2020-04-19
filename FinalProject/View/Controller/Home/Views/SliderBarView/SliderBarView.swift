@@ -17,7 +17,7 @@ class SliderBarView: UIView {
 	// MARK: Override Init
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		self.backgroundColor = #colorLiteral(red: 0.2899999917, green: 0.2899999917, blue: 0.2899999917, alpha: 0.8146136558)
+		self.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.4571650257)
 		configTableView()
 	}
 

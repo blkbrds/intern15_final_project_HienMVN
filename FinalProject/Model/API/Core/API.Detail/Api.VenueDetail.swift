@@ -28,7 +28,10 @@ extension Api.VenueDetail {
 						completion(.failure(Api.Error.json))
 						return
 				}
-				completion(.success(venueResponse))
+				let serialQueue = DispatchQueue(label: "myqueue")
+				serialQueue.sync {
+					completion(.success(venueResponse))
+				}
 			}
 		}
 	}

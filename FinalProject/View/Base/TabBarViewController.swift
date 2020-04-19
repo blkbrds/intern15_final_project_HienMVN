@@ -8,37 +8,20 @@ final class TabBarViewController: UITabBarController {
 		setupTabBar()
 	}
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		makeNavigationBarTransparent()
-	}
-
-	// MARK: - Private Methods
-	private func makeNavigationBarTransparent(isTranslucent: Bool = true) {
-		if let navBar = self.navigationController?.navigationBar {
-			let blankImage = UIImage()
-			navBar.setBackgroundImage(blankImage, for: .default)
-			navBar.shadowImage = blankImage
-			navBar.isTranslucent = isTranslucent
-		}
-	}
-
 	private func setupTabBar() {
 		let homeVC = HomeViewController()
 		let homeNaVi = UINavigationController(rootViewController: homeVC)
 		let favoriteVC = FavoriteViewController()
-	//	favoriteVC.viewModel = FavoriteViewControllerModel()
+		favoriteVC.viewModel = FavoriteViewControllerModel()
 		let favoriteNavi = UINavigationController(rootViewController: favoriteVC)
 		homeVC.tabBarItem = UITabBarItem(title: "Map", image: #imageLiteral(resourceName: "map"), tag: 0)
-		favoriteVC.tabBarItem = UITabBarItem(title: "Favorite", image: #imageLiteral(resourceName: "heart"), tag: 1)
+		favoriteVC.tabBarItem = UITabBarItem(title: "Favorite", image: #imageLiteral(resourceName: "icons8-heart-49"), tag: 1)
 		viewControllers = [homeNaVi, favoriteNavi]
 		selectedIndex = 0
 		tabBar.unselectedItemTintColor = .black
-		tabBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-		tabBar.backgroundImage = #imageLiteral(resourceName: "unnamed")
+		tabBar.tintColor = #colorLiteral(red: 0, green: 0.5843623281, blue: 1, alpha: 1)
 		navigationController?.setNavigationBarHidden(false, animated: false)
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
 		let appearance = UITabBarItem.appearance()
 		appearance.setBadgeTextAttributes([NSAttributedString.Key.strokeColor: UIColor.systemPink], for: .normal)

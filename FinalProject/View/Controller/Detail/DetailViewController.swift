@@ -2,12 +2,11 @@ import UIKit
 import MapKit
 import SDWebImage
 import SVProgressHUD
-import Cosmos
 
 final class DetailViewController: ViewController {
 
 	// MARK: Outlet
-	@IBOutlet weak var ratingView: RatingView!
+	@IBOutlet weak private var ratingView: RatingView!
 	@IBOutlet weak private var mapView: MKMapView!
 	@IBOutlet weak private var cityLabel: UILabel!
 	@IBOutlet weak private var favoriteButton: UIButton!
@@ -85,13 +84,13 @@ final class DetailViewController: ViewController {
 	}
 
 	// MARK: Action Back To Home_VC
-	@IBAction func backTouchUpInside(_ sender: Any) {
+	@IBAction private func backTouchUpInside(_ sender: Any) {
 		navigationController?.popViewController(animated: true)
 		navigationController?.isNavigationBarHidden = false
 	}
 
 // MARK: Action Favorite
-	@IBAction func favoriteTouchUpInside(_ sender: Any) {
+	@IBAction private func favoriteTouchUpInside(_ sender: Any) {
 		if favoriting {
 			favoriteButton.isSelected = !favoriteButton.isSelected
 			viewModel?.didUpdateFavorite()
@@ -163,7 +162,6 @@ final class DetailViewController: ViewController {
 // MARK: Get API
 extension DetailViewController {
 	func getAPIVenuesSimilar() {
-
 		guard let locationCoordinate = viewModel?.getLocationCoordinate() else { return }
 		viewModel?.getVenues(currentLocation: locationCoordinate) { [weak self] (result) in
 			guard let this = self else { return }
@@ -227,9 +225,6 @@ extension DetailViewController: UITableViewDataSource {
 
 // MARK: TableViewDelegate
 extension DetailViewController: UITableViewDelegate {
-	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return Config.heightForRow
-	}
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let detailVC = DetailViewController()

@@ -8,18 +8,13 @@ final class FavoriteTableViewCell: UITableViewCell {
 	@IBOutlet weak private var favoriteImageView: UIImageView!
 	@IBOutlet weak private var nameLabel: UILabel!
 
-	@IBOutlet weak var ratingView: RatingView!
+	@IBOutlet weak private var ratingView: RatingView!
 	@IBOutlet weak private var timeOpenLabel: UILabel!
 	// MARK: - Properties
 	var viewModel: FavoriteTableViewCellModel? {
 		didSet {
 			updateTableViewCell()
 		}
-	}
-
-	// MARK: - Life Cycle
-	override func awakeFromNib() {
-		super.awakeFromNib()
 	}
 
 	// MARK: - Private Methods

@@ -15,7 +15,7 @@ final class VenueDetail: Object, Mappable {
 	@objc dynamic var prefix: String?
 	@objc dynamic var suffix: String?
 	var groups: JSArray?
-	@objc dynamic var rating: Int = 6
+	@objc dynamic var rating: Int = 0
 	@objc dynamic var favorite: Bool = false
 
 	required convenience init?(map: Map) {

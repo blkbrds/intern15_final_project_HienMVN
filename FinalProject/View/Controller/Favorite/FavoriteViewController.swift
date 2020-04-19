@@ -3,7 +3,7 @@ import UIKit
 final class FavoriteViewController: ViewController {
 
 	// MARK: - Outlets
-	@IBOutlet weak var tableView: UITableView!
+	@IBOutlet weak private var tableView: UITableView!
 
 	// MARK: - Properties
 	var viewModel: FavoriteViewControllerModel?
@@ -20,27 +20,14 @@ final class FavoriteViewController: ViewController {
 		})
 	}
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
-	}
-
 	// MARK: - Override Method
 	override func setupUI() {
 		title = "Favorite"
-		let nib = UINib(nibName: Config.favoriteTableViewCell, bundle: .main)
-		tableView.register(nib, forCellReuseIdentifier: Config.favoriteTableViewCell)
-		tableView.dataSource = self
-		tableView.delegate = self
-		tableView.allowsMultipleSelection = true
-		tableView.allowsSelectionDuringEditing = true
-		let imageBackgrond = UIImageView()
-		imageBackgrond.image = #imageLiteral(resourceName: "dsad")
-		imageBackgrond.alpha = 0.7
-		tableView.backgroundView = imageBackgrond
 		let deleteAllBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteAllDataRealm))
 		deleteAllBarButtonItem.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 		self.navigationItem.rightBarButtonItem = deleteAllBarButtonItem
-		navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+		navigationController?.navigationBar.barTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+		configTableView()
 	}
 
 	// MARK: - Action
@@ -52,6 +39,19 @@ final class FavoriteViewController: ViewController {
 				print("Error: Can't deleted ")
 			}
 		}
+	}
+
+	private func configTableView() {
+		let nib = UINib(nibName: Config.favoriteTableViewCell, bundle: .main)
+		tableView.register(nib, forCellReuseIdentifier: Config.favoriteTableViewCell)
+		tableView.dataSource = self
+		tableView.delegate = self
+		tableView.allowsMultipleSelection = true
+		tableView.allowsSelectionDuringEditing = true
+		let imageBackgrond = UIImageView()
+		imageBackgrond.image = #imageLiteral(resourceName: "dsad")
+		imageBackgrond.alpha = 0.7
+		tableView.backgroundView = imageBackgrond
 	}
 }
 
@@ -100,6 +100,5 @@ extension FavoriteViewController: UITableViewDelegate {
 extension FavoriteViewController {
 	struct Config {
 		static var favoriteTableViewCell = "FavoriteTableViewCell"
-		static var heightForRow: CGFloat = 150
 	}
 }
