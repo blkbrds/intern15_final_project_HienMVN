@@ -1,7 +1,6 @@
 import UIKit
 import MapKit
 import CoreLocation
-import SVProgressHUD
 
 final class HomeViewController: ViewController {
 
@@ -20,6 +19,10 @@ final class HomeViewController: ViewController {
 		mapView.delegate = self
 		mapView.showsUserLocation = true
 		configDetailView()
+		LocationManager.shared.startUpdating { [weak self] (location) in
+			guard self != nil else { return }
+			print("latitude: \(location.coordinate.latitude), longitude: \(location.coordinate.longitude)")
+		}
 		LocationManager.shared.getCurrentLocation(completion: { [weak self] (location) in
 			guard let `self` = self else { return }
 			self.currentLocation = location.coordinate
@@ -115,27 +118,24 @@ extension HomeViewController: MKMapViewDelegate {
 // MARK: Load Api
 extension HomeViewController {
 	func getVenueForHome(currentLocation: CLLocationCoordinate2D) {
-		SVProgressHUD.show()
 		viewModel.getVenues(currentLocation: currentLocation) { [weak self] (result) in
 			guard let this = self else {
 				return
 			}
 			switch result {
 			case .success:
-				print("OK")
-				SVProgressHUD.dismiss()
-				this.viewModel.getDetail(at: 0) { (result) in
-					switch result {
-					case .failure(let error):
-						print(error.localizedDescription)
-					case .success:
-						print("total: Ok")
-						DispatchQueue.main.async {
-							this.detailView.viewModel = DetailViewModel(ObjectManager.share.venues, ObjectManager.share.venueDetails)
+				this.viewModel.venues.forEach { (venue) in
+					if let id = venue.id {
+						this.viewModel.getVenuesHome(venueID: id) { (resultDetail) in
+							guard let this = self else { return }
+							switch resultDetail {
+							case .success:
+								venue.venuesDetail = this.viewModel.venueDetail
+							case .failure(let error):
+								this.alert(msg: error.localizedDescription, handler: nil)
+							}
 						}
 					}
-				}
-				ObjectManager.share.venues.forEach { (venue) in
 					if let location = venue.location {
 						let annotation = MKPointAnnotation()
 						annotation.coordinate = location
@@ -143,6 +143,7 @@ extension HomeViewController {
 						this.mapView.addAnnotation(annotation)
 					}
 				}
+				this.detailView.viewModel = DetailViewModel(this.viewModel.venues)
 			case .failure(let error):
 				this.alert(msg: error.localizedDescription, handler: nil)
 			}
