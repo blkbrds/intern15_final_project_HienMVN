@@ -50,8 +50,8 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="...  sadasdsadsa dasdasdasdasdasdasdasdasdasdasdas" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="526" translatesAutoresizingMaskIntoConstraints="NO" id="yHE-uo-bPw">
-                        <rect key="frame" x="120" y="20" width="445" height="57"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="...  sadasdsadsa dasdasdasdasdasdasdasdasdasdasdas" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHE-uo-bPw">
+                        <rect key="frame" x="120" y="20" width="435" height="57"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -70,7 +70,7 @@
                                             <constraint firstAttribute="height" constant="20" id="grL-ZX-nPu"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..... dasdasdasdasdasdasdsadasdasd " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TPN-Nh-5RB">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..... dasdasdasdasdasdasdsadasdasd " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TPN-Nh-5RB">
                                         <rect key="frame" x="25" y="0.0" width="430" height="20"/>
                                         <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="15"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -115,7 +115,7 @@
                     <constraint firstItem="Rdc-V6-4PE" firstAttribute="leading" secondItem="HwH-Cy-DRB" secondAttribute="leading" id="SEI-OM-h4D"/>
                     <constraint firstItem="izu-pB-00z" firstAttribute="leading" secondItem="mqm-vV-eaV" secondAttribute="trailing" constant="15" id="Scf-Jp-Mww"/>
                     <constraint firstItem="HwH-Cy-DRB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="WZ0-Fj-mCQ"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="yHE-uo-bPw" secondAttribute="trailing" constant="20" id="cUG-c0-8WG"/>
+                    <constraint firstAttribute="trailing" secondItem="yHE-uo-bPw" secondAttribute="trailing" constant="30" id="cUG-c0-8WG"/>
                     <constraint firstItem="izu-pB-00z" firstAttribute="top" secondItem="yHE-uo-bPw" secondAttribute="bottom" constant="10" id="cfs-zp-8j5"/>
                     <constraint firstItem="Rdc-V6-4PE" firstAttribute="top" secondItem="HwH-Cy-DRB" secondAttribute="top" id="eMw-e5-IqA"/>
                     <constraint firstAttribute="trailing" secondItem="HwH-Cy-DRB" secondAttribute="trailing" constant="10" id="iqz-7I-qC0"/>
@@ -132,7 +132,7 @@
                 <outlet property="locationImageView" destination="mqm-vV-eaV" id="QFv-RP-nQc"/>
                 <outlet property="locationNameLabel" destination="yHE-uo-bPw" id="pL3-Og-RTh"/>
             </connections>
-            <point key="canvasLocation" x="257.24637681159425" y="124.21875"/>
+            <point key="canvasLocation" x="143" y="120"/>
         </tableViewCell>
     </objects>
     <resources>

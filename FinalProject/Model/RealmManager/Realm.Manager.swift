@@ -88,7 +88,6 @@ class RealmManager {
 				guard let itemFavorite = itemFavorite else { return }
 				realm.delete(itemFavorite)
 			}
-			
 		} catch {
 			print("Lỗi xoá đối tượng vào Realm")
 		}

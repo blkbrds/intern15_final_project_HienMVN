@@ -17,7 +17,7 @@ class SliderBarView: UIView {
 	// MARK: Override Init
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		self.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.4571650257)
+		self.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.598432149)
 		configTableView()
 	}
 
@@ -58,12 +58,7 @@ extension SliderBarView: UITableViewDataSource {
 		cell.selectionStyle = .none
 		if indexPath.row == 0 {
 			cell.backgroundColor = .clear
-			let cellImg: UIImageView!
-			cellImg = UIImageView(frame: CGRect(x: Config.spacingX, y: Config.spacingY, width: Config.widthImage, height: Config.hightForRow))
-			cellImg?.image = #imageLiteral(resourceName: "icons8-select-all-96")
-			cellImg?.contentMode = .scaleAspectFill
-			cell.addSubview(cellImg)
-
+			
 			let cellLabel = UILabel(frame: CGRect(x: Config.xOrigin, y: cell.frame.height / 2 - Config.spacing, width: Config.widthLabel, height: Config.hightLabel))
 			cell.addSubview(cellLabel)
 			cellLabel.text = titles[indexPath.row]
@@ -100,12 +95,12 @@ extension SliderBarView: UITableViewDelegate {
 extension SliderBarView {
 	struct Config {
 		static var tableCelldetifier: String = "Cell"
-		static var hightForRowAtZero: CGFloat = 60
+		static var hightForRowAtZero: CGFloat = 43
 		static var hightForRow: CGFloat = 60
-		static var hightImage: CGFloat = 40
-		static var widthImage: CGFloat = 40
-		static var spacingX: CGFloat = 10
-		static var spacingY: CGFloat = 0
+		static var hightImage: CGFloat = 30
+		static var widthImage: CGFloat = 30
+		static var spacingX: CGFloat = 12
+		static var spacingY: CGFloat = 8
 		static var spacing: CGFloat = 15
 		static var basicWidth: CGFloat = 250
 		static var fontOfSize: CGFloat = 30

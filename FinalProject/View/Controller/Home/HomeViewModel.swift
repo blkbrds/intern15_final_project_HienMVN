@@ -23,14 +23,16 @@ final class HomeViewModel {
 	}
 
 	func getDetail(id: String, completion: @escaping APICompletion) {
-		Api.VenueDetail.getVenueDetail(id: id) { [weak self] (result) in
-			guard self != nil else { return }
-			switch result {
-			case .failure(let error):
-				completion(.failure(error))
-			case .success(let data):
-				ObjectManager.share.venueDetails.append(data)
-				completion(.success)
+		DispatchQueue.global(qos: .background).sync {
+			Api.VenueDetail.getVenueDetail(id: id) { [weak self] (result) in
+				guard self != nil else { return }
+				switch result {
+				case .failure(let error):
+					completion(.failure(error))
+				case .success(let data):
+					ObjectManager.share.venueDetails.append(data)
+					completion(.success)
+				}
 			}
 		}
 	}

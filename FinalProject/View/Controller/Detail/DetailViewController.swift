@@ -24,6 +24,7 @@ final class DetailViewController: ViewController {
 	var viewModel: DetailViewControllerModel? {
 		didSet {
 			if viewModel?.venueDetail == nil {
+				SVProgressHUD.show()
 				viewModel?.getVenuesDetail(completion: { [weak self] (result) in
 					guard let this = self else { return }
 					switch result {
@@ -33,6 +34,7 @@ final class DetailViewController: ViewController {
 						this.getAPIVenuesSimilar()
 						DispatchQueue.main.async {
 							this.setupUI()
+							SVProgressHUD.dismiss()
 						}
 					}
 				})

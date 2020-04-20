@@ -15,21 +15,20 @@ extension Api.VenueDetail {
 
 	// MARK: - Static Method
 	static func getVenueDetail(id: String, completion: @escaping DataCompletion<VenueDetail>) {
-		let urlString: String = QueryString.getUrlString(id: id)
-		api.request(method: .get, urlString: urlString) { result in
-			switch result {
-			case .failure(let error):
-				completion(.failure(error))
-			case .success(let json):
-				guard let json = json as? JSObject,
-					let response = json["response"] as? JSObject,
-					let venue = response["venue"] as? JSObject,
-					let venueResponse = Mapper<VenueDetail>().map(JSONObject: venue) else {
-						completion(.failure(Api.Error.json))
-						return
-				}
-				let serialQueue = DispatchQueue(label: "myqueue")
-				serialQueue.sync {
+		DispatchQueue.global(qos: .background).sync {
+			let urlString: String = QueryString.getUrlString(id: id)
+			api.request(method: .get, urlString: urlString) { result in
+				switch result {
+				case .failure(let error):
+					completion(.failure(error))
+				case .success(let json):
+					guard let json = json as? JSObject,
+						let response = json["response"] as? JSObject,
+						let venue = response["venue"] as? JSObject,
+						let venueResponse = Mapper<VenueDetail>().map(JSONObject: venue) else {
+							completion(.failure(Api.Error.json))
+							return
+					}
 					completion(.success(venueResponse))
 				}
 			}

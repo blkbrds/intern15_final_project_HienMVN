@@ -16,7 +16,6 @@ final class HomeViewController: ViewController {
 	private var viewModel = HomeViewModel()
 	private var currentLocation: CLLocationCoordinate2D?
 	private var mapCenterLocation: CLLocationCoordinate2D?
-
 	private var dispatchGroup = DispatchGroup()
 	private var anotationImage: UIImage?
 
@@ -53,7 +52,7 @@ final class HomeViewController: ViewController {
 		navigationController?.navigationBar.barTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 	}
 
-	// MARK: - Setup Menu Method
+	// MARK: - Setup Menu
 	private func setupMenu() {
 		sliderBarView = SliderBarView(frame: CGRect(x: 0, y: 0, width: 0, height: self.view.frame.height))
 		sliderBarView.delegate = self
@@ -71,7 +70,6 @@ final class HomeViewController: ViewController {
 	// MARK: - Action Menu
 	@objc private func menuTouchUpInside() {
 		blackScreen.isHidden = false
-		navigationController?.isNavigationBarHidden = true
 		UIView.animate(withDuration: 0.5, animations: {
 			self.sliderBarView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width / 2, height: self.view.frame.height)
 			self.blackScreen.frame = CGRect(x: self.sliderBarView.frame.width, y: 0, width: self.view.frame.width - self.sliderBarView.frame.width, height: self.view.bounds.height + 100)
@@ -85,7 +83,6 @@ final class HomeViewController: ViewController {
 		UIView.animate(withDuration: 0.5) {
 			self.sliderBarView.frame = CGRect(x: 0, y: 0, width: 0, height: self.view.frame.height)
 		}
-		navigationController?.isNavigationBarHidden = false
 	}
 
 	// MARK: - Action Search
@@ -201,7 +198,6 @@ extension HomeViewController {
 				this.mapView.removeAnnotations(this.mapView.annotations)
 				ObjectManager.share.venueHomes.forEach { (venue) in
 					this.dispatchGroup.enter()
-					SVProgressHUD.dismiss()
 					guard let id = venue.id else { return }
 					this.viewModel.getDetail(id: id) { (result) in
 						switch result {
@@ -223,7 +219,7 @@ extension HomeViewController {
 						anotation.title = venueHome.element.name
 						anotation.subtitle = venueHome.element.city
 						self?.mapView.addAnnotation(anotation)
-						
+						SVProgressHUD.dismiss()
 					}
 				}
 			case .failure(let error):
