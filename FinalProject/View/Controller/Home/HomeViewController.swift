@@ -124,7 +124,6 @@ extension HomeViewController {
 			}
 			switch result {
 			case .success:
-				print(this.viewModel.venues.count)
 				this.viewModel.venues.forEach { (venue) in
 					if let id = venue.id {
 						this.viewModel.getVenuesHome(venueID: id) { (resultDetail) in

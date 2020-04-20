@@ -9,14 +9,14 @@ final class DetailViewController: ViewController {
 	@IBOutlet weak var mapView: MKMapView!
 	@IBOutlet weak var cityLabel: UILabel!
 
-	@IBOutlet weak var favoriteButton: UIButton!
-	@IBOutlet weak var timeOpenLabel: UILabel!
-	@IBOutlet weak var locationImageView: UIImageView!
-	@IBOutlet weak var discriptionLabel: UILabel!
-	@IBOutlet weak var likeLabel: UILabel!
-	@IBOutlet weak var ratingLabel: UILabel!
-	@IBOutlet weak var locationNameLabel: UILabel!
-	@IBOutlet weak var addressLabel: UILabel!
+	@IBOutlet weak private var favoriteButton: UIButton!
+	@IBOutlet weak private var timeOpenLabel: UILabel!
+	@IBOutlet weak private var locationImageView: UIImageView!
+	@IBOutlet weak private var discriptionLabel: UILabel!
+	@IBOutlet weak private var likeLabel: UILabel!
+	@IBOutlet weak private var ratingLabel: UILabel!
+	@IBOutlet weak private var locationNameLabel: UILabel!
+	@IBOutlet weak private var addressLabel: UILabel!
 	// MARK: Properties
 	var viewModel: DetailViewControllerModel?
 
@@ -24,9 +24,7 @@ final class DetailViewController: ViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		mapView.delegate = self
-		// sua lai core location
 		center(location: mapView.userLocation.coordinate)
-//	navigationController?.setNavigationBarHidden(true, animated: true)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -36,7 +34,7 @@ final class DetailViewController: ViewController {
 	}
 
 	func makeNavigationBarTransparent(isTranslucent: Bool = true) {
-		if let navBar = self.navigationController?.navigationBar {
+		if let navBar = navigationController?.navigationBar {
 			let blankImage = UIImage()
 			navBar.setBackgroundImage(blankImage, for: .default)
 			navBar.shadowImage = blankImage
@@ -98,33 +96,8 @@ final class DetailViewController: ViewController {
 	@IBAction func favoriteButtonTouchUpInside(_ sender: Any) {
 		favoriteButton.isSelected = !favoriteButton.isSelected
 		viewModel?.didUpdateFavorite(isFav: favoriteButton.isSelected)
-		print("c")
 	}
 }
-// MARK: Get API
-// extension DetailViewController {
-//
-//	func getAPIForDetail() {
-//		viewModel?.getItems { [weak self] (result) in
-//			guard let this = self else { return }
-//			switch result {
-//			case .success:
-//				this.updateUI()
-//				if let lat = this.viewModel?.venueDetail?.lat, let lon = this.viewModel?.venueDetail?.lng {
-//					let annotation = MKPointAnnotation()
-//					let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-//					annotation.coordinate = location
-//					this.mapView.addAnnotation(annotation)
-//						// sua lai core location
-//					this.routing(source: this.mapView.userLocation.coordinate, destination: location)
-//					this.scrollView.isHidden = false
-//				}
-//			case .failure(let error):
-//				this.alert(msg: error.localizedDescription, handler: nil)
-//			}
-//		}
-//	}
-//}
 
 // MARK: MKMapViewDelegate
 extension DetailViewController: MKMapViewDelegate {
