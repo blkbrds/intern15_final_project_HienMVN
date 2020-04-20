@@ -323,7 +323,6 @@
 			isa = PBXGroup;
 			children = (
 				FD3B5A18242085D7005BC72C /* DetailView */,
-				FD3B5A13241F3511005BC72C /* MyPin */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -355,6 +354,7 @@
 				FDDFC32E242B54D90087142F /* TableViewCell */,
 				FDDF38BB2418EDF600F483B5 /* FavoriteViewController.swift */,
 				FDDFC334242BA42E0087142F /* FavoriteViewControllerModel.swift */,
+				FD3B5A13241F3511005BC72C /* MyPin */,
 				FDDF38BC2418EDF600F483B5 /* FavoriteViewController.xib */,
 			);
 			path = Favorite;
