@@ -19,7 +19,7 @@ target 'FinalProject' do
 
   # Utils
   pod 'SwifterSwift', '~> 5.0'
-  pod 'IQKeyboardManagerSwift', '~> 6.0.4', :inhibit_warnings => true
+#  pod 'IQKeyboardManagerSwift', '~> 6.0.4', :inhibit_warnings => true
   pod 'SwiftUtils', '4.2', :inhibit_warnings => true
 
   # UI

@@ -6,13 +6,13 @@ extension Api.VenueHome {
 	}
 
 	struct QueryString {
-		static func getVenue(lat: Double, long: Double) -> String {
-			return Api.Path.VenueHome.venueURL + "\(lat),\(long)"
+		static func getVenue(lat: Double, long: Double, limit: Int) -> String {
+			return Api.Path.VenueHome.venueURL + "\(lat),\(long)&limit=\(limit)"
 		}
 	}
 
-	static func getHomeData(lat: Double, long: Double, completion: @escaping DataCompletion<VenueResult>) {
-		let urlString: String = QueryString.getVenue(lat: lat, long: long)
+	static func getHomeData(lat: Double, long: Double, limit: Int, completion: @escaping DataCompletion<VenueResult>) {
+		let urlString: String = QueryString.getVenue(lat: lat, long: long, limit: limit)
 		api.request(method: .get, urlString: urlString) { (resutl) in
 			DispatchQueue.main.async {
 				switch resutl {

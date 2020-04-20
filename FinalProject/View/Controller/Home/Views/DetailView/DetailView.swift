@@ -61,12 +61,12 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 		return CGSize(width: UIScreen.main.bounds.width / 2 - 20, height: UIScreen.main.bounds.height / 2)
 	}
 
-	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		cell.alpha = 0
-		cell.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-		UIView.animate(withDuration: 1) {
-			cell.alpha = 1
-			cell.transform = .identity
-		}
-	}
+//	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//		cell.alpha = 0
+//		cell.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+//		UIView.animate(withDuration: 1) {
+//			cell.alpha = 1
+//			cell.transform = .identity
+//		}
+//	}
 }

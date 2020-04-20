@@ -234,7 +234,6 @@
 			isa = PBXGroup;
 			children = (
 				FD3B5A242420A04D005BC72C /* API.Home */,
-				FD3B5A2124209F8B005BC72C /* API.Detail */,
 				25BF8CBF24188248007F4C55 /* Api.swift */,
 				25BF8CC024188248007F4C55 /* Error.swift */,
 				25BF8CC324188248007F4C55 /* RequestSerializer.swift */,
@@ -324,7 +323,6 @@
 			isa = PBXGroup;
 			children = (
 				FD3B5A18242085D7005BC72C /* DetailView */,
-				FD3B5A13241F3511005BC72C /* MyPin */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -356,6 +354,7 @@
 				FDDFC32E242B54D90087142F /* TableViewCell */,
 				FDDF38BB2418EDF600F483B5 /* FavoriteViewController.swift */,
 				FDDFC334242BA42E0087142F /* FavoriteViewControllerModel.swift */,
+				FD3B5A13241F3511005BC72C /* MyPin */,
 				FDDF38BC2418EDF600F483B5 /* FavoriteViewController.xib */,
 			);
 			path = Favorite;
@@ -366,6 +365,7 @@
 			children = (
 				FDDFC33A242C7DE10087142F /* VenueDetail.swift */,
 				FDDFC33B242C7DE10087142F /* VenueHome.swift */,
+				FD3B5A2124209F8B005BC72C /* API.Detail */,
 			);
 			path = Scheme;
 			sourceTree = "<group>";
