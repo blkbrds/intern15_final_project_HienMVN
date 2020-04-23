@@ -58,7 +58,6 @@ extension SliderBarView: UITableViewDataSource {
 		cell.selectionStyle = .none
 		if indexPath.row == 0 {
 			cell.backgroundColor = .clear
-			
 			let cellLabel = UILabel(frame: CGRect(x: Config.xOrigin, y: cell.frame.height / 2 - Config.spacing, width: Config.widthLabel, height: Config.hightLabel))
 			cell.addSubview(cellLabel)
 			cellLabel.text = titles[indexPath.row]

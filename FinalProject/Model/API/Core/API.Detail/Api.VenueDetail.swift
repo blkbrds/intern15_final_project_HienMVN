@@ -15,7 +15,7 @@ extension Api.VenueDetail {
 
 	// MARK: - Static Method
 	static func getVenueDetail(id: String, completion: @escaping DataCompletion<VenueDetail>) {
-		DispatchQueue.global(qos: .background).sync {
+		DispatchQueue.main.async {
 			let urlString: String = QueryString.getUrlString(id: id)
 			api.request(method: .get, urlString: urlString) { result in
 				switch result {

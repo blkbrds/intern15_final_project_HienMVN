@@ -1,4 +1,5 @@
 import UIKit
+import RealmSwift
 
 final class FavoriteViewController: ViewController {
 
@@ -6,7 +7,7 @@ final class FavoriteViewController: ViewController {
 	@IBOutlet weak private var tableView: UITableView!
 
 	// MARK: - Properties
-	var viewModel: FavoriteViewControllerModel?
+	var viewModel: FavoriteViewControllerModel = FavoriteViewControllerModel()
 
 	// MARK: - Life Cycle
 	override func viewWillAppear(_ animated: Bool) {
@@ -63,9 +64,8 @@ extension FavoriteViewController: UITableViewDataSource {
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: Config.favoriteTableViewCell, for: indexPath) as? FavoriteTableViewCell,
-			let viewModel = viewModel else {
-				fatalError("Imposible case")
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: Config.favoriteTableViewCell, for: indexPath) as? FavoriteTableViewCell else {
+				return UITableViewCell()
 		}
 		cell.viewModel = viewModel.getFavoriteTableViewCellModel(at: indexPath)
 		return cell
@@ -91,7 +91,7 @@ extension FavoriteViewController: UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let detailVC = DetailViewController()
-		detailVC.viewModel = viewModel?.detailViewControllerModel(at: indexPath)
+		detailVC.viewModel = viewModel.detailViewControllerModel(at: indexPath)
 		navigationController?.pushViewController(detailVC, animated: true)
 	}
 }

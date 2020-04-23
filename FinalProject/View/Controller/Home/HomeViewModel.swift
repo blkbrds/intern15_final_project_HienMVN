@@ -23,7 +23,7 @@ final class HomeViewModel {
 	}
 
 	func getDetail(id: String, completion: @escaping APICompletion) {
-		DispatchQueue.global(qos: .background).sync {
+		DispatchQueue.main.async {
 			Api.VenueDetail.getVenueDetail(id: id) { [weak self] (result) in
 				guard self != nil else { return }
 				switch result {

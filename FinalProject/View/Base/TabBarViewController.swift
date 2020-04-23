@@ -12,7 +12,6 @@ final class TabBarViewController: UITabBarController {
 		let homeVC = HomeViewController()
 		let homeNaVi = UINavigationController(rootViewController: homeVC)
 		let favoriteVC = FavoriteViewController()
-		favoriteVC.viewModel = FavoriteViewControllerModel()
 		let favoriteNavi = UINavigationController(rootViewController: favoriteVC)
 		homeVC.tabBarItem = UITabBarItem(title: "Map", image: #imageLiteral(resourceName: "map"), tag: 0)
 		favoriteVC.tabBarItem = UITabBarItem(title: "Favorite", image: #imageLiteral(resourceName: "icons8-heart-49"), tag: 1)

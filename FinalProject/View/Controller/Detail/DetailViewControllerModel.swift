@@ -25,7 +25,7 @@ final class DetailViewControllerModel {
 
 	func deleteFavorite() {
 		guard let idVenueDetail = venueDetail?.id else { return }
-		RealmManager.shared.deleteOjbectInRealm(at: idVenueDetail)
+		RealmManager.shared.deleteOjbectInRealm(idVenue: idVenueDetail)
 	}
 
 	// MARK: - Get Coordinate of pin

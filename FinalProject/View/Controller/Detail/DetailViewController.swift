@@ -49,11 +49,11 @@ final class DetailViewController: ViewController {
 		configMapView()
 		configTableView()
 		getAPIVenuesSimilar()
-		navigationController?.isNavigationBarHidden = true
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		navigationController?.isNavigationBarHidden = true
 		guard let realm = RealmManager.shared.realm else { return }
 		guard let locationName = locationNameLabel.text else { return }
 		if realm.objects(VenueDetail.self).filter(NSPredicate(format: "name = %@", locationName)).isEmpty {

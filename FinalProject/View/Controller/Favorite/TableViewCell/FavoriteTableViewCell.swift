@@ -7,9 +7,9 @@ final class FavoriteTableViewCell: UITableViewCell {
 	@IBOutlet weak private var addressLabel: UILabel!
 	@IBOutlet weak private var favoriteImageView: UIImageView!
 	@IBOutlet weak private var nameLabel: UILabel!
-
 	@IBOutlet weak private var ratingView: RatingView!
 	@IBOutlet weak private var timeOpenLabel: UILabel!
+
 	// MARK: - Properties
 	var viewModel: FavoriteTableViewCellModel? {
 		didSet {

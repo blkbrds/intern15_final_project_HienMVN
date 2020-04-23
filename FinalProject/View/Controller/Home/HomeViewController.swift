@@ -6,8 +6,8 @@ import SVProgressHUD
 final class HomeViewController: ViewController {
 
 	// MARK: - Outlets
-	@IBOutlet weak var mapView: MKMapView!
-	@IBOutlet weak var currentLocationButton: CustomButton!
+	@IBOutlet weak private var mapView: MKMapView!
+	@IBOutlet weak private var currentLocationButton: CustomButton!
 
 	// MARK: - Properties
 	private var blackScreen: UIView!
@@ -30,6 +30,7 @@ final class HomeViewController: ViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		makeNavigationBarTransparent()
 	}
 
 	// MARK: - ConfigMap
@@ -133,14 +134,14 @@ extension HomeViewController: MKMapViewDelegate {
 			var view: MKPinAnnotationView
 			view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
 			let button = UIButton(type: .infoLight)
-			button.setImage(#imageLiteral(resourceName: "icons8-more-than-52"), for: .normal)
+			button.setImage(#imageLiteral(resourceName: "icons8-next-page-50"), for: .normal)
 			button.tintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
 			button.addTarget(self, action: #selector(selectPinView(_:)), for: .touchDown)
 			view.rightCalloutAccessoryView = button
 
 			if let detail = ObjectManager.share.venueDetails.first(where: { ($0.lat == annotation.coordinate.latitude && $0.lng == annotation.coordinate.longitude) }) {
 				let imageView = UIImageView()
-				imageView.frame.size = CGSize(width: 40, height: 40)
+				imageView.frame.size = CGSize(width: Config.sizeImageCallOut, height: Config.sizeImageCallOut)
 				imageView.sd_setImage(with: URL(string: (detail.prefix ?? "") + "414x414" + (detail.suffix ?? "")), placeholderImage: #imageLiteral(resourceName: "dsad"))
 				view.leftCalloutAccessoryView = imageView
 				view.canShowCallout = true
@@ -291,5 +292,6 @@ extension HomeViewController {
 		static let latitudeDelta: CLLocationDegrees = 0.01
 		static let longitudeDelta: CLLocationDegrees = 0.01
 		static let zoomDistance: CLLocationDistance = 5_000
+		static let sizeImageCallOut: CGFloat = 40
 	}
 }
