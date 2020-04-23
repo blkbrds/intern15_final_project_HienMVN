@@ -47,8 +47,6 @@ final class FavoriteViewController: ViewController {
 		tableView.register(nib, forCellReuseIdentifier: Config.favoriteTableViewCell)
 		tableView.dataSource = self
 		tableView.delegate = self
-		tableView.allowsMultipleSelection = true
-		tableView.allowsSelectionDuringEditing = true
 		let imageBackgrond = UIImageView()
 		imageBackgrond.image = #imageLiteral(resourceName: "dsad")
 		imageBackgrond.alpha = 0.7
