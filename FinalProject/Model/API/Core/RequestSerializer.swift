@@ -4,9 +4,11 @@ import Alamofire
 extension ApiManager {
 
 	@discardableResult
-	func request(method: HTTPMethod, urlString: URLStringConvertible, parameters: [String: Any]? = nil,
-				 encoding: ParameterEncoding = URLEncoding.default, headers: [String: String]? = nil,
-				 completion: Completion<Any>?) -> Request? {
+	func request(method: HTTPMethod, urlString: URLStringConvertible,
+		parameters: [String: Any]? = nil,
+		encoding: ParameterEncoding = URLEncoding.default,
+		headers: [String: String]? = nil,
+		completion: Completion<Any>?) -> Request? {
 		guard Network.shared.isReachable else {
 			completion?(.failure(Api.Error.network))
 			return nil
@@ -31,10 +33,14 @@ extension ApiManager {
 					headers: header
 				).responseJSON { response in
 //							print("-->", response.request?.url)
-					completion?(response.result)
+					DispatchQueue.main.async {
+						completion?(response.result)
+					}
 				}
 			} else {
+				DispatchQueue.main.async {
 					completion?(response.result)
+				}
 			}
 		}
 		return request
