@@ -33,7 +33,6 @@ extension ApiManager {
                                       encoding: encoding,
                                       headers: header
                         ).responseJSON { response in
-							print("-->", response.request?.url)
                             completion?(response.result)
                     }
                 } else {

@@ -17,7 +17,7 @@ final class DetailViewController: ViewController {
 	@IBOutlet weak private var ratingLabel: UILabel!
 	@IBOutlet weak private var locationNameLabel: UILabel!
 	@IBOutlet weak private var addressLabel: UILabel!
->>>>>>> master
+	
 	// MARK: Properties
 	var viewModel: DetailViewControllerModel? {
 		didSet {
@@ -47,12 +47,8 @@ final class DetailViewController: ViewController {
 		super.viewDidLoad()
 		view.backgroundColor = #colorLiteral(red: 0.2901675105, green: 0.29021433, blue: 0.2901572585, alpha: 1)
 		mapView.delegate = self
-<<<<<<< HEAD
 		guard let location = viewModel?.getLocationCoordinate() else { return }
 		center(location: location)
-=======
-		center(location: mapView.userLocation.coordinate)
->>>>>>> master
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -107,7 +103,6 @@ final class DetailViewController: ViewController {
 	}
 }
 
-<<<<<<< HEAD
 // MARK: Get API
 extension DetailViewController {
 	func getAPIForDetail() {
@@ -133,8 +128,6 @@ extension DetailViewController {
 	}
 }
 
-=======
->>>>>>> master
 // MARK: MKMapViewDelegate
 extension DetailViewController: MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
