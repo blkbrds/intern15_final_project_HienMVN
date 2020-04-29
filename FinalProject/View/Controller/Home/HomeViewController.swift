@@ -10,7 +10,7 @@ final class HomeViewController: ViewController {
 	@IBOutlet weak private var currentLocationButton: CustomButton!
 
 	// MARK: - Properties
-	private var detailView: DetailView!
+	private var detailView: DetailView?
 	private var viewModel = HomeViewModel()
 	private var currentLocation: CLLocationCoordinate2D?
 	private var mapCenterLocation: CLLocationCoordinate2D?
@@ -23,10 +23,10 @@ final class HomeViewController: ViewController {
 		mapView.showsUserLocation = true
 		configDetailView()
 		LocationManager.shared.getCurrentLocation(completion: { [weak self] (location) in
-			guard let `self` = self else { return }
-			self.currentLocation = location.coordinate
-			self.mapCenterLocation = location.coordinate
-			self.center(location: location.coordinate)
+			guard let this = self else { return }
+			this.currentLocation = location.coordinate
+			this.mapCenterLocation = location.coordinate
+			this.center(location: location.coordinate)
 		})
 	}
 
@@ -72,6 +72,7 @@ final class HomeViewController: ViewController {
 			guard let userView = Bundle.main.loadNibNamed(Config.detailView, owner: self, options: nil)?.first as? DetailView else { return }
 			userView.frame = CGRect(x: Config.originX, y: Config.originY, width: view.bounds.width, height: Config.hightView)
 			detailView = userView
+			guard let detailView = detailView else { return }
 			view.addSubview(detailView)
 		}
 	}
@@ -124,7 +125,7 @@ extension HomeViewController: MKMapViewDelegate {
 		center(location: coordinate)
 		if let venue = viewModel.getVenue(at: coordinate) {
 			viewModel.selectedVenue = venue
-			detailView.scrollCollectionView(to: venue)
+			detailView?.scrollCollectionView(to: venue)
 		}
 	}
 	func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
@@ -139,7 +140,6 @@ extension HomeViewController: MKMapViewDelegate {
 			if distanceInMeters >= Constant.distance && distanceInMeters <= Constant.maxDistance {
 				self.mapCenterLocation = mapViewCenterLocation.coordinate
 				getVenueForHome(currentLocation: placeLocation)
-				print("OK  😄")
 			}
 		}
 	}
@@ -162,9 +162,8 @@ extension HomeViewController {
 					case .failure(let error):
 						print(error.localizedDescription)
 					case .success:
-						print("total: Ok")
 						DispatchQueue.main.async {
-							this.detailView.viewModel = DetailViewModel(ObjectManager.share.venues, ObjectManager.share.venueDetails)
+							this.detailView?.viewModel = DetailViewModel(ObjectManager.share.venues, ObjectManager.share.venueDetails)
 						}
 					}
 				}
@@ -192,7 +191,7 @@ extension HomeViewController: UISearchBarDelegate {
 		activityIndicator.center = self.view.center
 		activityIndicator.hidesWhenStopped = true
 		activityIndicator.startAnimating()
-		self.view.addSubview(activityIndicator)
+		view.addSubview(activityIndicator)
 		searchBar.resignFirstResponder()
 		dismiss(animated: true, completion: nil)
 		let searchRequest = MKLocalSearch.Request()
