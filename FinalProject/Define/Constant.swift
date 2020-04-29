@@ -10,5 +10,5 @@ import UIKit
 
 struct Constant {
 	static let distance: Double = 300
-	static let maxDistance: Double = 2000
+	static let maxDistance: Double = 1_000
 }
