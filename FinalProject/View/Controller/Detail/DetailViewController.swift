@@ -153,11 +153,8 @@ extension DetailViewController: MKMapViewDelegate {
 
 	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
 		let selectedAnnotation = view.annotation as? MKPointAnnotation
-		guard let coordinate = selectedAnnotation?.coordinate else { return }
-		guard let viewModel = viewModel else { return }
-		if let venue = viewModel.getVenue(at: coordinate) {
-			viewModel.selectedVenue = venue
-		}
+		guard let viewModel = viewModel, let coordinate = selectedAnnotation?.coordinate, let venue = viewModel.getVenue(at: coordinate) else { return }
+		viewModel.selectedVenue = venue
 	}
 
 	@objc private func selectPinView(_ sender: UIButton?) {
