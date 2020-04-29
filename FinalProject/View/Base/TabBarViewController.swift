@@ -21,7 +21,7 @@ final class TabBarViewController: UITabBarController {
 	}
 
 	func makeNavigationBarTransparent(isTranslucent: Bool = true) {
-		if let navBar = self.navigationController?.navigationBar {
+		if let navBar = navigationController?.navigationBar {
 			let blankImage = UIImage()
 			navBar.setBackgroundImage(blankImage, for: .default)
 			navBar.shadowImage = blankImage
@@ -41,11 +41,12 @@ final class TabBarViewController: UITabBarController {
 		selectedIndex = 0
 		tabBar.unselectedItemTintColor = .black
 		tabBar.tintColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+
 		navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.view.backgroundColor = UIColor.clear
+		navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+		navigationController?.navigationBar.shadowImage = UIImage()
+		navigationController?.navigationBar.isTranslucent = true
+		navigationController?.view.backgroundColor = UIColor.clear
 		let appearance = UITabBarItem.appearance()
 		appearance.setBadgeTextAttributes([NSAttributedString.Key.strokeColor: UIColor.systemPink], for: .normal)
 		appearance.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)], for: .normal)

@@ -9,8 +9,7 @@ final class HomeViewModel {
 
 	// MARK: - Public Methods
 	func getVenues(currentLocation: CLLocationCoordinate2D, completion: @escaping APICompletion) {
-		Api.VenueHome.getHomeData(lat: currentLocation.latitude, long: currentLocation.longitude, limit: limitVenue) { [weak self] (result) in
-			guard self != nil else { return }
+		Api.VenueHome.getHomeData(lat: currentLocation.latitude, long: currentLocation.longitude, limit: limitVenue) { (result) in
 			switch result {
 			case .failure(let error):
 				completion(.failure(error))

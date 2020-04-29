@@ -6,16 +6,16 @@ import SVProgressHUD
 final class DetailViewController: ViewController {
 
 	// MARK: Outlet
-	@IBOutlet weak var mapView: MKMapView!
-	@IBOutlet weak var cityLabel: UILabel!
-	@IBOutlet weak var favoriteButton: UIButton!
-	@IBOutlet weak var timeOpenLabel: UILabel!
-	@IBOutlet weak var locationImageView: UIImageView!
-	@IBOutlet weak var discriptionLabel: UILabel!
-	@IBOutlet weak var likeLabel: UILabel!
-	@IBOutlet weak var ratingLabel: UILabel!
-	@IBOutlet weak var locationNameLabel: UILabel!
-	@IBOutlet weak var addressLabel: UILabel!
+	@IBOutlet weak private var mapView: MKMapView!
+	@IBOutlet weak private var cityLabel: UILabel!
+	@IBOutlet weak private var favoriteButton: UIButton!
+	@IBOutlet weak private var timeOpenLabel: UILabel!
+	@IBOutlet weak private var locationImageView: UIImageView!
+	@IBOutlet weak private var discriptionLabel: UILabel!
+	@IBOutlet weak private var likeLabel: UILabel!
+	@IBOutlet weak private var ratingLabel: UILabel!
+	@IBOutlet weak private var locationNameLabel: UILabel!
+	@IBOutlet weak private var addressLabel: UILabel!
 
 	// MARK: Properties
 	var viewModel: DetailViewControllerModel? {
@@ -152,11 +152,8 @@ extension DetailViewController: MKMapViewDelegate {
 
 	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
 		let selectedAnnotation = view.annotation as? MKPointAnnotation
-		guard let coordinate = selectedAnnotation?.coordinate else { return }
-		guard let viewModel = viewModel else { return }
-		if let venue = viewModel.getVenue(at: coordinate) {
-			viewModel.selectedVenue = venue
-		}
+		guard let viewModel = viewModel, let coordinate = selectedAnnotation?.coordinate, let venue = viewModel.getVenue(at: coordinate) else { return }
+		viewModel.selectedVenue = venue
 	}
 
 	@objc private func selectPinView(_ sender: UIButton?) {
