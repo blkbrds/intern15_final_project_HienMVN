@@ -6,8 +6,8 @@ import SVProgressHUD
 final class HomeViewController: ViewController {
 
 	// MARK: - Outlets
-	@IBOutlet weak var mapView: MKMapView!
-	@IBOutlet weak var currentLocationButton: CustomButton!
+	@IBOutlet weak private var mapView: MKMapView!
+	@IBOutlet weak private var currentLocationButton: CustomButton!
 
 	// MARK: - Properties
 	private var detailView: DetailView!
