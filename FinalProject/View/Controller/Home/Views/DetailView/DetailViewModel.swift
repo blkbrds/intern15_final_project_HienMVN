@@ -4,33 +4,34 @@ import UIKit
 
 final class DetailViewModel: ViewModel {
 
-	private(set) var venues: [VenueHome] = []
+	private(set) var venuesHome: [VenueHome] = []
+	private(set) var venuesDetail: [VenueDetail] = []
 
 	func numberOfIteam() -> Int {
-		return venues.count
+		return venuesHome.count
 	}
 
-	init(_ venus: [VenueHome] = []) {
-		self.venues = venus
+	init(_ venuesHome: [VenueHome] = [], _ venuesDetail: [VenueDetail] = []) {
+		self.venuesHome = venuesHome
+		self.venuesDetail = venuesDetail
 	}
 
 	func getIndexPathVenus(id: String) -> IndexPath? {
-		if let index = venues.map({ $0.id }).firstIndex(of: id) {
+		if let index = venuesHome.map({ $0.id }).firstIndex(of: id) {
 			return IndexPath(item: index, section: 0)
 		}
 		return nil
 	}
 
 	func updateInformationForCell(at indexPath: IndexPath) -> LocationViewCellModel {
-		guard let name = venues[indexPath.row].name,
-			let country = venues[indexPath.row].country,
-			let prefixDetail = venues[indexPath.row].venuesDetail?.prefix,
-			let suffixDetail = venues[indexPath.row].venuesDetail?.suffix
+		guard let name = venuesHome[indexPath.row].name,
+			let country = venuesHome[indexPath.row].country
 			else {
-				return LocationViewCellModel(locationImageURL: "", imageDetail: "")
+				return LocationViewCellModel()
 		}
-
-		let locationImageURL = venues[indexPath.row].prefix
-		return LocationViewCellModel(locationName: name, locationImageURL: locationImageURL ?? "", country: country, imageDetail: prefixDetail + "400x400" + suffixDetail)
+		let prefixDetail = venuesDetail[indexPath.row].prefix
+		let suffixDetail = venuesDetail[indexPath.row].suffix
+		let locationImageURL = venuesHome[indexPath.row].prefix
+		return LocationViewCellModel(locationName: name, locationImageURL: locationImageURL ?? "", country: country, suffix: suffixDetail ?? "", prefix: prefixDetail ?? "")
 	}
 }

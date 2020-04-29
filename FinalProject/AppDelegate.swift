@@ -1,6 +1,7 @@
 import UIKit
 import Realm
 import RealmSwift
+import SVProgressHUD
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,5 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window?.makeKeyAndVisible()
 		LocationManager.shared.request()
 		return true
+	}
+
+	private func configHUD() {
+		SVProgressHUD.setDefaultStyle(.custom)
+		SVProgressHUD.setDefaultMaskType(.custom)
+		SVProgressHUD.setBackgroundLayerColor(UIColor.black.withAlphaComponent(0.5))
 	}
 }

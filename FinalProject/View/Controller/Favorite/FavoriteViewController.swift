@@ -11,7 +11,7 @@ final class FavoriteViewController: ViewController {
 	// MARK: - Life Cycle
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		viewModel?.fetchDataRealm(completion: { (success) in
+		RealmManager.shared.fetchDataRealm(completion: { (success) in
 			if success {
 				tableView.reloadData()
 			} else {
@@ -27,6 +27,8 @@ final class FavoriteViewController: ViewController {
 		tableView.register(nib, forCellReuseIdentifier: Config.favoriteTableViewCell)
 		tableView.dataSource = self
 		tableView.delegate = self
+		tableView.allowsMultipleSelection = true
+		tableView.allowsSelectionDuringEditing = true
 
 		let deleteAllBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteAllDataRealm))
 		deleteAllBarButtonItem.tintColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
@@ -35,8 +37,7 @@ final class FavoriteViewController: ViewController {
 
 	// MARK: - Action
 	@objc func deleteAllDataRealm() {
-		guard let viewModel = viewModel else { return }
-		viewModel.deleteAllDataRealm { (success) in
+		RealmManager.shared.deleteAllDataRealm { (success) in
 			if success {
 				tableView.reloadData()
 			} else {
@@ -49,8 +50,7 @@ final class FavoriteViewController: ViewController {
 // MARK: - UITableViewDataSource
 extension FavoriteViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let viewModel = viewModel else { return 0 }
-		return viewModel.listItemFavorite?.count ?? 0
+		return RealmManager.shared.listItemFavorite?.count ?? 0
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -71,8 +71,7 @@ extension FavoriteViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
 			tableView.beginUpdates()
-			guard let viewModel = viewModel else { return }
-			viewModel.deleteObjectRealm(at: indexPath.row) { (success) in
+			RealmManager.shared.deleteObjectRealm(at: indexPath.row) { (success) in
 				if success {
 					tableView.deleteRows(at: [indexPath], with: .fade)
 					tableView.endUpdates()
@@ -83,13 +82,18 @@ extension FavoriteViewController: UITableViewDelegate {
 			}
 		}
 	}
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let detailVC = DetailViewController()
+		detailVC.viewModel = viewModel?.detailViewControllerModel(at: indexPath)
+		navigationController?.pushViewController(detailVC, animated: true)
+	}
 }
 
 // MARK: - Config
-extension FavoriteViewController {
-	struct Config {
-		static var favoriteTableViewCell = "FavoriteTableViewCell"
-		static var numberOfRow: Int = 10
-		static var heightForRow: CGFloat = 100
+	extension FavoriteViewController {
+		struct Config {
+			static var favoriteTableViewCell = "FavoriteTableViewCell"
+			static var numberOfRow: Int = 10
+			static var heightForRow: CGFloat = 100
+		}
 	}
-}
