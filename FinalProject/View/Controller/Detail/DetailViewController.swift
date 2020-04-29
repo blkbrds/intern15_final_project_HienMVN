@@ -17,7 +17,7 @@ final class DetailViewController: ViewController {
 	@IBOutlet weak private var ratingLabel: UILabel!
 	@IBOutlet weak private var locationNameLabel: UILabel!
 	@IBOutlet weak private var addressLabel: UILabel!
-	
+
 	// MARK: Properties
 	var viewModel: DetailViewControllerModel? {
 		didSet {

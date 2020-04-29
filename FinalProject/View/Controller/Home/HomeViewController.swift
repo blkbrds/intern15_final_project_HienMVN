@@ -124,13 +124,13 @@ extension HomeViewController {
 			}
 			switch result {
 			case .success:
-				this.viewModel.venues.forEach { (venue) in
-					if let id = venue.id {
-						this.viewModel.getVenuesHome(venueID: id) { (resultDetail) in
+				ObjectManager.share.venues.forEach { (venue) in
+					if let id = Int(venue.id ?? "") {
+						this.viewModel.getDetail(at: Int(id)) { (resultDetail) in
 							guard let this = self else { return }
 							switch resultDetail {
 							case .success:
-								venue.venuesDetail = this.viewModel.venueDetail
+								print("Success")
 							case .failure(let error):
 								this.alert(msg: error.localizedDescription, handler: nil)
 							}
@@ -143,7 +143,6 @@ extension HomeViewController {
 						this.mapView.addAnnotation(annotation)
 					}
 				}
-				this.detailView.viewModel = DetailViewModel(this.viewModel.venues)
 			case .failure(let error):
 				this.alert(msg: error.localizedDescription, handler: nil)
 			}
