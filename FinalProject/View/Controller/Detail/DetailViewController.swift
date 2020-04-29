@@ -6,9 +6,8 @@ import SVProgressHUD
 final class DetailViewController: ViewController {
 
 	// MARK: Outlet
-	@IBOutlet weak var mapView: MKMapView!
-	@IBOutlet weak var cityLabel: UILabel!
-
+	@IBOutlet weak private var mapView: MKMapView!
+	@IBOutlet weak private var cityLabel: UILabel!
 	@IBOutlet weak private var favoriteButton: UIButton!
 	@IBOutlet weak private var timeOpenLabel: UILabel!
 	@IBOutlet weak private var locationImageView: UIImageView!
