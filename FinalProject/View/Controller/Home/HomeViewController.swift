@@ -178,7 +178,6 @@ extension HomeViewController: MKMapViewDelegate {
 		let location: CLLocation = CLLocation(latitude: placeLocation.latitude, longitude: placeLocation.longitude)
 		let mapViewCenterLocation: CLLocation = CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
 		let distanceInMeters = location.distance(from: mapViewCenterLocation)
-		print(" 🚗 --> ", distanceInMeters)
 		if distanceInMeters >= Constant.distance && distanceInMeters <= Constant.maxDistance {
 			mapCenterLocation = mapViewCenterLocation.coordinate
 			getVenueForHome(currentLocation: mapViewCenterLocation.coordinate, query: "")

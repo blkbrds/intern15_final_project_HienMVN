@@ -32,7 +32,7 @@ extension ApiManager {
 					encoding: encoding,
 					headers: header
 				).responseJSON { response in
-//							print("-->", response.request?.url)
+
 					DispatchQueue.main.async {
 						completion?(response.result)
 					}
