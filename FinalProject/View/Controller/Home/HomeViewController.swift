@@ -1,17 +1,20 @@
 import UIKit
 import MapKit
 import CoreLocation
+import SVProgressHUD
 
 final class HomeViewController: ViewController {
 
 	// MARK: - Outlets
-	@IBOutlet weak var mapView: MKMapView!
-	@IBOutlet weak var currentLocationButton: CustomButton!
+	@IBOutlet weak private var mapView: MKMapView!
+	@IBOutlet weak private var currentLocationButton: CustomButton!
 
 	// MARK: - Properties
-	private var detailView: DetailView!
+	private var detailView: DetailView?
 	private var viewModel = HomeViewModel()
 	private var currentLocation: CLLocationCoordinate2D?
+	private var mapCenterLocation: CLLocationCoordinate2D?
+	private var firstLoadMap: Bool = true
 
 	// MARK: - Life Cycle
 	override func viewDidLoad() {
@@ -19,14 +22,11 @@ final class HomeViewController: ViewController {
 		mapView.delegate = self
 		mapView.showsUserLocation = true
 		configDetailView()
-		LocationManager.shared.startUpdating { [weak self] (location) in
-			guard self != nil else { return }
-			print("latitude: \(location.coordinate.latitude), longitude: \(location.coordinate.longitude)")
-		}
 		LocationManager.shared.getCurrentLocation(completion: { [weak self] (location) in
-			guard let `self` = self else { return }
-			self.currentLocation = location.coordinate
-			self.center(location: location.coordinate)
+			guard let this = self else { return }
+			this.currentLocation = location.coordinate
+			this.mapCenterLocation = location.coordinate
+			this.center(location: location.coordinate)
 		})
 	}
 
@@ -36,12 +36,27 @@ final class HomeViewController: ViewController {
 	}
 
 	func makeNavigationBarTransparent(isTranslucent: Bool = true) {
+		let searchButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-search-50"), style: .plain, target: self, action: #selector(searchTouchUpInside))
+		let menuButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-menu-51"), style: .plain, target: self, action: #selector(menuTouchUpInside))
+		searchButton.tintColor = #colorLiteral(red: 0.8098723292, green: 0.02284341678, blue: 0.3325383663, alpha: 1)
+		menuButton.tintColor = #colorLiteral(red: 0.8098723292, green: 0.02284341678, blue: 0.3325383663, alpha: 1)
+		navigationItem.rightBarButtonItem = searchButton
+		navigationItem.leftBarButtonItem = menuButton
 		if let navBar = self.navigationController?.navigationBar {
 			let blankImage = UIImage()
 			navBar.setBackgroundImage(blankImage, for: .default)
 			navBar.shadowImage = blankImage
 			navBar.isTranslucent = isTranslucent
 		}
+	}
+	@objc func menuTouchUpInside() {
+
+	}
+
+	@objc func searchTouchUpInside() {
+		let searchController = UISearchController(searchResultsController: nil)
+		searchController.searchBar.delegate = self
+		present(searchController, animated: true, completion: nil)
 	}
 
 // MARK: - Private Methods
@@ -57,6 +72,7 @@ final class HomeViewController: ViewController {
 			guard let userView = Bundle.main.loadNibNamed(Config.detailView, owner: self, options: nil)?.first as? DetailView else { return }
 			userView.frame = CGRect(x: Config.originX, y: Config.originY, width: view.bounds.width, height: Config.hightView)
 			detailView = userView
+			guard let detailView = detailView else { return }
 			view.addSubview(detailView)
 		}
 	}
@@ -109,33 +125,49 @@ extension HomeViewController: MKMapViewDelegate {
 		center(location: coordinate)
 		if let venue = viewModel.getVenue(at: coordinate) {
 			viewModel.selectedVenue = venue
-			detailView.scrollCollectionView(to: venue)
+			detailView?.scrollCollectionView(to: venue)
 		}
 	}
-
+	func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+		if firstLoadMap {
+			firstLoadMap = false
+		} else {
+			guard let placeLocation = mapCenterLocation else { return }
+			let location: CLLocation = CLLocation(latitude: placeLocation.latitude, longitude: placeLocation.longitude)
+			let mapViewCenterLocation: CLLocation = CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
+			let distanceInMeters = location.distance(from: mapViewCenterLocation)
+			print("--> ", distanceInMeters)
+			if distanceInMeters >= Constant.distance && distanceInMeters <= Constant.maxDistance {
+				self.mapCenterLocation = mapViewCenterLocation.coordinate
+				getVenueForHome(currentLocation: placeLocation)
+			}
+		}
+	}
 }
 
 // MARK: Load Api
 extension HomeViewController {
 	func getVenueForHome(currentLocation: CLLocationCoordinate2D) {
+		SVProgressHUD.show()
 		viewModel.getVenues(currentLocation: currentLocation) { [weak self] (result) in
 			guard let this = self else {
 				return
 			}
 			switch result {
 			case .success:
-				ObjectManager.share.venues.forEach { (venue) in
-					if let id = Int(venue.id ?? "") {
-						this.viewModel.getDetail(at: Int(id)) { (resultDetail) in
-							guard let this = self else { return }
-							switch resultDetail {
-							case .success:
-								print("Success")
-							case .failure(let error):
-								this.alert(msg: error.localizedDescription, handler: nil)
-							}
+				//	this.mapView.removeAnnotations(this.mapView.annotations)
+				SVProgressHUD.dismiss()
+				this.viewModel.getDetail(at: 0) { (result) in
+					switch result {
+					case .failure(let error):
+						print(error.localizedDescription)
+					case .success:
+						DispatchQueue.main.async {
+							this.detailView?.viewModel = DetailViewModel(ObjectManager.share.venues, ObjectManager.share.venueDetails)
 						}
 					}
+				}
+				ObjectManager.share.venues.forEach { (venue) in
 					if let location = venue.location {
 						let annotation = MKPointAnnotation()
 						annotation.coordinate = location
@@ -145,6 +177,43 @@ extension HomeViewController {
 				}
 			case .failure(let error):
 				this.alert(msg: error.localizedDescription, handler: nil)
+			}
+		}
+	}
+}
+
+// MARK: UISearchBarDelegate
+extension HomeViewController: UISearchBarDelegate {
+
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		UIApplication.shared.beginReceivingRemoteControlEvents()
+		let activityIndicator = UIActivityIndicatorView()
+		activityIndicator.center = self.view.center
+		activityIndicator.hidesWhenStopped = true
+		activityIndicator.startAnimating()
+		view.addSubview(activityIndicator)
+		searchBar.resignFirstResponder()
+		dismiss(animated: true, completion: nil)
+		let searchRequest = MKLocalSearch.Request()
+		searchRequest.naturalLanguageQuery = searchBar.text
+		let activeSearch = MKLocalSearch(request: searchRequest)
+		activeSearch.start { (response, error) in
+			activityIndicator.stopAnimating()
+			UIApplication.shared.endReceivingRemoteControlEvents()
+			if response == nil {
+				print(error?.localizedDescription as Any)
+			} else {
+				self.mapView.removeAnnotations(self.mapView.annotations)
+				guard let latitude = response?.boundingRegion.center.latitude,
+					let longtide = response?.boundingRegion.center.longitude else { return }
+				let annotation = MKPointAnnotation()
+				annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longtide)
+				self.mapView.addAnnotation(annotation)
+				let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longtide)
+				self.getVenueForHome(currentLocation: coordinate)
+				let span = MKCoordinateSpan(latitudeDelta: Config.latitudeDelta, longitudeDelta: Config.longitudeDelta)
+				let region = MKCoordinateRegion(center: coordinate, span: span)
+				self.mapView.setRegion(region, animated: true)
 			}
 		}
 	}

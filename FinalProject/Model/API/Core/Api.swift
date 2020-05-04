@@ -16,7 +16,7 @@ final class Api {
 extension Api.Path {
 	struct VenueHome {
 		static let path: String = baseURL / version
-		static let venueURL: String = path / "venues" / "search?client_id=U15EYIZEPQYA1J4OD4RDOX3AODLXS2BEVPB0Q50MDV51CIQL&client_secret=Z11A3B140OMH0NZEMM2URPCCFEE1FVPB0YEPAOD5G3NB1DXE&v=20130815&ll="
+		static let venueURL: String = path / "venues" / "search?client_id=E5LY2IS5QDA5G1KKIAE3XXK0OGD4T3L1U2TWT4LZFGWAMEOD&client_secret=PELFEG4UP21Q1PHTCD3IZXOQPV0RII4NI5SR4MHRTKP0SXF3&v=20130815&ll="
 	}
 	struct VenueDetail {
 		static let path: String = baseURL / version
