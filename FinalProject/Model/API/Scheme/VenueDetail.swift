@@ -21,6 +21,7 @@ final class VenueDetail: Object, Mappable {
 	required convenience init?(map: Map) {
 		self.init()
 	}
+
 	override static func primaryKey() -> String? {
 		return "id"
 	}

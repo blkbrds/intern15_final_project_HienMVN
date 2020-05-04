@@ -24,7 +24,6 @@ extension Request {
         }
 
         let statusCode = response.statusCode
-		print("--> ", statusCode)
         if let error = error {
             return .failure(error)
         }
