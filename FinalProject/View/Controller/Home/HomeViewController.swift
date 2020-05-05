@@ -155,7 +155,7 @@ extension HomeViewController: MKMapViewDelegate {
 		return nil
 	}
 
-// MARK: - Action Select Pin
+	// MARK: - Action Select Pin
 	@objc private func selectPinView(_ sender: UIButton?) {
 		let detailVC = DetailViewController()
 		detailVC.viewModel = viewModel.detailViewControllerModel()
