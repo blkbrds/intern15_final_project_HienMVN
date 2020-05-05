@@ -8,6 +8,7 @@ final class TabBarViewController: UITabBarController {
 		setupTabBar()
 	}
 
+	// MARK: - Private Method
 	private func setupTabBar() {
 		let homeVC = HomeViewController()
 		let homeNaVi = UINavigationController(rootViewController: homeVC)
