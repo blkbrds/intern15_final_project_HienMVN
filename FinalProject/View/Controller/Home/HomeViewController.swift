@@ -10,9 +10,9 @@ final class HomeViewController: ViewController {
 	@IBOutlet weak private var currentLocationButton: CustomButton!
 
 	// MARK: - Properties
-	private var blackScreen: UIView!
-	private var sliderBarView: SliderBarView!
-	private var detailView: DetailView!
+	private var blackScreen: UIView?
+	private var sliderBarView: SliderBarView?
+	private var detailView: DetailView?
 	private var viewModel = HomeViewModel()
 	private var currentLocation: CLLocationCoordinate2D?
 	private var mapCenterLocation: CLLocationCoordinate2D?
@@ -56,13 +56,15 @@ final class HomeViewController: ViewController {
 	// MARK: - Setup Menu
 	private func setupMenu() {
 		sliderBarView = SliderBarView(frame: CGRect(x: 0, y: 0, width: 0, height: self.view.frame.height))
-		sliderBarView.delegate = self
-		sliderBarView.layer.zPosition = 100
+		sliderBarView?.delegate = self
+		sliderBarView?.layer.zPosition = 100
+		guard let sliderBarView = sliderBarView else { return }
 		navigationController?.view.addSubview(sliderBarView)
 		blackScreen = UIView(frame: view.bounds)
-		blackScreen.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.2757651969)
-		blackScreen.isHidden = true
-		blackScreen.layer.zPosition = 99
+		blackScreen?.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.2757651969)
+		blackScreen?.isHidden = true
+		blackScreen?.layer.zPosition = 99
+		guard let blackScreen = blackScreen else { return }
 		view.addSubview(blackScreen)
 		let tapGestRecognizer = UITapGestureRecognizer(target: self, action: #selector(blackScreenTapAction(sender:)))
 		blackScreen.addGestureRecognizer(tapGestRecognizer)
@@ -70,19 +72,20 @@ final class HomeViewController: ViewController {
 
 	// MARK: - Action Menu
 	@objc private func menuTouchUpInside() {
-		blackScreen.isHidden = false
+		blackScreen?.isHidden = false
 		UIView.animate(withDuration: 0.5, animations: {
-			self.sliderBarView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width / 2, height: self.view.frame.height)
-			self.blackScreen.frame = CGRect(x: self.sliderBarView.frame.width, y: 0, width: self.view.frame.width - self.sliderBarView.frame.width, height: self.view.bounds.height + 100)
+			self.sliderBarView?.frame = CGRect(x: 0, y: 0, width: self.view.frame.width / 2, height: self.view.frame.height)
+			guard let xOrigin = self.sliderBarView?.frame.width else { return }
+			self.blackScreen?.frame = CGRect(x: xOrigin, y: 0, width: self.view.frame.width - (self.sliderBarView?.frame.width ?? 0), height: self.view.bounds.height + 100)
 		})
 	}
 
 	// MARK: - Action Back Screen
 	@objc private func blackScreenTapAction(sender: UITapGestureRecognizer) {
-		blackScreen.isHidden = true
-		blackScreen.frame = view.bounds
+		blackScreen?.isHidden = true
+		blackScreen?.frame = view.bounds
 		UIView.animate(withDuration: 0.5) {
-			self.sliderBarView.frame = CGRect(x: 0, y: 0, width: 0, height: self.view.frame.height)
+			self.sliderBarView?.frame = CGRect(x: 0, y: 0, width: 0, height: self.view.frame.height)
 		}
 	}
 
@@ -114,6 +117,7 @@ final class HomeViewController: ViewController {
 			guard let userView = Bundle.main.loadNibNamed(Config.detailView, owner: self, options: nil)?.first as? DetailView else { return }
 			userView.frame = CGRect(x: Config.originX, y: UIScreen.main.bounds.height - Config.hightView - Config.originY, width: view.bounds.width, height: Config.hightView)
 			detailView = userView
+			guard let detailView = detailView else { return }
 			view.addSubview(detailView)
 		}
 	}
@@ -169,7 +173,7 @@ extension HomeViewController: MKMapViewDelegate {
 		center(location: coordinate)
 		if let venue = viewModel.getVenue(at: coordinate) {
 			viewModel.selectedVenue = venue
-			detailView.scrollCollectionView(to: venue)
+			detailView?.scrollCollectionView(to: venue)
 		}
 	}
 
@@ -210,7 +214,7 @@ extension HomeViewController {
 					}
 				}
 				this.dispatchGroup.notify(queue: .main) {
-					this.detailView.viewModel = DetailViewModel(ObjectManager.share.venueHomes, ObjectManager.share.venueDetails)
+					this.detailView?.viewModel = DetailViewModel(ObjectManager.share.venueHomes, ObjectManager.share.venueDetails)
 					for venueHome in ObjectManager.share.venueDetails.enumerated() where venueHome.offset <= ObjectManager.share.venueHomes.count {
 						let anotation = MKPointAnnotation()
 						let latitude = venueHome.element.lat
@@ -218,7 +222,7 @@ extension HomeViewController {
 						anotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: logtitude)
 						anotation.title = venueHome.element.name
 						anotation.subtitle = venueHome.element.city
-						self?.mapView.addAnnotation(anotation)
+						this.mapView.addAnnotation(anotation)
 						SVProgressHUD.dismiss()
 					}
 				}
@@ -237,7 +241,7 @@ extension HomeViewController: UISearchBarDelegate {
 		activityIndicator.center = self.view.center
 		activityIndicator.hidesWhenStopped = true
 		activityIndicator.startAnimating()
-		self.view.addSubview(activityIndicator)
+		view.addSubview(activityIndicator)
 		searchBar.resignFirstResponder()
 		dismiss(animated: true, completion: nil)
 		let searchRequest = MKLocalSearch.Request()

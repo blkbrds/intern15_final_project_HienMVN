@@ -23,8 +23,7 @@ final class HomeViewModel {
 	}
 
 	func getDetail(id: String, completion: @escaping APICompletion) {
-		Api.VenueDetail.getVenueDetail(id: id) { [weak self] (result) in
-			guard self != nil else { return }
+		Api.VenueDetail.getVenueDetail(id: id) { (result) in
 			switch result {
 			case .failure(let error):
 				completion(.failure(error))

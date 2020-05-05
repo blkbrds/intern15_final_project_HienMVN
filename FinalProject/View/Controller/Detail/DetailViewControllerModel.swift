@@ -13,7 +13,7 @@ final class DetailViewControllerModel {
 
 	// MARK: - Init
 	init(venue: VenueDetail?, id: String?) {
-		self.venueDetail = venue
+		venueDetail = venue
 		self.id = id
 	}
 

@@ -26,7 +26,7 @@ final class FavoriteViewController: ViewController {
 		title = "Favorite"
 		let deleteAllBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteAllDataRealm))
 		deleteAllBarButtonItem.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-		self.navigationItem.rightBarButtonItem = deleteAllBarButtonItem
+		navigationItem.rightBarButtonItem = deleteAllBarButtonItem
 		navigationController?.navigationBar.barTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 		configTableView()
 	}
