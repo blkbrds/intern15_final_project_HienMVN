@@ -32,7 +32,7 @@ final class FavoriteViewController: ViewController {
 	}
 
 	// MARK: - Action
-	@objc func deleteAllDataRealm() {
+	@objc private func deleteAllDataRealm() {
 		RealmManager.shared.deleteAllDataRealm { (success) in
 			if success {
 				tableView.reloadData()
