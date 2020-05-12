@@ -1,6 +1,6 @@
 import UIKit
 
-class DetailTableViewCell: UITableViewCell {
+final class DetailTableViewCell: UITableViewCell {
 
 	@IBOutlet weak private  var locationNameLabel: UILabel!
 	@IBOutlet weak private var addressLabel: UILabel!
