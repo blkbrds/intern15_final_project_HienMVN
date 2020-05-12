@@ -1,6 +1,6 @@
 import Foundation
 
-final class DetailTableViewModel {
+class DetailTableViewModel {
 
 	var locationName: String?
 	var imageURL: String?

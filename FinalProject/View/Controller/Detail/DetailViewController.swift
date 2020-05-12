@@ -244,7 +244,6 @@ extension DetailViewController: LocationManagerDelegate {
 // MARK: Config
 extension DetailViewController {
 	struct Config {
-		static let detailView: String = "DetailView"
 		static let identifier: String = "Pin"
 		static let originX: CGFloat = 0
 		static let originY: CGFloat = 610

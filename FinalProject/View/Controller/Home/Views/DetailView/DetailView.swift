@@ -4,8 +4,7 @@ final class DetailView: UIView {
 
 	// MARK: - Outlet
 	@IBOutlet weak private var detailCollectionView: UICollectionView!
-	@IBOutlet weak private var locationNameLabel: UILabel!
-	@IBOutlet weak private var addressLabel: UILabel!
+
 
 	// MARK: - Properties
 	private let locationCollectionViewCell = "LocationCollectionViewCell"

@@ -1,9 +1,8 @@
 import UIKit
 
-final class DetailTableViewCell: UITableViewCell {
-	
+class DetailTableViewCell: UITableViewCell {
+
 	@IBOutlet weak private  var locationNameLabel: UILabel!
-	@IBOutlet weak private var backgroundImageView: UIImageView!
 	@IBOutlet weak private var addressLabel: UILabel!
 	@IBOutlet weak private var cityLabel: UILabel!
 	@IBOutlet weak private var locationImageView: UIImageView!
