@@ -5,7 +5,6 @@ final class DetailView: UIView {
 	// MARK: - Outlet
 	@IBOutlet weak private var detailCollectionView: UICollectionView!
 
-
 	// MARK: - Properties
 	private let locationCollectionViewCell = "LocationCollectionViewCell"
 	var viewModel: DetailViewModel? {

@@ -6,7 +6,7 @@ typealias Network = NetworkReachabilityManager
 
 // MARK: - Network
 extension Network {
-	
+
 	static let shared: Network = {
 		guard let manager = Network() else {
 			fatalError("Cannot alloc network reachability manager!")
@@ -16,7 +16,7 @@ extension Network {
 }
 
 extension Api {
-	
+
 	struct Error {
 		static let network = NSError(domain: NSCocoaErrorDomain, message: "Occurred network connection error. Please check your network connection and try again.")
 		static let notFound = NSError(domain: NSCocoaErrorDomain, code: 404, message: "The requested page could not be found but may be available again in the future.")
@@ -49,17 +49,17 @@ extension Api {
 }
 
 extension Error {
-	
+
 	func show() {
 		let `self` = self as NSError
 		self.show()
 	}
-	
+
 	public var code: Int {
 		let `self` = self as NSError
 		return self.code
 	}
-	
+
 	public var errorsString: [String] {
 		let `self` = self as NSError
 		return self.errorsString
