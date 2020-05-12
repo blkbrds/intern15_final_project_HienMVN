@@ -36,7 +36,6 @@
 		FD3B5A2824210B03005BC72C /* LocationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3B5A2624210B03005BC72C /* LocationCollectionViewCell.swift */; };
 		FD3B5A2924210B03005BC72C /* LocationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD3B5A2724210B03005BC72C /* LocationCollectionViewCell.xib */; };
 		FD3B5A2D24221243005BC72C /* LocationViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3B5A2C24221243005BC72C /* LocationViewCellModel.swift */; };
-		FD4EB057244755D4004C1CF5 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD4EB056244755D3004C1CF5 /* DetailViewController.xib */; };
 		FD5B6219241B43FA007811C6 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5B6218241B43FA007811C6 /* LocationManager.swift */; };
 		FD83B32324284F9A008DAE09 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD83B32124284F9A008DAE09 /* DetailViewController.swift */; };
 		FD83B32624286802008DAE09 /* DetailViewControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD83B32524286802008DAE09 /* DetailViewControllerModel.swift */; };
@@ -412,7 +411,6 @@
 				FDDFC32E242B54D90087142F /* TableViewCell */,
 				FDDF38BB2418EDF600F483B5 /* FavoriteViewController.swift */,
 				FDDFC334242BA42E0087142F /* FavoriteViewControllerModel.swift */,
-				FD3B5A13241F3511005BC72C /* MyPin */,
 				FDDF38BC2418EDF600F483B5 /* FavoriteViewController.xib */,
 			);
 			path = Favorite;
@@ -511,7 +509,6 @@
 				25BF8C9124187CFF007F4C55 /* Assets.xcassets in Resources */,
 				FDDF38BE2418EDF600F483B5 /* FavoriteViewController.xib in Resources */,
 				FD3B5A2924210B03005BC72C /* LocationCollectionViewCell.xib in Resources */,
-				FD4EB057244755D4004C1CF5 /* DetailViewController.xib in Resources */,
 				FDDFC332242B550C0087142F /* FavoriteTableViewCell.xib in Resources */,
 				FDDF38C42418F07B00F483B5 /* HomeViewController.xib in Resources */,
 				FD3B5A1C24208625005BC72C /* DetailView.xib in Resources */,
