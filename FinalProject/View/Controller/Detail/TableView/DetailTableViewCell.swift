@@ -1,6 +1,7 @@
 import UIKit
 
-class DetailTableViewCell: UITableViewCell {
+final class DetailTableViewCell: UITableViewCell {
+	
 	@IBOutlet weak private  var locationNameLabel: UILabel!
 	@IBOutlet weak private var backgroundImageView: UIImageView!
 	@IBOutlet weak private var addressLabel: UILabel!
@@ -12,6 +13,7 @@ class DetailTableViewCell: UITableViewCell {
 			updateTableView()
 		}
 	}
+
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		setupUITableView()

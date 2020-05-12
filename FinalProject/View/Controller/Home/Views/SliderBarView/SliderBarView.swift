@@ -6,7 +6,7 @@ protocol SliderBarViewDelegate: class {
 	func sidebarDidSelectRow(typeOfLocation: String)
 }
 
-class SliderBarView: UIView {
+final class SliderBarView: UIView {
 
 	// MARK: Properties
 	private var myTableView = UITableView()
