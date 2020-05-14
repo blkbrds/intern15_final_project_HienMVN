@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -16,32 +16,32 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ZRo-Sf-nWT" customClass="M">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="662"/>
+                    <rect key="frame" x="0.0" y="44" width="375" height="534"/>
                 </mapView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tgg-do-E85" customClass="CustomButton" customModule="FinalProject" customModuleProvider="target">
-                    <rect key="frame" x="354" y="562" width="50" height="50"/>
+                    <rect key="frame" x="315" y="478" width="50" height="50"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="7QK-rK-cHR"/>
                         <constraint firstAttribute="height" constant="50" id="zYY-zm-ofS"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <state key="normal" image="icons8-location-off-30 (2)"/>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" image="location.north.fill" catalog="system"/>
                     <connections>
-                        <action selector="moveCurrentLocation:" destination="-1" eventType="touchUpInside" id="mhf-Xq-fxI"/>
+                        <action selector="moveCurrentLocationTouchUpInside:" destination="-1" eventType="touchUpInside" id="mhf-Xq-fxI"/>
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="ZRo-Sf-nWT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="CYd-xn-d1F"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ZRo-Sf-nWT" secondAttribute="bottom" constant="200" id="GVg-33-gLl"/>
-                <constraint firstItem="ZRo-Sf-nWT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="T2R-Pf-QNl"/>
+                <constraint firstItem="ZRo-Sf-nWT" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="T2R-Pf-QNl"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="tgg-do-E85" secondAttribute="bottom" constant="250" id="Tkk-xQ-371"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tgg-do-E85" secondAttribute="trailing" constant="10" id="nfY-Rp-Fja"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ZRo-Sf-nWT" secondAttribute="trailing" id="sA8-kV-0H5"/>
@@ -51,6 +51,6 @@
         </view>
     </objects>
     <resources>
-        <image name="icons8-location-off-30 (2)" width="30" height="30"/>
+        <image name="location.north.fill" catalog="system" width="54" height="64"/>
     </resources>
 </document>

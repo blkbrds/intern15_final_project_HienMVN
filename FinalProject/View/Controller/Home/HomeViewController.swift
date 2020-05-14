@@ -10,24 +10,22 @@ final class HomeViewController: ViewController {
 	@IBOutlet weak private var currentLocationButton: CustomButton!
 
 	// MARK: - Properties
+	private var blackScreen: UIView?
+	private var sliderBarView: SliderBarView?
 	private var detailView: DetailView?
 	private var viewModel = HomeViewModel()
 	private var currentLocation: CLLocationCoordinate2D?
 	private var mapCenterLocation: CLLocationCoordinate2D?
-	private var firstLoadMap: Bool = true
+	private var dispatchGroup = DispatchGroup()
+	private var anotationImage: UIImage?
 
 	// MARK: - Life Cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		mapView.delegate = self
-		mapView.showsUserLocation = true
+		configMapView()
 		configDetailView()
-		LocationManager.shared.getCurrentLocation(completion: { [weak self] (location) in
-			guard let this = self else { return }
-			this.currentLocation = location.coordinate
-			this.mapCenterLocation = location.coordinate
-			this.center(location: location.coordinate)
-		})
+		setupMenu()
+		makeNavigationBarTransparent()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -35,31 +33,70 @@ final class HomeViewController: ViewController {
 		makeNavigationBarTransparent()
 	}
 
-	func makeNavigationBarTransparent(isTranslucent: Bool = true) {
+	// MARK: - ConfigMap
+	private func configMapView() {
+		mapView.delegate = self
+		mapView.showsUserLocation = true
+		LocationManager.shared.locationHomeDelegate = self
+		LocationManager.shared.startUpdating { _ in }
+	}
+
+	// MARK: - NavigationBar
+	private func makeNavigationBarTransparent(isTranslucent: Bool = true) {
+		title = "Home "
 		let searchButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-search-50"), style: .plain, target: self, action: #selector(searchTouchUpInside))
 		let menuButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-menu-51"), style: .plain, target: self, action: #selector(menuTouchUpInside))
-		searchButton.tintColor = #colorLiteral(red: 0.8098723292, green: 0.02284341678, blue: 0.3325383663, alpha: 1)
-		menuButton.tintColor = #colorLiteral(red: 0.8098723292, green: 0.02284341678, blue: 0.3325383663, alpha: 1)
+		searchButton.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+		menuButton.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
 		navigationItem.rightBarButtonItem = searchButton
 		navigationItem.leftBarButtonItem = menuButton
-		if let navBar = self.navigationController?.navigationBar {
-			let blankImage = UIImage()
-			navBar.setBackgroundImage(blankImage, for: .default)
-			navBar.shadowImage = blankImage
-			navBar.isTranslucent = isTranslucent
+		navigationController?.navigationBar.barTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+	}
+
+	// MARK: - Setup Menu
+	private func setupMenu() {
+		sliderBarView = SliderBarView(frame: CGRect(x: 0, y: 0, width: 0, height: self.view.frame.height))
+		sliderBarView?.delegate = self
+		sliderBarView?.layer.zPosition = 100
+		guard let sliderBarView = sliderBarView else { return }
+		navigationController?.view.addSubview(sliderBarView)
+		blackScreen = UIView(frame: view.bounds)
+		blackScreen?.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.2757651969)
+		blackScreen?.isHidden = true
+		blackScreen?.layer.zPosition = 99
+		guard let blackScreen = blackScreen else { return }
+		view.addSubview(blackScreen)
+		let tapGestRecognizer = UITapGestureRecognizer(target: self, action: #selector(blackScreenTapAction(sender:)))
+		blackScreen.addGestureRecognizer(tapGestRecognizer)
+	}
+
+	// MARK: - Action Menu
+	@objc private func menuTouchUpInside() {
+		blackScreen?.isHidden = false
+		UIView.animate(withDuration: 0.5, animations: {
+			self.sliderBarView?.frame = CGRect(x: 0, y: 0, width: self.view.frame.width / 2, height: self.view.frame.height)
+			guard let xOrigin = self.sliderBarView?.frame.width else { return }
+			self.blackScreen?.frame = CGRect(x: xOrigin, y: 0, width: self.view.frame.width - (self.sliderBarView?.frame.width ?? 0), height: self.view.bounds.height + 100)
+		})
+	}
+
+	// MARK: - Action Back Screen
+	@objc private func blackScreenTapAction(sender: UITapGestureRecognizer) {
+		blackScreen?.isHidden = true
+		blackScreen?.frame = view.bounds
+		UIView.animate(withDuration: 0.5) {
+			self.sliderBarView?.frame = CGRect(x: 0, y: 0, width: 0, height: self.view.frame.height)
 		}
 	}
-	@objc func menuTouchUpInside() {
 
-	}
-
-	@objc func searchTouchUpInside() {
+	// MARK: - Action Search
+	@objc private func searchTouchUpInside() {
 		let searchController = UISearchController(searchResultsController: nil)
 		searchController.searchBar.delegate = self
 		present(searchController, animated: true, completion: nil)
 	}
 
-// MARK: - Private Methods
+	// MARK: - Method map center
 	private func center(location: CLLocationCoordinate2D) {
 		mapView.setCenter(location, animated: true)
 		let span = MKCoordinateSpan(latitudeDelta: Config.latitudeDelta, longitudeDelta: Config.longitudeDelta)
@@ -67,47 +104,58 @@ final class HomeViewController: ViewController {
 		mapView.setRegion(region, animated: true)
 	}
 
+	// MARK: - Methods zoom level
+	private func zoomLevel(location: CLLocationCoordinate2D) {
+		guard let mapCenterLocation = mapCenterLocation else { return }
+		let mapCoordinates = MKCoordinateRegion(center: mapCenterLocation, latitudinalMeters: Config.zoomDistance, longitudinalMeters: Config.zoomDistance)
+		mapView.setRegion(mapCoordinates, animated: true)
+	}
+
+	// MARK: - Methods Config View
 	private func configDetailView() {
 		if detailView == nil {
 			guard let userView = Bundle.main.loadNibNamed(Config.detailView, owner: self, options: nil)?.first as? DetailView else { return }
-			userView.frame = CGRect(x: Config.originX, y: Config.originY, width: view.bounds.width, height: Config.hightView)
+			userView.frame = CGRect(x: Config.originX, y: UIScreen.main.bounds.height - Config.hightView - Config.originY, width: view.bounds.width, height: Config.hightView)
 			detailView = userView
 			guard let detailView = detailView else { return }
 			view.addSubview(detailView)
 		}
 	}
 
-// MARK: - Action
-	@IBAction func moveCurrentLocation(_ sender: Any) {
-		guard let currentLocation = self.currentLocation else { return }
+	// MARK: - Action Current Location
+	@IBAction private func moveCurrentLocationTouchUpInside(_ sender: Any) {
+		guard let currentLocation = currentLocation else { return }
+		getVenueForHome(currentLocation: currentLocation)
 		center(location: currentLocation)
 	}
 }
 
 // MARK: - MKMapViewDelegate
 extension HomeViewController: MKMapViewDelegate {
-
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 		if annotation is MKPointAnnotation {
 			let identifier = Config.identifier
-			var view: PinView
+			var view: MKPinAnnotationView
+			view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+			let button = UIButton(type: .infoLight)
+			button.setImage(#imageLiteral(resourceName: "icons8-next-page-50"), for: .normal)
+			button.tintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+			button.addTarget(self, action: #selector(selectPinView(_:)), for: .touchDown)
+			view.rightCalloutAccessoryView = button
 
-			if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? PinView {
-				dequeuedView.annotation = annotation
-				view = dequeuedView
-			} else {
-				view = PinView(annotation: annotation, reuseIdentifier: identifier)
-				let button = UIButton(type: .detailDisclosure)
-				button.addTarget(self, action: #selector(selectPinView(_:)), for: .touchDown)
-				view.rightCalloutAccessoryView = button
-				view.leftCalloutAccessoryView = UIImageView(image: #imageLiteral(resourceName: "pin"))
+			if let detail = ObjectManager.share.venueDetails.first(where: { ($0.lat == annotation.coordinate.latitude && $0.lng == annotation.coordinate.longitude) }) {
+				let imageView = UIImageView()
+				imageView.frame.size = CGSize(width: Config.sizeImageCallOut, height: Config.sizeImageCallOut)
+				imageView.sd_setImage(with: URL(string: (detail.prefix ?? "") + "414x414" + (detail.suffix ?? "")), placeholderImage: #imageLiteral(resourceName: "dsad"))
+				view.leftCalloutAccessoryView = imageView
 				view.canShowCallout = true
+				return view
 			}
-			return view
 		}
 		return nil
 	}
 
+	// MARK: - Action Select Pin
 	@objc private func selectPinView(_ sender: UIButton?) {
 		let detailVC = DetailViewController()
 		detailVC.viewModel = viewModel.detailViewControllerModel()
@@ -128,51 +176,54 @@ extension HomeViewController: MKMapViewDelegate {
 			detailView?.scrollCollectionView(to: venue)
 		}
 	}
+
 	func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-		if firstLoadMap {
-			firstLoadMap = false
-		} else {
-			guard let placeLocation = mapCenterLocation else { return }
-			let location: CLLocation = CLLocation(latitude: placeLocation.latitude, longitude: placeLocation.longitude)
-			let mapViewCenterLocation: CLLocation = CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
-			let distanceInMeters = location.distance(from: mapViewCenterLocation)
-			print("--> ", distanceInMeters)
-			if distanceInMeters >= Constant.distance && distanceInMeters <= Constant.maxDistance {
-				self.mapCenterLocation = mapViewCenterLocation.coordinate
-				getVenueForHome(currentLocation: placeLocation)
-			}
+		guard let placeLocation = mapCenterLocation else { return }
+		let location: CLLocation = CLLocation(latitude: placeLocation.latitude, longitude: placeLocation.longitude)
+		let mapViewCenterLocation: CLLocation = CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
+		let distanceInMeters = location.distance(from: mapViewCenterLocation)
+		if distanceInMeters >= Constant.distance && distanceInMeters <= Constant.maxDistance {
+			mapCenterLocation = mapViewCenterLocation.coordinate
+			getVenueForHome(currentLocation: mapViewCenterLocation.coordinate, query: "")
 		}
 	}
 }
 
 // MARK: Load Api
 extension HomeViewController {
-	func getVenueForHome(currentLocation: CLLocationCoordinate2D) {
+	func getVenueForHome(currentLocation: CLLocationCoordinate2D, query: String = "") {
 		SVProgressHUD.show()
-		viewModel.getVenues(currentLocation: currentLocation) { [weak self] (result) in
-			guard let this = self else {
-				return
-			}
+		ObjectManager.share.venueHomes.removeAll()
+		ObjectManager.share.venueDetails.removeAll()
+		viewModel.getVenues(currentLocation: currentLocation, query: query) { [weak self] (result) in
+			guard let this = self else { return }
 			switch result {
 			case .success:
-				//	this.mapView.removeAnnotations(this.mapView.annotations)
-				SVProgressHUD.dismiss()
-				this.viewModel.getDetail(at: 0) { (result) in
-					switch result {
-					case .failure(let error):
-						print(error.localizedDescription)
-					case .success:
-						DispatchQueue.main.async {
-							this.detailView?.viewModel = DetailViewModel(ObjectManager.share.venues, ObjectManager.share.venueDetails)
+				this.mapView.removeAnnotations(this.mapView.annotations)
+				ObjectManager.share.venueHomes.forEach { (venue) in
+					this.dispatchGroup.enter()
+					guard let id = venue.id else { return }
+					this.viewModel.getDetail(id: id) { (result) in
+						switch result {
+						case .failure(let error):
+							print(error.localizedDescription)
+						case .success:
+							print("Success 🤡")
 						}
+						this.dispatchGroup.leave()
 					}
 				}
-				ObjectManager.share.venues.forEach { (venue) in
-					if let location = venue.location {
-						let annotation = MKPointAnnotation()
-						annotation.coordinate = location
-						annotation.title = venue.name
-						this.mapView.addAnnotation(annotation)
+				this.dispatchGroup.notify(queue: .main) {
+					this.detailView?.viewModel = DetailViewModel(ObjectManager.share.venueHomes, ObjectManager.share.venueDetails)
+					for venueHome in ObjectManager.share.venueDetails.enumerated() where venueHome.offset <= ObjectManager.share.venueHomes.count {
+						let anotation = MKPointAnnotation()
+						let latitude = venueHome.element.lat
+						let logtitude = venueHome.element.lng
+						anotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: logtitude)
+						anotation.title = venueHome.element.name
+						anotation.subtitle = venueHome.element.city
+						this.mapView.addAnnotation(anotation)
+						SVProgressHUD.dismiss()
 					}
 				}
 			case .failure(let error):
@@ -184,7 +235,6 @@ extension HomeViewController {
 
 // MARK: UISearchBarDelegate
 extension HomeViewController: UISearchBarDelegate {
-
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		UIApplication.shared.beginReceivingRemoteControlEvents()
 		let activityIndicator = UIActivityIndicatorView()
@@ -209,13 +259,28 @@ extension HomeViewController: UISearchBarDelegate {
 				let annotation = MKPointAnnotation()
 				annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longtide)
 				self.mapView.addAnnotation(annotation)
-				let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longtide)
-				self.getVenueForHome(currentLocation: coordinate)
-				let span = MKCoordinateSpan(latitudeDelta: Config.latitudeDelta, longitudeDelta: Config.longitudeDelta)
-				let region = MKCoordinateRegion(center: coordinate, span: span)
-				self.mapView.setRegion(region, animated: true)
+				let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: latitude, longitude: longtide)
+				self.getVenueForHome(currentLocation: coordinate, query: "")
+				self.center(location: coordinate)
 			}
 		}
+	}
+}
+
+// MARK: SliderBarViewDelegate
+extension HomeViewController: SliderBarViewDelegate {
+	func sidebarDidSelectRow(typeOfLocation: String) {
+		guard let currentLocation = currentLocation else { return }
+		getVenueForHome(currentLocation: currentLocation, query: typeOfLocation)
+		zoomLevel(location: currentLocation)
+	}
+}
+
+extension HomeViewController: LocationManagerDelegate {
+	func locationManager(locationManager: LocationManager, didUpdateCurrentLocation currentLocation: CLLocation) {
+		self.currentLocation = currentLocation.coordinate
+		mapCenterLocation = currentLocation.coordinate
+		center(location: currentLocation.coordinate)
 	}
 }
 
@@ -225,10 +290,11 @@ extension HomeViewController {
 		static let detailView: String = "DetailView"
 		static let identifier: String = "Pin"
 		static let originX: CGFloat = 0
-		static let originY: CGFloat = 610
+		static let originY: CGFloat = 84
 		static let hightView: CGFloat = 200
-		static let latitudeDelta: CLLocationDegrees = 0.005
-		static let longitudeDelta: CLLocationDegrees = 0.005
-
+		static let latitudeDelta: CLLocationDegrees = 0.01
+		static let longitudeDelta: CLLocationDegrees = 0.01
+		static let zoomDistance: CLLocationDistance = 5_000
+		static let sizeImageCallOut: CGFloat = 40
 	}
 }

@@ -3,11 +3,14 @@ import RealmSwift
 
 final class FavoriteViewControllerModel {
 
-// MARK: - Private Method
-	func getCellViewModel(at indexPath: IndexPath) -> FavoriteTableViewCellModel? {
+// MARK: - Public Method
+	func getFavoriteTableViewCellModel(at indexPath: IndexPath) -> FavoriteTableViewCellModel? {
 		guard let listFavorite = RealmManager.shared.listItemFavorite else { return nil }
-		return FavoriteTableViewCellModel(locationName: listFavorite[indexPath.row].name ?? "",
-			address: listFavorite[indexPath.row].address ?? "",
+		return FavoriteTableViewCellModel(locationName: listFavorite[indexPath.row].name,
+										  address: listFavorite[indexPath.row].address,
+										  timeOpen: listFavorite[indexPath.row].openTime,
+										  like: listFavorite[indexPath.row].countOfLike,
+										  rating: listFavorite[indexPath.row].rating,
 			suffix: listFavorite[indexPath.row].suffix ?? "",
 			prefix: listFavorite[indexPath.row].prefix ?? "")
 	}

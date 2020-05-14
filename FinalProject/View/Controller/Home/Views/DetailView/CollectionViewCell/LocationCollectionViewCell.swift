@@ -10,7 +10,7 @@ final class LocationCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Properties
 	private let backgroundImageView = UIImageView()
-	var viewModel = LocationViewCellModel() {
+	var viewModel: LocationViewCellModel? {
 		didSet {
 			updateView()
 		}
@@ -35,12 +35,13 @@ final class LocationCollectionViewCell: UICollectionViewCell {
 	}
 
 	private func updateView() {
+		guard let viewModel = viewModel else { return }
 		addressLabel.text = viewModel.country
 		locationNameLabel.text = viewModel.locationName
 
 		guard let locationImageURL = viewModel.locationImageURL,
 			let suffix = viewModel.suffix, let prefix = viewModel.prefix else { return }
-		locationImageView.sd_setImage(with: URL(string: locationImageURL + "64.png"), placeholderImage: #imageLiteral(resourceName: "icons8-star-96"))
+		locationImageView.sd_setImage(with: URL(string: locationImageURL + "64.png"), placeholderImage: #imageLiteral(resourceName: "icons8-hand-drawn-star-100"))
 		backgroundImageView.sd_setImage(with: URL(string: prefix + "414x414" + suffix), placeholderImage: #imageLiteral(resourceName: "dsad"))
 	}
 }

@@ -32,7 +32,7 @@ extension Request {
             return .success([:])
         }
 
-        guard 200...299 ~= statusCode else {
+		guard 200...299 ~= statusCode else {
             // Cancel request
             if statusCode == Api.Error.cancelRequest.code {
                 return .failure(Api.Error.cancelRequest)

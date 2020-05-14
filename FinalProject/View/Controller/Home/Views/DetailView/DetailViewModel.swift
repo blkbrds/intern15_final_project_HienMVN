@@ -4,34 +4,40 @@ import UIKit
 
 final class DetailViewModel: ViewModel {
 
-	private(set) var venuesHome: [VenueHome] = []
-	private(set) var venuesDetail: [VenueDetail] = []
+	// MARK: - Properties
+	var venuesHome: [VenueHome] = []
+	var venuesDetail: [VenueDetail] = []
 
-	func numberOfIteam() -> Int {
-		return venuesHome.count
-	}
-
+	// MARK: - Life Cycle
 	init(_ venuesHome: [VenueHome] = [], _ venuesDetail: [VenueDetail] = []) {
 		self.venuesHome = venuesHome
 		self.venuesDetail = venuesDetail
 	}
 
-	func getIndexPathVenus(id: String) -> IndexPath? {
-		if let index = venuesHome.map({ $0.id }).firstIndex(of: id) {
+	// MARK: - Puclic Methods
+	func numberOfItem() -> Int {
+		return venuesDetail.count
+	}
+
+	func getIndexPathVenues(id: String?) -> IndexPath? {
+		guard let id = id else { return nil }
+		if let index = venuesDetail.firstIndex(where: { $0.id ?? "" == id }) {
 			return IndexPath(item: index, section: 0)
 		}
 		return nil
 	}
 
-	func updateInformationForCell(at indexPath: IndexPath) -> LocationViewCellModel {
-		guard let name = venuesHome[indexPath.row].name,
-			let country = venuesHome[indexPath.row].country
-			else {
-				return LocationViewCellModel()
+	func getLocationViewCellModel(at indexPath: IndexPath) -> LocationViewCellModel? {
+		guard indexPath.row < venuesDetail.count else {
+			return nil
 		}
-		let prefixDetail = venuesDetail[indexPath.row].prefix
-		let suffixDetail = venuesDetail[indexPath.row].suffix
-		let locationImageURL = venuesHome[indexPath.row].prefix
-		return LocationViewCellModel(locationName: name, locationImageURL: locationImageURL ?? "", country: country, suffix: suffixDetail ?? "", prefix: prefixDetail ?? "")
+		let venueHome = venuesHome.first { (venueHome) -> Bool in
+			return venuesDetail[indexPath.row].id == venueHome.id
+		}
+		return LocationViewCellModel(locationName: venueHome?.name,
+			locationImageURL: venueHome?.prefix,
+			country: venueHome?.country,
+			suffix: venuesDetail[indexPath.row].suffix,
+			prefix: venuesDetail[indexPath.row].prefix)
 	}
 }

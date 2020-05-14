@@ -6,6 +6,6 @@ class ObjectManager {
 		return ObjectManager()
 	}()
 
-	var venues: [VenueHome] = []
+	var venueHomes: [VenueHome] = []
 	var venueDetails: [VenueDetail] = []
 }

@@ -4,35 +4,36 @@ final class DetailView: UIView {
 
 	// MARK: - Outlet
 	@IBOutlet weak private var detailCollectionView: UICollectionView!
-	@IBOutlet weak private var locationNameLabel: UILabel!
-	@IBOutlet weak private var addressLabel: UILabel!
 
 	// MARK: - Properties
+	private let locationCollectionViewCell = "LocationCollectionViewCell"
 	var viewModel: DetailViewModel? {
 		didSet {
-			detailCollectionView.reloadData()
+			updateView()
 		}
 	}
-	private let locationCollectionViewCell = "LocationCollectionViewCell"
 
 	// MARK: - Life Cycle
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		loadNib()
+		configCollectionView()
 	}
 
 	// MARK: - Private Method
-	private func loadNib() {
+	private func configCollectionView() {
 		let nib = UINib(nibName: locationCollectionViewCell, bundle: .main)
 		detailCollectionView.register(nib, forCellWithReuseIdentifier: locationCollectionViewCell)
 		detailCollectionView.dataSource = self
 	}
 
-	// TODO: scroll collection by internal func 
+	private func updateView() {
+		detailCollectionView.reloadData()
+	}
+
+	// MARK: - Public Method
 	func scrollCollectionView(to venue: VenueHome) {
-		guard let viewModel = viewModel else { return }
-		guard let index = viewModel.venuesHome.firstIndex(of: venue) else { return }
-		let indexPath = IndexPath(row: index, section: 0)
+		guard let viewModel = viewModel,
+			let indexPath = viewModel.getIndexPathVenues(id: venue.id) else { return }
 		detailCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
 	}
 }
@@ -41,15 +42,16 @@ final class DetailView: UIView {
 extension DetailView: UICollectionViewDataSource {
 
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return viewModel?.numberOfIteam() ?? 0
+		guard let numberItems = viewModel?.numberOfItem() else { return 0 }
+		return numberItems
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: locationCollectionViewCell, for: indexPath) as? LocationCollectionViewCell else {
 			return UICollectionViewCell()
 		}
-		if let viewmodel = viewModel {
-			cell.viewModel = viewmodel.updateInformationForCell(at: indexPath)
+		if let viewModel = viewModel {
+			cell.viewModel = viewModel.getLocationViewCellModel(at: indexPath)
 		}
 		return cell
 	}
